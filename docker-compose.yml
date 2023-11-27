@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=user_management_application_db
 
   auth-server:
-    image: spring-6-auth-server:latest
+    image: auth-server:latest
     container_name: auth-server
     ports:
       - "9000:9000"
