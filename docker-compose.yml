@@ -11,6 +11,12 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=user_management_application_db
 
+  auth-server:
+    image: spring-6-auth-server:latest
+    container_name: auth-server
+    ports:
+      - "9000:9000"
+
   application:
     image: user-management-api:latest
     container_name: application
