@@ -70,3 +70,5 @@ Permits the deletion of a selected entry. Displays an informative message after 
 - **Lombok**
 - **Springdoc-OpenAPI**
 - **PostgreSQL**
+- **Docker containers**
+- **OAuth2**
