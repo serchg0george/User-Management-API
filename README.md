@@ -66,9 +66,8 @@ Permits the deletion of a selected entry. Displays an informative message after 
 - **Java**
 - **Spring Boot**
 - **Spring Data JPA**
+- ****
 - **MapStruct**
 - **Lombok**
 - **Springdoc-OpenAPI**
 - **PostgreSQL**
-- **Docker containers**
-- **OAuth2**
