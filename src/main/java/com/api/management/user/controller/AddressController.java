@@ -1,6 +1,7 @@
 package com.api.management.user.controller;
 
 import com.api.management.user.dto.AddressDto;
+import com.api.management.user.dto.search.AddressSearchRequest;
 import com.api.management.user.service.AddressService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.api.management.user.controller.Constants.*;
 
 @RestController
@@ -21,6 +24,12 @@ import static com.api.management.user.controller.Constants.*;
 public class AddressController {
 
     private final AddressService addressService;
+
+    @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<List<AddressDto>> findAddress(@RequestBody AddressSearchRequest addressRequest) {
+        return ResponseEntity.ok(addressService.findAddressByCriteria(addressRequest));
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -44,7 +53,7 @@ public class AddressController {
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateAddress(@PathVariable("id") Long addressId,
-                                                    @Valid @RequestBody AddressDto address) {
+                                                @Valid @RequestBody AddressDto address) {
         addressService.update(address, addressId);
         return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
     }

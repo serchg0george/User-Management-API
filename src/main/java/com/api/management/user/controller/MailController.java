@@ -1,6 +1,7 @@
 package com.api.management.user.controller;
 
 import com.api.management.user.dto.MailDto;
+import com.api.management.user.dto.search.MailSearchRequest;
 import com.api.management.user.service.MailService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.api.management.user.controller.Constants.*;
 
 @RestController
@@ -21,6 +24,12 @@ import static com.api.management.user.controller.Constants.*;
 public class MailController {
 
     private final MailService mailService;
+
+    @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<List<MailDto>> searchMailByCriteria(@RequestBody MailSearchRequest findMail) {
+        return ResponseEntity.ok(mailService.findMailByCriteria(findMail));
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

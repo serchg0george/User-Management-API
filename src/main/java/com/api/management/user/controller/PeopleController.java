@@ -2,6 +2,7 @@ package com.api.management.user.controller;
 
 import com.api.management.user.dto.MailToPeopleDto;
 import com.api.management.user.dto.PeopleDto;
+import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.service.PeopleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,17 @@ public class PeopleController {
 
     private final PeopleService peopleService;
 
+    @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<List<PeopleDto>> searchPeopleByCriteria(@RequestBody PeopleSearchRequest findPerson) {
+        return ResponseEntity.ok(peopleService.findPersonByCriteria(findPerson));
+    }
+
     @PutMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PeopleDto> setMailToPeople(@RequestBody MailToPeopleDto mailToPeopleDto) {
         PeopleDto people = peopleService.setMailToPeople(mailToPeopleDto.mailId(), mailToPeopleDto.peopleId());
         return new ResponseEntity<>(people, HttpStatus.OK);
-    }
-
-    @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<List<PeopleDto>> searchPeopleByName(@RequestParam("query") String findPerson) {
-        return ResponseEntity.ok(peopleService.searchPeopleByName(findPerson));
     }
 
     @PostMapping
