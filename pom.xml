@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.4.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.user.management.api</groupId>
@@ -17,15 +17,14 @@
         A Java-based web application built with Spring Boot, and PostgreSQL.
     </description>
     <properties>
-        <java.version>17</java.version>
-        <lombok.version>1.18.28</lombok.version>
+        <java.version>21</java.version>
+        <lombok.version>1.18.36</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <springboot.version>3.2.0</springboot.version>
-        <springboot.security.version>3.2.0</springboot.security.version>
-        <springdoc.version>2.1.0</springdoc.version>
-        <commons-lang3.version>3.5</commons-lang3.version>
-        <springboot.docker-compose.version>3.1.1</springboot.docker-compose.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <springboot.version>3.4.3</springboot.version>
+        <springboot.security.version>3.4.3</springboot.security.version>
+        <springdoc.version>2.8.4</springdoc.version>
+        <jwt.version>0.11.5</jwt.version>
     </properties>
     <dependencies>
         <dependency>
@@ -50,36 +49,29 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-docker-compose</artifactId>
-            <version>${springboot.docker-compose.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
             <version>${springboot.security.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-        </dependency>
-
 
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <scope>runtime</scope>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
