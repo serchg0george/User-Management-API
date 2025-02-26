@@ -1,6 +1,7 @@
 package com.api.management.user.service.impl;
 
-import com.api.management.user.dto.PeopleDto;
+import com.api.management.user.dto.people.PeopleDto;
+import com.api.management.user.dto.people.SearchPeopleResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.entity.MailEntity;
 import com.api.management.user.entity.PeopleEntity;
@@ -60,7 +61,7 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
     }
 
     @Override
-    public List<PeopleDto> findPersonByCriteria(final PeopleSearchRequest request) {
+    public SearchPeopleResponse findPersonByCriteria(final PeopleSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PeopleEntity> criteriaQuery = criteriaBuilder.createQuery(PeopleEntity.class);
         List<Predicate> predicates = new ArrayList<>();
@@ -78,6 +79,13 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
 
         TypedQuery<PeopleEntity> query = entityManager.createQuery(criteriaQuery);
 
-        return query.getResultList().stream().map(peopleMapper::mapEntityToDto).toList();
+        SearchPeopleResponse response = new SearchPeopleResponse();
+
+        var people = query.getResultList().stream().map(peopleMapper::mapEntityToDto).toList();
+
+        response.setPeople(people);
+        response.setPeopleCount(people.size());
+
+        return response;
     }
 }

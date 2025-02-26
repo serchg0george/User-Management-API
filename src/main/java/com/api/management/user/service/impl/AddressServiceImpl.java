@@ -1,6 +1,7 @@
 package com.api.management.user.service.impl;
 
-import com.api.management.user.dto.AddressDto;
+import com.api.management.user.dto.address.AddressDto;
+import com.api.management.user.dto.address.SearchAddressResponse;
 import com.api.management.user.dto.search.AddressSearchRequest;
 import com.api.management.user.entity.AddressEntity;
 import com.api.management.user.mapper.AddressMapper;
@@ -41,7 +42,7 @@ public class AddressServiceImpl extends GenericServiceImpl<AddressEntity, Addres
 
 
     @Override
-    public List<AddressDto> findAddressByCriteria(final AddressSearchRequest request) {
+    public SearchAddressResponse findAddressByCriteria(final AddressSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<AddressEntity> criteriaQuery = criteriaBuilder.createQuery(AddressEntity.class);
         List<Predicate> predicates = new ArrayList<>();
@@ -59,6 +60,13 @@ public class AddressServiceImpl extends GenericServiceImpl<AddressEntity, Addres
 
         TypedQuery<AddressEntity> query = entityManager.createQuery(criteriaQuery);
 
-        return query.getResultList().stream().map(addressMapper::mapEntityToDto).toList();
+        final SearchAddressResponse response = new SearchAddressResponse();
+
+        var addresses = query.getResultList().stream().map(addressMapper::mapEntityToDto).toList();
+
+        response.setAddress(addresses);
+        response.setAddressesCount(addresses.size());
+
+        return response;
     }
 }

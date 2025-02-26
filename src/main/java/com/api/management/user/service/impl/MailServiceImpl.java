@@ -1,6 +1,7 @@
 package com.api.management.user.service.impl;
 
-import com.api.management.user.dto.MailDto;
+import com.api.management.user.dto.mail.MailDto;
+import com.api.management.user.dto.mail.SearchMailResponse;
 import com.api.management.user.dto.search.MailSearchRequest;
 import com.api.management.user.entity.EmailType;
 import com.api.management.user.entity.MailEntity;
@@ -40,7 +41,7 @@ public class MailServiceImpl extends GenericServiceImpl<MailEntity, MailDto> imp
     }
 
     @Override
-    public List<MailDto> findMailByCriteria(final MailSearchRequest request) {
+    public SearchMailResponse findMailByCriteria(final MailSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<MailEntity> criteriaQuery = criteriaBuilder.createQuery(MailEntity.class);
         List<Predicate> predicates = new ArrayList<>();
@@ -61,6 +62,13 @@ public class MailServiceImpl extends GenericServiceImpl<MailEntity, MailDto> imp
 
         TypedQuery<MailEntity> query = entityManager.createQuery(criteriaQuery);
 
-        return query.getResultList().stream().map(mailMapper::mapEntityToDto).toList();
+        final SearchMailResponse response = new SearchMailResponse();
+
+        var mailAddresses = query.getResultList().stream().map(mailMapper::mapEntityToDto).toList();
+
+        response.setMails(mailAddresses);
+        response.setMailsCount(mailAddresses.size());
+
+        return response;
     }
 }

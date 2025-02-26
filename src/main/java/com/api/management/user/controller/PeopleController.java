@@ -1,7 +1,8 @@
 package com.api.management.user.controller;
 
-import com.api.management.user.dto.MailToPeopleDto;
-import com.api.management.user.dto.PeopleDto;
+import com.api.management.user.dto.people.MailToPeopleDto;
+import com.api.management.user.dto.people.PeopleDto;
+import com.api.management.user.dto.people.SearchPeopleResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.service.PeopleService;
 import jakarta.validation.Valid;
@@ -13,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.api.management.user.controller.Constants.*;
 import static org.springframework.http.ResponseEntity.ok;
@@ -29,7 +28,7 @@ public class PeopleController {
 
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<List<PeopleDto>> searchPeopleByCriteria(@RequestBody PeopleSearchRequest findPerson) {
+    public ResponseEntity<SearchPeopleResponse> searchPeopleByCriteria(@RequestBody PeopleSearchRequest findPerson) {
         return ResponseEntity.ok(peopleService.findPersonByCriteria(findPerson));
     }
 
