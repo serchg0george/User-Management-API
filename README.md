@@ -22,6 +22,7 @@ User Management API is a RESTful service for managing users, emails, and address
 - **Security**: JWT Authentication
 - **ORM**: Hibernate, JPA
 - **Dependency Management**: Maven
+- **Tools**: MapStruct, Lombok, Maven, Springdoc OpenAPI/Swagger
 
 ## 📂 Database Models & Schema
 
