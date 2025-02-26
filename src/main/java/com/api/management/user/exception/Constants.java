@@ -1,4 +1,4 @@
-package com.api.management.user.controller;
+package com.api.management.user.exception;
 
 public interface Constants {
     String CREATE_SUCCESS = "Created successfully!";

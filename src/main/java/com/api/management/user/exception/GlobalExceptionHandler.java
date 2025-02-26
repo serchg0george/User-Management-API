@@ -1,8 +1,5 @@
-package com.api.management.user.controller;
+package com.api.management.user.exception;
 
-import com.api.management.user.exception.ErrorResponse;
-import com.api.management.user.exception.NotFoundException;
-import com.api.management.user.exception.SubErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +43,7 @@ public class GlobalExceptionHandler {
         }
 
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, subErrorResponses);
-        return new ResponseEntity(errorResponse, errorResponse.getStatus());
+        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 
 }

@@ -1,5 +1,6 @@
-package com.api.management.user.dto;
+package com.api.management.user.dto.mail;
 
+import com.api.management.user.dto.BaseDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
