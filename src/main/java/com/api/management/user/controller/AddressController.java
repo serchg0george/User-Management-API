@@ -1,6 +1,7 @@
 package com.api.management.user.controller;
 
-import com.api.management.user.dto.AddressDto;
+import com.api.management.user.dto.address.AddressDto;
+import com.api.management.user.dto.address.SearchAddressResponse;
 import com.api.management.user.dto.search.AddressSearchRequest;
 import com.api.management.user.service.AddressService;
 import jakarta.validation.Valid;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.api.management.user.controller.Constants.*;
 
@@ -27,7 +26,7 @@ public class AddressController {
 
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<List<AddressDto>> findAddress(@RequestBody AddressSearchRequest addressRequest) {
+    public ResponseEntity<SearchAddressResponse> findAddress(@RequestBody AddressSearchRequest addressRequest) {
         return ResponseEntity.ok(addressService.findAddressByCriteria(addressRequest));
     }
 

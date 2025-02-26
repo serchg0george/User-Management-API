@@ -1,15 +1,14 @@
 package com.api.management.user.service;
 
-import com.api.management.user.dto.PeopleDto;
+import com.api.management.user.dto.people.PeopleDto;
+import com.api.management.user.dto.people.SearchPeopleResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.entity.PeopleEntity;
-
-import java.util.List;
 
 public interface PeopleService extends GenericService<PeopleEntity, PeopleDto> {
 
     PeopleDto setMailToPeople(Long mailId, Long peopleId);
 
-    List<PeopleDto> findPersonByCriteria(PeopleSearchRequest request);
+    SearchPeopleResponse findPersonByCriteria(PeopleSearchRequest request);
 
 }
