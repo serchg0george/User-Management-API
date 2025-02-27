@@ -3,8 +3,8 @@ package com.api.management.user.service.impl;
 import com.api.management.user.dto.people.PeopleDto;
 import com.api.management.user.dto.people.SearchPeopleResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
+import com.api.management.user.entity.EmployeeEntity;
 import com.api.management.user.entity.MailEntity;
-import com.api.management.user.entity.PeopleEntity;
 import com.api.management.user.exception.NotFoundException;
 import com.api.management.user.mapper.PeopleMapper;
 import com.api.management.user.mapper.base.BaseMapper;
@@ -27,7 +27,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDto> implements PeopleService {
+public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, PeopleDto> implements PeopleService {
 
     private final PeopleRepository peopleRepository;
     private final MailRepository mailRepository;
@@ -35,12 +35,12 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
     private final EntityManager entityManager;
 
     @Override
-    public BaseMapper<PeopleEntity, PeopleDto> getMapper() {
+    public BaseMapper<EmployeeEntity, PeopleDto> getMapper() {
         return peopleMapper;
     }
 
     @Override
-    public JpaRepository<PeopleEntity, Long> getRepository() {
+    public JpaRepository<EmployeeEntity, Long> getRepository() {
         return peopleRepository;
     }
 
@@ -48,12 +48,12 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
     public PeopleDto setMailToPeople(Long mailId, Long peopleId) {
         MailEntity mailEntity = mailRepository.findById(mailId).orElseThrow(
                 () -> new NotFoundException(mailId));
-        PeopleEntity peopleEntity = peopleRepository.findById(peopleId).orElseThrow(
+        EmployeeEntity peopleEntity = peopleRepository.findById(peopleId).orElseThrow(
                 () -> new NotFoundException(peopleId));
 
-        mailEntity.setPeople(peopleEntity);
+        mailEntity.setEmployee(peopleEntity);
         mailRepository.save(mailEntity);
-        Optional<PeopleEntity> people = peopleRepository.findById(peopleId);
+        Optional<EmployeeEntity> people = peopleRepository.findById(peopleId);
         if (people.isEmpty()) {
             throw new NotFoundException(peopleId);
         }
@@ -63,9 +63,9 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
     @Override
     public SearchPeopleResponse findPersonByCriteria(final PeopleSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<PeopleEntity> criteriaQuery = criteriaBuilder.createQuery(PeopleEntity.class);
+        CriteriaQuery<EmployeeEntity> criteriaQuery = criteriaBuilder.createQuery(EmployeeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        Root<PeopleEntity> root = criteriaQuery.from(PeopleEntity.class);
+        Root<EmployeeEntity> root = criteriaQuery.from(EmployeeEntity.class);
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
@@ -77,7 +77,7 @@ public class PeopleServiceImpl extends GenericServiceImpl<PeopleEntity, PeopleDt
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<PeopleEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<EmployeeEntity> query = entityManager.createQuery(criteriaQuery);
 
         SearchPeopleResponse response = new SearchPeopleResponse();
 

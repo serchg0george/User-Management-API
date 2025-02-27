@@ -1,12 +1,12 @@
 package com.api.management.user.repository;
 
-import com.api.management.user.entity.PeopleEntity;
+import com.api.management.user.entity.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PeopleRepository extends JpaRepository<PeopleEntity, Long> {
+public interface PeopleRepository extends JpaRepository<EmployeeEntity, Long> {
 
-    List<PeopleEntity> findAllByFullNameIgnoreCase(String fullName);
+    List<EmployeeEntity> findAllByFullNameIgnoreCase(String fullName);
 
 }

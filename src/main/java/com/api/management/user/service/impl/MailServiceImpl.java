@@ -3,7 +3,7 @@ package com.api.management.user.service.impl;
 import com.api.management.user.dto.mail.MailDto;
 import com.api.management.user.dto.mail.SearchMailResponse;
 import com.api.management.user.dto.search.MailSearchRequest;
-import com.api.management.user.entity.EmailType;
+import com.api.management.user.entity.enums.EmailType;
 import com.api.management.user.entity.MailEntity;
 import com.api.management.user.mapper.MailMapper;
 import com.api.management.user.mapper.base.BaseMapper;

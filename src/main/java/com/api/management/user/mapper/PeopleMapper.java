@@ -1,17 +1,17 @@
 package com.api.management.user.mapper;
 
 import com.api.management.user.dto.people.PeopleDto;
-import com.api.management.user.entity.PeopleEntity;
+import com.api.management.user.entity.EmployeeEntity;
 import com.api.management.user.mapper.base.BaseMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface PeopleMapper extends BaseMapper<PeopleEntity, PeopleDto> {
+public interface PeopleMapper extends BaseMapper<EmployeeEntity, PeopleDto> {
 
     @Override
-    PeopleDto mapEntityToDto(PeopleEntity peopleEntity);
+    PeopleDto mapEntityToDto(EmployeeEntity peopleEntity);
 
     @Override
-    PeopleEntity mapDtoToEntity(PeopleDto peopleDto);
+    EmployeeEntity mapDtoToEntity(PeopleDto peopleDto);
 
 }

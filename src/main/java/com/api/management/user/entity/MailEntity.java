@@ -1,5 +1,6 @@
 package com.api.management.user.entity;
 
+import com.api.management.user.entity.enums.EmailType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class MailEntity extends BaseEntity {
     @Column(name = "email", length = 40, unique = true)
     private String email;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "mail")
+    private OrganizationEntity organization;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    PeopleEntity people;
+    private EmployeeEntity employee;
 }
