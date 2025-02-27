@@ -35,9 +35,6 @@ public class EmployeeEntity extends BaseEntity {
     @OneToOne
     private TimeSheetEntity timeSpentMinutes;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "assignedToEmployee", fetch = FetchType.LAZY)
-    private List<TaskEntity> tasks;
-
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinTable(
             name = "t_projects_employees",
