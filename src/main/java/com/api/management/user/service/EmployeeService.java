@@ -7,8 +7,6 @@ import com.api.management.user.entity.EmployeeEntity;
 
 public interface EmployeeService extends GenericService<EmployeeEntity, EmployeeDto> {
 
-    EmployeeDto setMailToEmployee(Long mailId, Long employeeId);
-
     SearchEmployeeResponse findEmployee(PeopleSearchRequest request);
 
 }

@@ -1,7 +1,6 @@
 package com.api.management.user.controller;
 
 import com.api.management.user.dto.employee.EmployeeDto;
-import com.api.management.user.dto.employee.MailToEmployeeDto;
 import com.api.management.user.dto.employee.SearchEmployeeResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.service.EmployeeService;
@@ -28,15 +27,8 @@ public class EmployeeController {
 
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<SearchEmployeeResponse> searchPeopleByCriteria(@RequestBody PeopleSearchRequest findPerson) {
+    public ResponseEntity<SearchEmployeeResponse> searchEmployeeByCriteria(@RequestBody PeopleSearchRequest findPerson) {
         return ResponseEntity.ok(employeeService.findEmployee(findPerson));
-    }
-
-    @PutMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EmployeeDto> setMailToPeople(@RequestBody MailToEmployeeDto mailToPeopleDto) {
-        EmployeeDto people = employeeService.setMailToEmployee(mailToPeopleDto.mailId(), mailToPeopleDto.peopleId());
-        return new ResponseEntity<>(people, HttpStatus.OK);
     }
 
     @PostMapping

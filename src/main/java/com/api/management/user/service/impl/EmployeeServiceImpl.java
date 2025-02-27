@@ -4,12 +4,9 @@ import com.api.management.user.dto.employee.EmployeeDto;
 import com.api.management.user.dto.employee.SearchEmployeeResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.entity.EmployeeEntity;
-import com.api.management.user.entity.MailEntity;
-import com.api.management.user.exception.NotFoundException;
 import com.api.management.user.mapper.EmployeeMapper;
 import com.api.management.user.mapper.base.BaseMapper;
 import com.api.management.user.repository.EmployeeRepository;
-import com.api.management.user.repository.MailRepository;
 import com.api.management.user.service.EmployeeService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -23,14 +20,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, EmployeeDto> implements EmployeeService {
+public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, EmployeeDto> implements EmployeeService {
 
     private final EmployeeRepository peopleRepository;
-    private final MailRepository mailRepository;
     private final EmployeeMapper employeeMapper;
     private final EntityManager entityManager;
 
@@ -44,21 +39,6 @@ public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, Employ
         return peopleRepository;
     }
 
-    @Override
-    public EmployeeDto setMailToEmployee(Long mailId, Long employeeId) {
-        MailEntity mailEntity = mailRepository.findById(mailId).orElseThrow(
-                () -> new NotFoundException(mailId));
-        EmployeeEntity peopleEntity = peopleRepository.findById(employeeId).orElseThrow(
-                () -> new NotFoundException(employeeId));
-
-        mailEntity.setEmployee(peopleEntity);
-        mailRepository.save(mailEntity);
-        Optional<EmployeeEntity> people = peopleRepository.findById(employeeId);
-        if (people.isEmpty()) {
-            throw new NotFoundException(employeeId);
-        }
-        return employeeMapper.mapEntityToDto(people.get());
-    }
 
     @Override
     public SearchEmployeeResponse findEmployee(final PeopleSearchRequest request) {
