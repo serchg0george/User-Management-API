@@ -2,11 +2,9 @@ package com.api.management.user.dto.timesheet;
 
 import com.api.management.user.dto.BaseDto;
 import com.api.management.user.dto.employee.EmployeeDto;
-import com.api.management.user.dto.task.TaskDto;
+import com.api.management.user.dto.role.RoleDto;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +21,12 @@ public class TimeSheetDto extends BaseDto {
     @Max(value = 10, message = "Value can't be greater than 10 digits")
     private Integer timeSpentMinutes;
 
+    @NotBlank
+    @Size(min = 1, max = 150)
+    private String taskDescription;
+
     @Valid
-    private TaskDto task;
+    private RoleDto role;
 
     @Valid
     private EmployeeDto employee;

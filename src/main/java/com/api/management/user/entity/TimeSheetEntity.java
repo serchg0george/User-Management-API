@@ -12,11 +12,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_time_tracks")
 public class TimeSheetEntity extends BaseEntity {
 
-    @Column(name = "time_spent_minutes", nullable = false)
+    @Column(name = "time_spent_minutes", nullable = false, length = 10)
     private Integer timeSpentMinutes;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSpentMinutes")
-    private TaskEntity task;
+    @Column(name = "task_description", nullable = false, length = 150)
+    private String taskDescription;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RoleEntity role;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "")
     private EmployeeEntity employee;
