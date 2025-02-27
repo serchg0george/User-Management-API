@@ -1,4 +1,4 @@
-package com.api.management.user.dto.group;
+package com.api.management.user.dto.department;
 
 import com.api.management.user.dto.BaseDto;
 import com.api.management.user.dto.employee.EmployeeDto;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupDto extends BaseDto {
+public class DepartmentDto extends BaseDto {
 
     @NotBlank
     @Size(min = 1, max = 40)

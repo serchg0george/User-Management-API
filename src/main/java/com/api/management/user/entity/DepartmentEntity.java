@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table
-public class GroupEntity extends BaseEntity {
+public class DepartmentEntity extends BaseEntity {
 
     @Column(name = "group_name", nullable = false, length = 40)
     private String groupName;

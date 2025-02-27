@@ -27,7 +27,7 @@ public class EmployeeEntity extends BaseEntity {
     private List<MailEntity> mails;
 
     @OneToOne
-    private GroupEntity group;
+    private DepartmentEntity group;
 
     @OneToOne
     private PositionEntity position;

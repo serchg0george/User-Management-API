@@ -1,9 +1,9 @@
 package com.api.management.user.repository;
 
-import com.api.management.user.entity.GroupEntity;
+import com.api.management.user.entity.DepartmentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
+public interface DepartmentRepository extends JpaRepository<DepartmentEntity, Long> {
 }
