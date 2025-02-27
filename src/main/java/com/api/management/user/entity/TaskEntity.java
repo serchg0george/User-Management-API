@@ -21,7 +21,7 @@ public class TaskEntity extends BaseEntity {
     @Column(name = "estimated_time_minutes", length = 10, nullable = false)
     private Integer estimatedTimeMinutes;
 
-    @Column
+    @Column(name = "status", length = 50, nullable = false)
     private String status;
 
     @OneToOne

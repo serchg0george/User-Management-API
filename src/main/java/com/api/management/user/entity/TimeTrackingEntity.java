@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_time_tracks")
 public class TimeTrackingEntity extends BaseEntity {
 
-    @Column(name = "time_spent_minutes")
+    @Column(name = "time_spent_minutes", nullable = false)
     private Integer timeSpentMinutes;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSpentMinutes")

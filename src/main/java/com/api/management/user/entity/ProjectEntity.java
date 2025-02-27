@@ -15,13 +15,13 @@ import java.util.Date;
 @Table(name = "t_projects")
 public class ProjectEntity extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false, length = 500)
     private String description;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private Date startDate;
 
     @Column(name = "finish_date")
@@ -33,5 +33,4 @@ public class ProjectEntity extends BaseEntity {
 
     @ManyToOne
     private OrganizationEntity organization;
-
 }
