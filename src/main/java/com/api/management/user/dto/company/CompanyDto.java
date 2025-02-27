@@ -1,10 +1,9 @@
 package com.api.management.user.dto.company;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.address.AddressDto;
-import com.api.management.user.dto.mail.MailDto;
 import com.api.management.user.dto.project.ProjectDto;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -28,11 +27,14 @@ public class CompanyDto extends BaseDto {
     @Size(min = 1, max = 50)
     private String industry;
 
-    @Valid
-    private MailDto mail;
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Email
+    private String email;
 
-    @Valid
-    AddressDto address;
+    @NotBlank
+    @Size(min = 1, max = 50)
+    private String address;
 
     @Valid
     private List<ProjectDto> projects;

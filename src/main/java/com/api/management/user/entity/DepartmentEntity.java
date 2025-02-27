@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table
+@Table(name = "t_departments")
 public class DepartmentEntity extends BaseEntity {
 
     @Column(name = "group_name", nullable = false, length = 40)
@@ -18,7 +18,7 @@ public class DepartmentEntity extends BaseEntity {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "group")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "department")
     private EmployeeEntity memberEntity;
 
 }

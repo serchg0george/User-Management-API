@@ -20,14 +20,14 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "pin", length = 10)
     private String pin;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private AddressEntity address;
+    @Column(name = "address", nullable = false, length = 50)
+    private String address;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "employee", fetch = FetchType.LAZY)
-    private List<MailEntity> mails;
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
 
     @OneToOne
-    private DepartmentEntity group;
+    private DepartmentEntity department;
 
     @OneToOne
     private PositionEntity position;
@@ -40,7 +40,7 @@ public class EmployeeEntity extends BaseEntity {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "projects_employee",
+            name = "t_projects_employees",
             joinColumns = {@JoinColumn(name = "employee_id")},
             inverseJoinColumns = {@JoinColumn(name = "project_id")}
     )

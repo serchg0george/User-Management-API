@@ -20,11 +20,11 @@ public class CompanyEntity extends BaseEntity {
     @Column(name = "industry", nullable = false, length = 50)
     private String industry;
 
-    @OneToOne
-    private MailEntity mail;
+    @Column(name = "address", length = 50)
+    private String address;
 
-    @OneToOne
-    private AddressEntity address;
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "company")
     private List<ProjectEntity> projects;
