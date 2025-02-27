@@ -1,4 +1,4 @@
-package com.api.management.user.dto.timetracking;
+package com.api.management.user.dto.timesheet;
 
 import com.api.management.user.dto.BaseDto;
 import com.api.management.user.dto.employee.EmployeeDto;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeTrackingDto extends BaseDto {
+public class TimeSheetDto extends BaseDto {
 
     @NotNull
     @Min(value = 0, message = "Time can't be negative")

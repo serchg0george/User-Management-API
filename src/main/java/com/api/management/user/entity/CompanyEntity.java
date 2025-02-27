@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_organizations")
-public class OrganizationEntity extends BaseEntity {
+@Table(name = "t_companies")
+public class CompanyEntity extends BaseEntity {
 
     @Column(name = "org_name", nullable = false, length = 50)
     private String name;
@@ -26,6 +26,6 @@ public class OrganizationEntity extends BaseEntity {
     @OneToOne
     private AddressEntity address;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "organization")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "company")
     private List<ProjectEntity> projects;
 }

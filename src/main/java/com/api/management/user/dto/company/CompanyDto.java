@@ -1,4 +1,4 @@
-package com.api.management.user.dto.organization;
+package com.api.management.user.dto.company;
 
 import com.api.management.user.dto.BaseDto;
 import com.api.management.user.dto.address.AddressDto;
@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrganizationDto extends BaseDto {
+public class CompanyDto extends BaseDto {
 
     @NotBlank
     @Size(min = 1, max = 50)

@@ -1,7 +1,7 @@
 package com.api.management.user.dto.project;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.organization.OrganizationDto;
+import com.api.management.user.dto.company.CompanyDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -37,5 +37,5 @@ public class ProjectDto extends BaseDto {
     private String status;
 
     @Valid
-    private OrganizationDto organization;
+    private CompanyDto organization;
 }

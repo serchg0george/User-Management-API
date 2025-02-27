@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "t_time_tracks")
-public class TimeTrackingEntity extends BaseEntity {
+public class TimeSheetEntity extends BaseEntity {
 
     @Column(name = "time_spent_minutes", nullable = false)
     private Integer timeSpentMinutes;

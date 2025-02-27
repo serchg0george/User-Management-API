@@ -21,7 +21,7 @@ public class AddressEntity extends BaseEntity {
     private String addrInfo;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "address")
-    private OrganizationEntity organization;
+    private CompanyEntity organization;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address", fetch = FetchType.LAZY)
     private List<EmployeeEntity> employees;

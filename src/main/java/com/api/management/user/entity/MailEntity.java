@@ -21,7 +21,7 @@ public class MailEntity extends BaseEntity {
     private String email;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "mail")
-    private OrganizationEntity organization;
+    private CompanyEntity company;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private EmployeeEntity employee;

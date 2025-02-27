@@ -33,7 +33,7 @@ public class EmployeeEntity extends BaseEntity {
     private PositionEntity position;
 
     @OneToOne
-    private TimeTrackingEntity timeSpentMinutes;
+    private TimeSheetEntity timeSpentMinutes;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "assignedToEmployee", fetch = FetchType.LAZY)
     private List<TaskEntity> tasks;

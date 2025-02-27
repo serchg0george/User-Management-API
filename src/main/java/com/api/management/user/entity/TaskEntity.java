@@ -25,7 +25,7 @@ public class TaskEntity extends BaseEntity {
     private String status;
 
     @OneToOne
-    private TimeTrackingEntity timeSpentMinutes;
+    private TimeSheetEntity timeSpentMinutes;
 
     @ManyToOne
     private EmployeeEntity assignedToEmployee;

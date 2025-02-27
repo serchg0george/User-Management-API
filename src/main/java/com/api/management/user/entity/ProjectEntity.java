@@ -32,5 +32,5 @@ public class ProjectEntity extends BaseEntity {
     private ProjectStatus status;
 
     @ManyToOne
-    private OrganizationEntity organization;
+    private CompanyEntity company;
 }
