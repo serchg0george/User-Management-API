@@ -1,5 +1,7 @@
-package com.api.management.user.auth;
+package com.api.management.user.controller;
 
+import com.api.management.user.auth.AuthenticationResponse;
+import com.api.management.user.auth.AuthenticationService;
 import com.api.management.user.dto.auth.AuthenticationRequestDto;
 import com.api.management.user.dto.auth.RegisterRequestDto;
 import jakarta.validation.Valid;
