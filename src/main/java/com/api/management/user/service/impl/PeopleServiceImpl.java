@@ -1,16 +1,16 @@
 package com.api.management.user.service.impl;
 
-import com.api.management.user.dto.people.PeopleDto;
-import com.api.management.user.dto.people.SearchPeopleResponse;
+import com.api.management.user.dto.employee.EmployeeDto;
+import com.api.management.user.dto.employee.SearchEmployeeResponse;
 import com.api.management.user.dto.search.PeopleSearchRequest;
 import com.api.management.user.entity.EmployeeEntity;
 import com.api.management.user.entity.MailEntity;
 import com.api.management.user.exception.NotFoundException;
-import com.api.management.user.mapper.PeopleMapper;
+import com.api.management.user.mapper.EmployeeMapper;
 import com.api.management.user.mapper.base.BaseMapper;
+import com.api.management.user.repository.EmployeeRepository;
 import com.api.management.user.repository.MailRepository;
-import com.api.management.user.repository.PeopleRepository;
-import com.api.management.user.service.PeopleService;
+import com.api.management.user.service.EmployeeService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -27,16 +27,16 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, PeopleDto> implements PeopleService {
+public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, EmployeeDto> implements EmployeeService {
 
-    private final PeopleRepository peopleRepository;
+    private final EmployeeRepository peopleRepository;
     private final MailRepository mailRepository;
-    private final PeopleMapper peopleMapper;
+    private final EmployeeMapper employeeMapper;
     private final EntityManager entityManager;
 
     @Override
-    public BaseMapper<EmployeeEntity, PeopleDto> getMapper() {
-        return peopleMapper;
+    public BaseMapper<EmployeeEntity, EmployeeDto> getMapper() {
+        return employeeMapper;
     }
 
     @Override
@@ -45,23 +45,23 @@ public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, People
     }
 
     @Override
-    public PeopleDto setMailToPeople(Long mailId, Long peopleId) {
+    public EmployeeDto setMailToEmployee(Long mailId, Long employeeId) {
         MailEntity mailEntity = mailRepository.findById(mailId).orElseThrow(
                 () -> new NotFoundException(mailId));
-        EmployeeEntity peopleEntity = peopleRepository.findById(peopleId).orElseThrow(
-                () -> new NotFoundException(peopleId));
+        EmployeeEntity peopleEntity = peopleRepository.findById(employeeId).orElseThrow(
+                () -> new NotFoundException(employeeId));
 
         mailEntity.setEmployee(peopleEntity);
         mailRepository.save(mailEntity);
-        Optional<EmployeeEntity> people = peopleRepository.findById(peopleId);
+        Optional<EmployeeEntity> people = peopleRepository.findById(employeeId);
         if (people.isEmpty()) {
-            throw new NotFoundException(peopleId);
+            throw new NotFoundException(employeeId);
         }
-        return peopleMapper.mapEntityToDto(people.get());
+        return employeeMapper.mapEntityToDto(people.get());
     }
 
     @Override
-    public SearchPeopleResponse findPersonByCriteria(final PeopleSearchRequest request) {
+    public SearchEmployeeResponse findEmployee(final PeopleSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<EmployeeEntity> criteriaQuery = criteriaBuilder.createQuery(EmployeeEntity.class);
         List<Predicate> predicates = new ArrayList<>();
@@ -79,12 +79,12 @@ public class PeopleServiceImpl extends GenericServiceImpl<EmployeeEntity, People
 
         TypedQuery<EmployeeEntity> query = entityManager.createQuery(criteriaQuery);
 
-        SearchPeopleResponse response = new SearchPeopleResponse();
+        SearchEmployeeResponse response = new SearchEmployeeResponse();
 
-        var people = query.getResultList().stream().map(peopleMapper::mapEntityToDto).toList();
+        var people = query.getResultList().stream().map(employeeMapper::mapEntityToDto).toList();
 
         response.setPeople(people);
-        response.setPeopleCount(people.size());
+        response.setEmployeeCount(people.size());
 
         return response;
     }
