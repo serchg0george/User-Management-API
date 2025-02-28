@@ -1,4 +1,4 @@
-package com.api.management.user.dto.employee;
+package com.api.management.user.dto.position;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +11,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchEmployeeResponse {
+public class PositionSearchResponse {
 
-    private List<EmployeeDto> people;
+    private List<PositionDto> positions;
 
-    private Integer employeeCount;
+    private Integer positionCount;
+
 }
