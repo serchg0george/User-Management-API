@@ -11,9 +11,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchEmployeeResponse {
+public class EmployeeSearchResponse {
 
-    private List<EmployeeDto> people;
+    private List<EmployeeDto> employees;
 
     private Integer employeeCount;
+
 }
