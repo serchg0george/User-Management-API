@@ -40,7 +40,7 @@ public class TimesheetServiceImpl extends GenericServiceImpl<TimesheetEntity, Ti
     }
 
     @Override
-    public TimesheetSearchResponse findTimeSheet(final TimesheetSearchRequest request) {
+    public TimesheetSearchResponse findTimesheet(final TimesheetSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<TimesheetEntity> criteriaQuery = criteriaBuilder.createQuery(TimesheetEntity.class);
         List<Predicate> predicates = new ArrayList<>();

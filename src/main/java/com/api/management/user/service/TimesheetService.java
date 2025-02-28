@@ -7,6 +7,6 @@ import com.api.management.user.entity.TimesheetEntity;
 
 public interface TimesheetService extends GenericService<TimesheetEntity, TimesheetDto> {
 
-    TimesheetSearchResponse findTimeSheet(TimesheetSearchRequest request);
+    TimesheetSearchResponse findTimesheet(TimesheetSearchRequest request);
 
 }

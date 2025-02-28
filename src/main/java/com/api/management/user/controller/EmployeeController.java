@@ -19,7 +19,7 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/people")
+@RequestMapping("api/v1/employee")
 @Validated
 public class EmployeeController {
 
@@ -27,41 +27,41 @@ public class EmployeeController {
 
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<EmployeeSearchResponse> searchEmployeeByCriteria(@RequestBody EmployeeSearchRequest findPerson) {
-        return ResponseEntity.ok(employeeService.findEmployee(findPerson));
+    public ResponseEntity<EmployeeSearchResponse> searchEmployeeByCriteria(@RequestBody EmployeeSearchRequest findEmployee) {
+        return ResponseEntity.ok(employeeService.findEmployee(findEmployee));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> createPeople(@Valid @RequestBody EmployeeDto people) {
-        employeeService.save(people);
+    public ResponseEntity<String> createEmployee(@Valid @RequestBody EmployeeDto employee) {
+        employeeService.save(employee);
         return ok().body(CREATE_SUCCESS);
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<EmployeeDto> getPeopleById(@PathVariable("id") Long peopleId) {
-        return new ResponseEntity<>(employeeService.get(peopleId), HttpStatus.OK);
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long employeeId) {
+        return new ResponseEntity<>(employeeService.get(employeeId), HttpStatus.OK);
     }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<Page<EmployeeDto>> getAllPeople(Pageable pageable) {
+    public ResponseEntity<Page<EmployeeDto>> getAllEmployees(Pageable pageable) {
         return new ResponseEntity<>(employeeService.getAll(pageable), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> updatePeople(@PathVariable("id") Long peopleId,
-                                               @Valid @RequestBody EmployeeDto people) {
-        employeeService.update(people, peopleId);
+    public ResponseEntity<String> updateEmployee(@PathVariable("id") Long employeeId,
+                                               @Valid @RequestBody EmployeeDto employee) {
+        employeeService.update(employee, employeeId);
         return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deletePeople(@PathVariable("id") Long peopleId) {
-        employeeService.delete(peopleId);
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") Long employeeId) {
+        employeeService.delete(employeeId);
         return ResponseEntity.status(HttpStatus.OK).body(DELETE_SUCCESS);
     }
 }
