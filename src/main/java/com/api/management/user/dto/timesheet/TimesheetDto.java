@@ -1,9 +1,6 @@
 package com.api.management.user.dto.timesheet;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.employee.EmployeeDto;
-import com.api.management.user.dto.role.RoleDto;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,9 +22,9 @@ public class TimesheetDto extends BaseDto {
     @Size(min = 1, max = 150)
     private String taskDescription;
 
-    @Valid
-    private RoleDto role;
+    @NotNull(message = "Id cannot be null")
+    @Positive(message = "Id must be a positive number")
+    @Min(value = 1, message = "Id cannot be lower than 1")
+    private Long roleId;
 
-    @Valid
-    private EmployeeDto employee;
 }
