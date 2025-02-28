@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "t_positions")
 public class PositionEntity extends BaseEntity {
 
-    @Column(name = "role_names", nullable = false, length = 50)
+    @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
 
     @Column(name = "years_of_experience")
