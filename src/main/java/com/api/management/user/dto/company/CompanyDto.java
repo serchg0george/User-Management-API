@@ -1,8 +1,6 @@
 package com.api.management.user.dto.company;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.project.ProjectDto;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +32,4 @@ public class CompanyDto extends BaseDto {
     @Size(min = 1, max = 50)
     private String address;
 
-    @Valid
-    private List<ProjectDto> projects;
 }

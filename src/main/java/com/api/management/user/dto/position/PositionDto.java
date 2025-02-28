@@ -1,8 +1,6 @@
 package com.api.management.user.dto.position;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.employee.EmployeeDto;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,9 +23,5 @@ public class PositionDto extends BaseDto {
     @NotNull(message = "Must not be null")
     @Min(value = 0, message = "Can't be negative number")
     private Integer yearsOfExperience;
-
-    @Valid
-    private EmployeeDto employee;
-
 
 }

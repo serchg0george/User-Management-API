@@ -1,8 +1,6 @@
 package com.api.management.user.dto.department;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.employee.EmployeeDto;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -24,6 +22,4 @@ public class DepartmentDto extends BaseDto {
     @Size(min = 1, max = 100)
     private String description;
 
-    @Valid
-    private EmployeeDto employee;
 }
