@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "t_time_tracks")
-public class TimeSheetEntity extends BaseEntity {
+@Table(name = "t_timesheets")
+public class TimesheetEntity extends BaseEntity {
 
     @Column(name = "time_spent_minutes", nullable = false, length = 10)
     private Integer timeSpentMinutes;

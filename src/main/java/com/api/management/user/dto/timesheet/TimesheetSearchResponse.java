@@ -11,9 +11,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeSheetSearchResponse {
+public class TimesheetSearchResponse {
 
-    private List<TimeSheetDto> timeSheets;
+    private List<TimesheetDto> timeSheets;
 
     private Integer timeSheetCount;
 

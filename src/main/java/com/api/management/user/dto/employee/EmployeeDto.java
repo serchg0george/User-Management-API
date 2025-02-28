@@ -4,7 +4,7 @@ import com.api.management.user.dto.BaseDto;
 import com.api.management.user.dto.department.DepartmentDto;
 import com.api.management.user.dto.position.PositionDto;
 import com.api.management.user.dto.project.ProjectDto;
-import com.api.management.user.dto.timesheet.TimeSheetDto;
+import com.api.management.user.dto.timesheet.TimesheetDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -48,7 +48,7 @@ public class EmployeeDto extends BaseDto {
     private PositionDto position;
 
     @Valid
-    private TimeSheetDto timeSpentMinutes;
+    private TimesheetDto timeSpentMinutes;
 
     @Valid
     private List<ProjectDto> projects;

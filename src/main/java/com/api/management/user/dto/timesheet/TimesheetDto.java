@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeSheetDto extends BaseDto {
+public class TimesheetDto extends BaseDto {
 
     @NotNull
     @Min(value = 0, message = "Time can't be negative")

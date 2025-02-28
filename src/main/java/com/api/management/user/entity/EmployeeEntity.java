@@ -33,7 +33,7 @@ public class EmployeeEntity extends BaseEntity {
     private PositionEntity position;
 
     @OneToOne
-    private TimeSheetEntity timeSpentMinutes;
+    private TimesheetEntity timeSpentMinutes;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinTable(

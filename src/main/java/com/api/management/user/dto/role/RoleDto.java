@@ -1,10 +1,9 @@
 package com.api.management.user.dto.role;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.timesheet.TimeSheetDto;
+import com.api.management.user.dto.timesheet.TimesheetDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +27,7 @@ public class RoleDto extends BaseDto {
     private String description;
 
     @Valid
-    private List<TimeSheetDto> timeSheets;
+    private List<TimesheetDto> timeSheets;
 
 
 }

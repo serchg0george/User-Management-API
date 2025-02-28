@@ -21,6 +21,6 @@ public class RoleEntity extends BaseEntity {
     private String description;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "role")
-    private List<TimeSheetEntity> timeSheets;
+    private List<TimesheetEntity> timeSheets;
 
 }
