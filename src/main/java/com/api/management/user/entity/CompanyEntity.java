@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "t_companies")
 public class CompanyEntity extends BaseEntity {
 
-    @Column(name = "org_name", nullable = false, length = 50)
+    @Column(name = "company_name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "industry", nullable = false, length = 50)
