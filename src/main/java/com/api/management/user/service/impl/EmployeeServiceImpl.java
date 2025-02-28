@@ -2,7 +2,7 @@ package com.api.management.user.service.impl;
 
 import com.api.management.user.dto.employee.EmployeeDto;
 import com.api.management.user.dto.employee.SearchEmployeeResponse;
-import com.api.management.user.dto.search.PeopleSearchRequest;
+import com.api.management.user.dto.search.EmployeeSearchRequest;
 import com.api.management.user.entity.EmployeeEntity;
 import com.api.management.user.mapper.EmployeeMapper;
 import com.api.management.user.mapper.base.BaseMapper;
@@ -41,7 +41,7 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
 
 
     @Override
-    public SearchEmployeeResponse findEmployee(final PeopleSearchRequest request) {
+    public SearchEmployeeResponse findEmployee(final EmployeeSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<EmployeeEntity> criteriaQuery = criteriaBuilder.createQuery(EmployeeEntity.class);
         List<Predicate> predicates = new ArrayList<>();

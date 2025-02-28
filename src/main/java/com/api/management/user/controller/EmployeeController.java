@@ -2,7 +2,7 @@ package com.api.management.user.controller;
 
 import com.api.management.user.dto.employee.EmployeeDto;
 import com.api.management.user.dto.employee.SearchEmployeeResponse;
-import com.api.management.user.dto.search.PeopleSearchRequest;
+import com.api.management.user.dto.search.EmployeeSearchRequest;
 import com.api.management.user.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class EmployeeController {
 
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<SearchEmployeeResponse> searchEmployeeByCriteria(@RequestBody PeopleSearchRequest findPerson) {
+    public ResponseEntity<SearchEmployeeResponse> searchEmployeeByCriteria(@RequestBody EmployeeSearchRequest findPerson) {
         return ResponseEntity.ok(employeeService.findEmployee(findPerson));
     }
 
