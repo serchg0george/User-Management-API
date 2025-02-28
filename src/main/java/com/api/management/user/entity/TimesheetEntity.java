@@ -21,6 +21,6 @@ public class TimesheetEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private RoleEntity role;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSpentMinutes")
     private EmployeeEntity employee;
 }
