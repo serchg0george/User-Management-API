@@ -1,0 +1,26 @@
+package com.api.management.user.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "t_time_tracks")
+public class TimeSheetEntity extends BaseEntity {
+
+    @Column(name = "time_spent_minutes", nullable = false, length = 10)
+    private Integer timeSpentMinutes;
+
+    @Column(name = "task_description", nullable = false, length = 150)
+    private String taskDescription;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private RoleEntity role;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "")
+    private EmployeeEntity employee;
+}
