@@ -48,10 +48,16 @@ public class PositionServiceImpl extends GenericServiceImpl<PositionEntity, Posi
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
-            Predicate roleName = criteriaBuilder.like(root.get("role_name"), query);
-            Predicate yearsOfExperience = criteriaBuilder.like(root.get("years_of_experience"), query);
+            Predicate roleName = criteriaBuilder.like(root.get("positionName"), query);
 
-            predicates.add(criteriaBuilder.or(roleName, yearsOfExperience));
+            try {
+                Integer yearsOfExperienceQuery = Integer.parseInt(request.query());
+                Predicate yearsOfExperience = criteriaBuilder.equal(root.get("yearsOfExperience"), yearsOfExperienceQuery);
+                predicates.add(criteriaBuilder.or(roleName, yearsOfExperience));
+            } catch (NumberFormatException e) {
+                predicates.add(roleName);
+            }
+
         }
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));

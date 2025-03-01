@@ -48,13 +48,13 @@ public class RoleServiceImpl extends GenericServiceImpl<RoleEntity, RoleDto> imp
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
-            Predicate roleName = criteriaBuilder.like(root.get("role_name"), query);
+            Predicate roleName = criteriaBuilder.like(root.get("roleName"), query);
             Predicate description = criteriaBuilder.like(root.get("description"), query);
 
-            predicates.add(criteriaBuilder.and(roleName, description));
+            predicates.add(criteriaBuilder.or(roleName, description));
         }
 
-        criteriaQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
+        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
         TypedQuery<RoleEntity> query = entityManager.createQuery(criteriaQuery);
 

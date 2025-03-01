@@ -48,13 +48,13 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentEntity, 
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
-            Predicate groupName = criteriaBuilder.like(root.get("group_name"), query);
+            Predicate groupName = criteriaBuilder.like(root.get("groupName"), query);
             Predicate description = criteriaBuilder.like(root.get("description"), query);
 
-            predicates.add(criteriaBuilder.and(groupName, description));
+            predicates.add(criteriaBuilder.or(groupName, description));
         }
 
-        criteriaQuery.where(predicates.toArray(new Predicate[0]));
+        criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
         TypedQuery<DepartmentEntity> query = entityManager.createQuery(criteriaQuery);
 
