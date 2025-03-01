@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -22,10 +22,10 @@ public class ProjectEntity extends BaseEntity {
     private String description;
 
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @Column(name = "finish_date")
-    private Date finishDate;
+    private LocalDate finishDate;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

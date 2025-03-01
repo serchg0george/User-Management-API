@@ -2,17 +2,15 @@ package com.api.management.user.dto.project;
 
 import com.api.management.user.dto.BaseDto;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class ProjectDto extends BaseDto {
 
     @NotBlank
@@ -24,10 +22,12 @@ public class ProjectDto extends BaseDto {
     private String description;
 
     @NotNull
-    private Date startDate;
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date must be in the format YYYY-MM-DD")
+    private String startDate;
 
     @NotNull
-    private Date finishDate;
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date must be in the format YYYY-MM-DD")
+    private String finishDate;
 
     @NotBlank
     private String status;
