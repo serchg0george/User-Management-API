@@ -2,6 +2,7 @@ package com.api.management.user.dto.department;
 
 import com.api.management.user.dto.BaseDto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +16,12 @@ import lombok.Setter;
 public class DepartmentDto extends BaseDto {
 
     @NotBlank
+    @NotNull
     @Size(min = 1, max = 40)
     private String groupName;
 
     @NotBlank
+    @NotNull
     @Size(min = 1, max = 100)
     private String description;
 

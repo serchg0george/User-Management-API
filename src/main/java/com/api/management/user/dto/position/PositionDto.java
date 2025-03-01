@@ -17,6 +17,7 @@ import lombok.Setter;
 public class PositionDto extends BaseDto {
 
     @NotBlank(message = "Should not be blank")
+    @NotNull
     @Size(min = 1, max = 50)
     private String positionName;
 

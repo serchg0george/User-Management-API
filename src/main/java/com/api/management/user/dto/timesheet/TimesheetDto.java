@@ -19,6 +19,7 @@ public class TimesheetDto extends BaseDto {
     private Integer timeSpentMinutes;
 
     @NotBlank
+    @NotNull
     @Size(min = 1, max = 150)
     private String taskDescription;
 

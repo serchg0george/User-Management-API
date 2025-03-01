@@ -15,7 +15,7 @@ public class PositionEntity extends BaseEntity {
     @Column(name = "position_name", nullable = false, length = 50)
     private String positionName;
 
-    @Column(name = "years_of_experience")
+    @Column(name = "years_of_experience", nullable = false)
     private Integer yearsOfExperience;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "position")
