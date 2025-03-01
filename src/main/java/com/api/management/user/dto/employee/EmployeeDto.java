@@ -1,19 +1,11 @@
 package com.api.management.user.dto.employee;
 
 import com.api.management.user.dto.BaseDto;
-import com.api.management.user.dto.department.DepartmentDto;
-import com.api.management.user.dto.position.PositionDto;
-import com.api.management.user.dto.project.ProjectDto;
-import com.api.management.user.dto.timesheet.TimesheetDto;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -21,36 +13,50 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class EmployeeDto extends BaseDto {
 
     @NotBlank
-    @Size(max = 90)
+    @Size(max = 50)
     @Pattern(regexp = "^[a-zA-Z\\p{IsCyrillic} -]+$")
-    private String fullName;
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 50)
+    @Pattern(regexp = "^[a-zA-Z\\p{IsCyrillic} -]+$")
+    private String lastName;
 
     @Pattern(regexp = "^(?!\\s*$)[-0-9\\s]{10}$")
     private String pin;
+
+    @NotBlank
+    @Size(min = 1, max = 50)
+    private String address;
 
     @NotBlank
     @Email
     @Size(min = 1, max = 50)
     private String email;
 
-    @NotBlank
-    @Size(min = 1, max = 50)
-    private String address;
+    @NotNull(message = "Id cannot be null")
+    @Positive(message = "Id must be a positive number")
+    @Min(value = 1, message = "Id cannot be lower than 1")
+    private Long departmentId;
 
-    @Valid
-    private DepartmentDto department;
+    @NotNull(message = "Id cannot be null")
+    @Positive(message = "Id must be a positive number")
+    @Min(value = 1, message = "Id cannot be lower than 1")
+    private Long positionId;
 
-    @Valid
-    private PositionDto position;
+    @NotNull(message = "Id cannot be null")
+    @Positive(message = "Id must be a positive number")
+    @Min(value = 1, message = "Id cannot be lower than 1")
+    private Long timeSheetEmployeeId;
 
-    @Valid
-    private TimesheetDto timeSpentMinutes;
-
-    @Valid
-    private List<ProjectDto> projects;
+    private List<
+            @NotNull(message = "Id cannot be null")
+            @Positive(message = "Id must be a positive number")
+            @Min(value = 1, message = "Id cannot be lower than 1")
+                    Long> projectIds;
 
 }
