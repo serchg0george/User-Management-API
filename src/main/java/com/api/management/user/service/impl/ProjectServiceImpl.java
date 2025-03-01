@@ -19,6 +19,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +54,37 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
             String query = "%" + request.query() + "%";
             Predicate name = criteriaBuilder.like(root.get("name"), query);
             Predicate description = criteriaBuilder.like(root.get("description"), query);
-            Predicate startDate = criteriaBuilder.like(root.get("start_date"), query);
-            Predicate finishDate = criteriaBuilder.like(root.get("finish_date"), query);
-            ProjectStatus projectStatus = ProjectStatus.valueOf(request.query().toUpperCase());
-            Predicate status = criteriaBuilder.equal(root.get("status"), projectStatus);
 
-            predicates.add(criteriaBuilder.or(name, description, startDate, finishDate, status));
+            List<Predicate> datePredicates = new ArrayList<>();
+            boolean isDateQuery = false;
+            try {
+                LocalDate queryDate = LocalDate.parse(request.query(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                datePredicates.add(criteriaBuilder.equal(root.get("startDate"), queryDate));
+                datePredicates.add(criteriaBuilder.equal(root.get("finishDate"), queryDate));
+                isDateQuery = true;
+            } catch (DateTimeParseException ignored) {
+                // If not Date — predicate ignoring
+            }
+
+            Predicate status = null;
+            if (!isDateQuery) {
+                try {
+                    ProjectStatus projectStatus = ProjectStatus.valueOf(request.query().toUpperCase());
+                    status = criteriaBuilder.equal(root.get("status"), projectStatus);
+                } catch (IllegalArgumentException ignored) {
+                    // If not enum — predicate ignoring
+                }
+            }
+
+            List<Predicate> allPredicates = new ArrayList<>();
+            allPredicates.add(name);
+            allPredicates.add(description);
+            allPredicates.addAll(datePredicates);
+            if (status != null) {
+                allPredicates.add(status);
+            }
+
+            predicates.add(criteriaBuilder.or(allPredicates.toArray(new Predicate[0])));
         }
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
