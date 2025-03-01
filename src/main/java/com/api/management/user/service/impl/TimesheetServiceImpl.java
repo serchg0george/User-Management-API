@@ -48,9 +48,15 @@ public class TimesheetServiceImpl extends GenericServiceImpl<TimesheetEntity, Ti
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
-            Predicate timeSpentMinutes = criteriaBuilder.like(root.get("time_spent_minutes"), query);
-            Predicate taskDescription = criteriaBuilder.like(root.get("task_description"), query);
-            predicates.add(criteriaBuilder.or(timeSpentMinutes, taskDescription));
+            Predicate taskDescription = criteriaBuilder.like(root.get("taskDescription"), query);
+            try {
+                Integer timeSpentMinutesQuery = Integer.parseInt(request.query());
+                Predicate timeSpentMinutes = criteriaBuilder.equal(root.get("timeSpentMinutes"), timeSpentMinutesQuery);
+                predicates.add(criteriaBuilder.or(timeSpentMinutes, taskDescription));
+            } catch (NumberFormatException e) {
+                predicates.add(taskDescription);
+            }
+
         }
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
@@ -66,4 +72,5 @@ public class TimesheetServiceImpl extends GenericServiceImpl<TimesheetEntity, Ti
 
         return response;
     }
+
 }
