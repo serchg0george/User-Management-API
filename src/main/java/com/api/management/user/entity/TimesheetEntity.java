@@ -2,12 +2,14 @@ package com.api.management.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "t_timesheets")
 public class TimesheetEntity extends BaseEntity {
@@ -21,6 +23,6 @@ public class TimesheetEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private RoleEntity role;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSpentMinutes")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSheetEmployee")
     private EmployeeEntity employee;
 }

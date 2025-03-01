@@ -2,20 +2,20 @@ package com.api.management.user.dto.timesheet;
 
 import com.api.management.user.dto.BaseDto;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@SuperBuilder
 public class TimesheetDto extends BaseDto {
 
     @NotNull
     @Min(value = 0, message = "Time can't be negative")
-    @Max(value = 10, message = "Value can't be greater than 10 digits")
+    @Max(value = 480, message = "Value can't be greater than 10 digits")
     private Integer timeSpentMinutes;
 
     @NotBlank
