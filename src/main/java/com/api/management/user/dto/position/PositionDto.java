@@ -18,7 +18,7 @@ public class PositionDto extends BaseDto {
 
     @NotBlank(message = "Should not be blank")
     @Size(min = 1, max = 50)
-    private String roleName;
+    private String positionName;
 
     @NotNull(message = "Must not be null")
     @Min(value = 0, message = "Can't be negative number")
