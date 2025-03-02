@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class CompanyServiceImpl extends GenericServiceImpl<CompanyEntity, CompanyDto> implements CompanyService {
 
@@ -66,6 +68,8 @@ public class CompanyServiceImpl extends GenericServiceImpl<CompanyEntity, Compan
 
         response.setCompanies(companies);
         response.setCompanyCount(companies.size());
+
+        log.debug("Found {} projects for query '{}'", response.getCompanyCount(), request.query());
 
         return response;
     }

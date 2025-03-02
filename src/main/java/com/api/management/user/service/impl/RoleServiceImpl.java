@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class RoleServiceImpl extends GenericServiceImpl<RoleEntity, RoleDto> implements RoleService {
 
@@ -64,6 +66,8 @@ public class RoleServiceImpl extends GenericServiceImpl<RoleEntity, RoleDto> imp
 
         response.setRoles(roles);
         response.setRoleCount(roles.size());
+
+        log.debug("Found {} projects for query '{}'", response.getRoleCount(), request.query());
 
         return response;
     }

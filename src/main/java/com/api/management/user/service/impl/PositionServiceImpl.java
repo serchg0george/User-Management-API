@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class PositionServiceImpl extends GenericServiceImpl<PositionEntity, PositionDto> implements PositionService {
 
@@ -70,6 +72,8 @@ public class PositionServiceImpl extends GenericServiceImpl<PositionEntity, Posi
 
         response.setPositions(positions);
         response.setPositionCount(positions.size());
+
+        log.debug("Found {} projects for query '{}'", response.getPositionCount(), request.query());
 
         return response;
     }

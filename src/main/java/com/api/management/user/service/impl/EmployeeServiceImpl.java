@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, EmployeeDto> implements EmployeeService {
 
@@ -58,7 +60,7 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
                 Predicate pin = criteriaBuilder.equal(root.get("pin"), pinQuery);
                 predicates.add(criteriaBuilder.or(firstName, lastName, email, pin));
             } catch (NumberFormatException e) {
-                // Add logging
+                log.info("Query '{}' is not a valid pin", e.getMessage());
             }
 
             predicates.add(criteriaBuilder.or(firstName, lastName, email));
@@ -75,6 +77,7 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
         response.setEmployees(employees);
         response.setEmployeeCount(employees.size());
 
+        log.debug("Found {} projects for query '{}'", response.getEmployeeCount(), request.query());
 
         return response;
     }

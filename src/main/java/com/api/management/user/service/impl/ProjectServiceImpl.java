@@ -16,6 +16,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, ProjectDto> implements ProjectService {
 
@@ -62,8 +64,8 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
                 datePredicates.add(criteriaBuilder.equal(root.get("startDate"), queryDate));
                 datePredicates.add(criteriaBuilder.equal(root.get("finishDate"), queryDate));
                 isDateQuery = true;
-            } catch (DateTimeParseException ignored) {
-                // If not Date — predicate ignoring
+            } catch (DateTimeParseException e) {
+                log.warn("Failed to parse date: {}", request.query(), e);
             }
 
             Predicate status = null;
@@ -71,8 +73,8 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
                 try {
                     ProjectStatus projectStatus = ProjectStatus.valueOf(request.query().toUpperCase());
                     status = criteriaBuilder.equal(root.get("status"), projectStatus);
-                } catch (IllegalArgumentException ignored) {
-                    // If not enum — predicate ignoring
+                } catch (IllegalArgumentException e) {
+                    log.info("Query '{}' is not a valid project status", request.query());
                 }
             }
 
@@ -97,6 +99,8 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
 
         response.setProjects(projects);
         response.setProjectCount(projects.size());
+
+        log.debug("Found {} projects for query '{}'", response.getProjectCount(), request.query());
 
         return response;
     }
