@@ -1,423 +1,177 @@
-# User Management API
+# TeamSphere
 
-![Java](https://img.shields.io/badge/Java-21-blue)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.2-brightgreen)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
-![JWT](https://img.shields.io/badge/JWT-Security-orange)
+[![Java](https://img.shields.io/badge/Java-21-blue)](https://www.java.com/)  [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.2-brightgreen)](https://spring.io/projects/spring-boot)  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)](https://www.postgresql.org/)  [![JWT](https://img.shields.io/badge/JWT-Security-orange)](https://jwt.io/)
 
-## 📌 Overview
-User Management API is a RESTful service for managing users, emails, and addresses. It provides authentication, CRUD operations for users and associated data, and search capabilities.
+## Overview
 
-## 🚀 Features
-- User authentication (registration, login) with JWT
-- CRUD operations for users, emails, and addresses
-- Role-based access control (admin, user)
-- Search functionality for users, emails, and addresses
-- Exception handling with meaningful responses
-- Database persistence using PostgreSQL
+TeamSphere is a RESTful web application designed to manage multiple aspects of a user system. Built using Java 21 and Spring Boot, it leverages PostgreSQL for persistence and offers robust authentication with JWT and role-based access control. The application provides comprehensive CRUD operations and dynamic search capabilities across various domains such as positions, projects, roles, timesheets, companies, departments, and employees.
 
-## 🛠️ Tech Stack
-- **Backend**: Java 21, Spring Boot 3.4.2, Spring Security
-- **Database**: PostgreSQL
-- **Security**: JWT Authentication
-- **ORM**: Hibernate, JPA
-- **Dependency Management**: Maven
-- **Tools**: MapStruct, Lombok, Maven, Springdoc OpenAPI/Swagger
+## Features
 
-## 📂 Database Models & Schema
+- **Authentication & Security**  
+  - JWT-based authentication with endpoints for registration and login.
+  - Role-based access control (e.g., ROLE_ADMIN and ROLE_USER).
 
-### User Table
-```plaintext
-+----+-----------+----------+----------------------+----------+
-| ID | firstName | lastName | email                | role     |
-+----+-----------+----------+----------------------+----------+
-| 1  | John      | Doe      | john@example.com     | ROLE_USER|
-| 2  | Jane      | Smith    | jane@example.com     | ROLE_ADMIN|
-+----+-----------+----------+----------------------+----------+
-```
+- **CRUD Operations**  
+  - Full Create, Read, Update, and Delete operations for positions, projects, roles, timesheets, companies, departments, and employees.
 
-### People Table
-```plaintext
-+----+-----------+----------+------+
-| ID | fullName  | pin      | addr |
-+----+-----------+----------+------+
-| 1  | John Doe  | 123456789| 1    |
-| 2  | Alice Bob | 987654321| 2    |
-+----+-----------+----------+------+
-```
+- **Dynamic Search**  
+  - Search endpoints that use JPA Criteria Builder for flexible, type-safe queries.
+  
+- **Mapping & Validation**  
+  - MapStruct for DTO-to-entity mapping.
+  - Lombok to reduce boilerplate code.
+  - Integrated validation using Spring Boot Starter Validation.
 
-### Mail Table
-```plaintext
-+----+-----------+--------------------+--------+
-| ID | emailType | email              | people |
-+----+-----------+--------------------+--------+
-| 1  | WORK      | john@company.com   | 1      |
-| 2  | PERSONAL  | alice@mail.com     | 2      |
-+----+-----------+--------------------+--------+
-```
+- **Documentation**  
+  - Swagger/OpenAPI integrated for interactive API documentation.
 
-### Address Table
-```plaintext
-+----+----------+----------------------+
-| ID | addrType | addrInfo             |
-+----+----------+----------------------+
-| 1  | HOME     | 123 Street, City     |
-| 2  | WORK     | 456 Business Rd      |
-+----+----------+----------------------+
-```
+## Tech Stack
 
-## 🔧 Installation & Setup
-1. Clone the repository:
+- **Backend:**  
+  - Java 21, Spring Boot 3.4.2  
+  - Spring Security, Spring Data JPA, Springdoc OpenAPI/Swagger  
+  - JWT (JSON Web Tokens)
+
+- **Database:**  
+  - PostgreSQL
+
+- **Build Tool:**  
+  - Maven
+
+- **Libraries & Tools:**  
+  - Lombok, MapStruct, JPA Criteria Builder
+
+## Installation & Setup
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/your-repo/user-management-api.git
    cd user-management-api
    ```
-2. Configure **application.properties** with your PostgreSQL database.
-3. Build and run the application:
+2. **Configure the database:**  
+   Update the `application.properties` with your PostgreSQL settings.
+
+3. **Build and run the application:**
    ```bash
    mvn clean install
    mvn spring-boot:run
    ```
 
-## 📌 API Endpoints
+4. **API Documentation:**  
+   Access the Swagger UI at:  
+   ```
+   http://localhost:8080/swagger-ui.html
+   ```
 
-### Authentication
-- **Register User**
-  ```http
-  POST /api/v1/auth/register
-  ```
-  **Request Body:**
-  ```json
-  {
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john.doe@example.com",
-    "password": "password123"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "token": "jwt-token-here"
-  }
-  ```
+---
 
-- **Authenticate User**
-  ```http
-  POST /api/v1/auth/authenticate
-  ```
-  **Request Body:**
-  ```json
-  {
-    "email": "john.doe@example.com",
-    "password": "password123"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "token": "jwt-token-here"
-  }
-  ```
+## API Endpoints
 
-### Users Controller
-- **Get All Users (Admin Only)**
-  ```http
-  GET /api/v1/users
-  ```
-  **Headers:**
-  ```json
-  {
-    "Authorization": "Bearer your-jwt-token"
-  }
-  ```
-  **Response:**
-  ```json
-  [
-    {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "email": "john@example.com",
-      "role": "ROLE_USER"
-    }
-  ]
-  ```
+Each controller has a dedicated table listing its endpoints and a short description.
 
-- **Get User by ID**
-  ```http
-  GET /api/v1/users/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "firstName": "John",
-    "lastName": "Doe",
-    "email": "john@example.com",
-    "role": "ROLE_USER"
-  }
-  ```
+### Authentication Controller
 
-- **Update User**
-  ```http
-  PUT /api/v1/users/{id}
-  ```
-  **Request Body:**
-  ```json
-  {
-    "firstName": "Updated Name",
-    "lastName": "Updated LastName"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "firstName": "Updated Name",
-    "lastName": "Updated LastName",
-    "email": "john@example.com",
-    "role": "ROLE_USER"
-  }
-  ```
+| HTTP Method | Endpoint                        | Description                                                   |
+|-------------|---------------------------------|---------------------------------------------------------------|
+| POST        | `/api/v1/auth/register`         | Registers a new user and returns a JWT token.                 |
+| POST        | `/api/v1/auth/authenticate`     | Authenticates a user and returns a JWT token.                 |
 
-- **Delete User**
-  ```http
-  DELETE /api/v1/users/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "message": "User deleted successfully."
-  }
-  ```
+### Position Controller
 
-### Emails Controller
-- **Create Email**
-  ```http
-  POST /api/v1/mails
-  ```
-  **Request Body:**
-  ```json
-  {
-    "emailType": "WORK",
-    "email": "user@example.com",
-    "peopleId": 1
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "emailType": "WORK",
-    "email": "user@example.com",
-    "people": {
-      "id": 1,
-      "fullName": "John Doe",
-      "pin": "123456789"
-    }
-  }
-  ```
+| HTTP Method | Endpoint                          | Description                                                                                 |
+|-------------|-----------------------------------|---------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/position/search`         | Searches positions using dynamic criteria (e.g., by name or years of experience).            |
+| POST        | `/api/v1/position`                | Creates a new position. (Admin only)                                                        |
+| GET         | `/api/v1/position/{id}`           | Retrieves details of a specific position.                                                   |
+| GET         | `/api/v1/position`                | Returns a paginated list of all positions.                                                  |
+| PUT         | `/api/v1/position/{id}`           | Updates a specific position. (Admin only)                                                   |
+| DELETE      | `/api/v1/position/{id}`           | Deletes a specific position. (Admin only)                                                   |
 
-- **Get All Emails**
-  ```http
-  GET /api/v1/mails
-  ```
-  **Response:**
-  ```json
-  [
-    {
-      "id": 1,
-      "emailType": "WORK",
-      "email": "user@example.com",
-      "people": {
-        "id": 1,
-        "fullName": "John Doe"
-      }
-    }
-  ]
-  ```
+### Project Controller
 
-- **Get Email by ID**
-  ```http
-  GET /api/v1/mails/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "emailType": "WORK",
-    "email": "user@example.com",
-    "people": {
-      "id": 1,
-      "fullName": "John Doe"
-    }
-  }
-  ```
+| HTTP Method | Endpoint                          | Description                                                                                   |
+|-------------|-----------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/project/search`          | Searches projects based on criteria (e.g., name, description, dates, or status).               |
+| POST        | `/api/v1/project`                 | Creates a new project. (Admin only)                                                           |
+| GET         | `/api/v1/project/{id}`            | Retrieves details of a specific project.                                                      |
+| GET         | `/api/v1/project`                 | Provides a paginated list of projects.                                                        |
+| PUT         | `/api/v1/project/{id}`            | Updates a project’s details. (Admin only)                                                     |
+| DELETE      | `/api/v1/project/{id}`            | Deletes a project. (Admin only)                                                               |
 
-- **Update Email**
-  ```http
-  PUT /api/v1/mails/{id}
-  ```
-  **Request Body:**
-  ```json
-  {
-    "emailType": "PERSONAL",
-    "email": "new.email@example.com"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "emailType": "PERSONAL",
-    "email": "new.email@example.com",
-    "people": {
-      "id": 1,
-      "fullName": "John Doe"
-    }
-  }
-  ```
+### Role Controller
 
-- **Delete Email**
-  ```http
-  DELETE /api/v1/mails/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "message": "Email deleted successfully."
-  }
-  ```
+| HTTP Method | Endpoint                        | Description                                                                                   |
+|-------------|---------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/role/search`            | Searches roles based on role name or description.                                              |
+| POST        | `/api/v1/role`                   | Creates a new role. (Admin only)                                                               |
+| GET         | `/api/v1/role/{id}`              | Retrieves details of a specific role.                                                         |
+| GET         | `/api/v1/role`                   | Returns a paginated list of roles.                                                            |
+| PUT         | `/api/v1/role/{id}`              | Updates role details. (Admin only)                                                            |
+| DELETE      | `/api/v1/role/{id}`              | Deletes a role. (Admin only)                                                                  |
 
-- **Search Emails**
-  ```http
-  POST /api/v1/mails/search
-  ```
-  **Request Body:**
-  ```json
-  {
-    "query": "example.com"
-  }
-  ```
-  **Response:**
-  ```json
-  [
-    {
-      "id": 1,
-      "emailType": "WORK",
-      "email": "user@example.com",
-      "people": {
-        "id": 1,
-        "fullName": "John Doe"
-      }
-    }
-  ]
-  ```
+### Timesheet Controller
 
-### Addresses Controller
-- **Create Address**
-  ```http
-  POST /api/v1/addresses
-  ```
-  **Request Body:**
-  ```json
-  {
-    "addrType": "HOME",
-    "addrInfo": "123 Street, City"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "addrType": "HOME",
-    "addrInfo": "123 Street, City"
-  }
-  ```
+| HTTP Method | Endpoint                           | Description                                                                                   |
+|-------------|------------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/timesheet/search`          | Searches timesheets by task description or time spent using dynamic queries.                   |
+| POST        | `/api/v1/timesheet`                 | Creates a new timesheet record. (Admin only)                                                   |
+| GET         | `/api/v1/timesheet/{id}`            | Retrieves a specific timesheet.                                                               |
+| GET         | `/api/v1/timesheet`                 | Returns a paginated list of timesheets.                                                       |
+| PUT         | `/api/v1/timesheet/{id}`            | Updates a timesheet record. (Admin only)                                                      |
+| DELETE      | `/api/v1/timesheet/{id}`            | Deletes a timesheet. (Admin only)                                                             |
 
-- **Get All Addresses**
-  ```http
-  GET /api/v1/addresses
-  ```
-  **Response:**
-  ```json
-  [
-    {
-      "id": 1,
-      "addrType": "HOME",
-      "addrInfo": "123 Street, City"
-    }
-  ]
-  ```
+### Company Controller
 
-- **Get Address by ID**
-  ```http
-  GET /api/v1/addresses/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "addrType": "HOME",
-    "addrInfo": "123 Street, City"
-  }
-  ```
+| HTTP Method | Endpoint                           | Description                                                                                   |
+|-------------|------------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/company/search`            | Searches companies by name, industry, address, or email using dynamic queries.                 |
+| POST        | `/api/v1/company`                   | Creates a new company. (Admin only)                                                           |
+| GET         | `/api/v1/company/{id}`              | Retrieves company details.                                                                    |
+| GET         | `/api/v1/company`                   | Provides a paginated list of companies.                                                       |
+| PUT         | `/api/v1/company/{id}`              | Updates company information. (Admin only)                                                     |
+| DELETE      | `/api/v1/company/{id}`              | Deletes a company. (Admin only)                                                               |
 
-- **Update Address**
-  ```http
-  PUT /api/v1/addresses/{id}
-  ```
-  **Request Body:**
-  ```json
-  {
-    "addrType": "WORK",
-    "addrInfo": "456 Business Rd"
-  }
-  ```
-  **Response:**
-  ```json
-  {
-    "id": 1,
-    "addrType": "WORK",
-    "addrInfo": "456 Business Rd"
-  }
-  ```
+### Department Controller
 
-- **Delete Address**
-  ```http
-  DELETE /api/v1/addresses/{id}
-  ```
-  **Response:**
-  ```json
-  {
-    "message": "Address deleted successfully."
-  }
-  ```
+| HTTP Method | Endpoint                            | Description                                                                                   |
+|-------------|-------------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/department/search`          | Searches departments based on group name or description.                                      |
+| POST        | `/api/v1/department`                 | Creates a new department. (Admin only)                                                        |
+| GET         | `/api/v1/department/{id}`            | Retrieves details of a specific department.                                                   |
+| GET         | `/api/v1/department`                 | Returns a paginated list of departments.                                                      |
+| PUT         | `/api/v1/department/{id}`            | Updates department details. (Admin only)                                                      |
+| DELETE      | `/api/v1/department/{id}`            | Deletes a department. (Admin only)                                                            |
 
-- **Search Addresses**
-  ```http
-  POST /api/v1/addresses/search
-  ```
-  **Request Body:**
-  ```json
-  {
-    "query": "Street"
-  }
-  ```
-  **Response:**
-  ```json
-  [
-    {
-      "id": 1,
-      "addrType": "HOME",
-      "addrInfo": "123 Street, City"
-    }
-  ]
-  ```
+### Employee Controller
 
-## 🔒 Security
-All sensitive endpoints require authentication via JWT. Add the `Authorization: Bearer <token>` header to your requests.
+| HTTP Method | Endpoint                           | Description                                                                                   |
+|-------------|------------------------------------|-----------------------------------------------------------------------------------------------|
+| POST        | `/api/v1/employee/search`           | Searches for employees based on dynamic criteria.                                            |
+| POST        | `/api/v1/employee`                  | Creates a new employee record. (Admin only)                                                   |
+| GET         | `/api/v1/employee/{id}`             | Retrieves details of a specific employee.                                                     |
+| GET         | `/api/v1/employee`                  | Returns a paginated list of employees.                                                        |
+| PUT         | `/api/v1/employee/{id}`             | Updates employee information. (Admin only)                                                    |
+| DELETE      | `/api/v1/employee/{id}`             | Deletes an employee record. (Admin only)                                                      |
 
-## 🎯 License
-MIT License. Free to use and modify.
+---
+
+## Technologies in Detail
+
+- **Spring Boot & Spring Security:**  
+  These frameworks form the backbone of the application. Spring Security manages authentication and role-based authorization, ensuring that only authenticated users with proper roles can access sensitive endpoints.
+
+- **JWT:**  
+  JSON Web Tokens are used for stateless authentication. After login, users receive a token that must be included in subsequent requests.
+
+- **JPA & Hibernate:**  
+  The API uses Spring Data JPA along with Hibernate for ORM. All CRUD operations are handled through JPA repositories.
+
+- **Criteria Builder:**  
+  For search endpoints, the API uses the JPA Criteria Builder to create type-safe and dynamic queries at runtime. This allows flexible filtering of data without hardcoding SQL queries.
+
+- **MapStruct & Lombok:**  
+  MapStruct facilitates mapping between DTOs and entities, while Lombok reduces boilerplate code.
+
+- **Maven:**  
+  Dependency management and build processes are handled with Maven.
