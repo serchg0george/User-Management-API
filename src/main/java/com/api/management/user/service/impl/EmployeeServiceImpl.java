@@ -1,8 +1,8 @@
 package com.api.management.user.service.impl;
 
 import com.api.management.user.dto.employee.EmployeeDto;
-import com.api.management.user.dto.employee.EmployeeSearchResponse;
 import com.api.management.user.dto.employee.EmployeeSearchRequest;
+import com.api.management.user.dto.employee.EmployeeSearchResponse;
 import com.api.management.user.entity.EmployeeEntity;
 import com.api.management.user.mapper.EmployeeMapper;
 import com.api.management.user.mapper.base.BaseMapper;
@@ -49,10 +49,19 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
-            Predicate name = criteriaBuilder.like(root.get("full_name"), query);
-            Predicate pin = criteriaBuilder.like(root.get("pin"), query);
+            Predicate firstName = criteriaBuilder.like(root.get("firstName"), query);
+            Predicate lastName = criteriaBuilder.like(root.get("lastName"), query);
+            Predicate email = criteriaBuilder.like(root.get("email"), query);
 
-            predicates.add(criteriaBuilder.or(name, pin));
+            try {
+                Integer pinQuery = Integer.parseInt(request.query());
+                Predicate pin = criteriaBuilder.equal(root.get("pin"), pinQuery);
+                predicates.add(criteriaBuilder.or(firstName, lastName, email, pin));
+            } catch (NumberFormatException e) {
+                // Add logging
+            }
+
+            predicates.add(criteriaBuilder.or(firstName, lastName, email));
         }
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
@@ -65,6 +74,7 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
 
         response.setEmployees(employees);
         response.setEmployeeCount(employees.size());
+
 
         return response;
     }
