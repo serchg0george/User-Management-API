@@ -21,7 +21,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/timesheet")
 @Validated
-@CrossOrigin(origins = "http://localhost:3000/")
 public class TimesheetController {
 
     private final TimesheetService timesheetService;

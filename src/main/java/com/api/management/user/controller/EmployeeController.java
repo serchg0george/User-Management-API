@@ -1,8 +1,8 @@
 package com.api.management.user.controller;
 
 import com.api.management.user.dto.employee.EmployeeDto;
-import com.api.management.user.dto.employee.EmployeeSearchResponse;
 import com.api.management.user.dto.employee.EmployeeSearchRequest;
+import com.api.management.user.dto.employee.EmployeeSearchResponse;
 import com.api.management.user.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/employee")
 @Validated
-@CrossOrigin(origins = "http://localhost:3000/")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -54,7 +53,7 @@ public class EmployeeController {
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateEmployee(@PathVariable("id") Long employeeId,
-                                               @Valid @RequestBody EmployeeDto employee) {
+                                                 @Valid @RequestBody EmployeeDto employee) {
         employeeService.update(employee, employeeId);
         return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
     }

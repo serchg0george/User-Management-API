@@ -21,7 +21,6 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/project")
 @Validated
-@CrossOrigin(origins = "http://localhost:3000/")
 public class ProjectController {
 
     private final ProjectService projectService;
