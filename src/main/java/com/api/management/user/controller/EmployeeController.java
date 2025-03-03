@@ -21,6 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/employee")
 @Validated
+@CrossOrigin(origins = "http://localhost:3000/")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
