@@ -4,7 +4,7 @@ spring:
   datasource:
     username: postgres
     password: root
-    url: jdbc:postgresql://localhost:5432/user_management_application_db
+    url: jdbc:postgresql://localhost:5432/team_sphere_db
 
   jpa:
     hibernate:
@@ -14,3 +14,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         show_sql: true
+
+  sql:
+    init:
+      mode: always
