@@ -54,14 +54,12 @@ const Company = () => {
         }
     };
 
-    // Handle edit company (redirect to edit page)
     const handleEdit = (id: number) => {
-        navigate(`/company/edit/${id}`); // Redirect to an edit page (you can create this later)
+        navigate(`/company/edit/${id}`);
     };
 
-    // Handle add company (redirect to add page)
     const handleAdd = () => {
-        navigate('/company/add'); // Redirect to an add page (you can create this later)
+        navigate('/company/add');
     };
 
     return (
