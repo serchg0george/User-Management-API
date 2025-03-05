@@ -19,12 +19,20 @@ public class ProjectMapper implements BaseMapper<ProjectEntity, ProjectDto> {
     private final CompanyRepository companyRepository;
 
     public ProjectDto mapEntityToDto(ProjectEntity entity) {
+
+        LocalDate finishDateEntity = entity.getFinishDate();
+        String finishDate = null;
+
+        if (finishDateEntity != null) {
+            finishDate = finishDateEntity.toString();
+        }
+
         return ProjectDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .startDate(entity.getStartDate().toString())
-                .finishDate(entity.getFinishDate().toString())
+                .finishDate(finishDate)
                 .status(entity.getStatus().toString())
                 .companyId(entity.getCompany().getId())
                 .build();
