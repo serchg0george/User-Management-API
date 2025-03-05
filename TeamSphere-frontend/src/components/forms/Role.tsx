@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {RoleData} from "../models/roleResponseData.ts";
+import {RoleData} from "../models/roleData.ts";
 import api from "../../api/api.ts";
 
 const Role = () => {

@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../api/api.ts";
-import {PositionData} from "../models/positionResponseData.ts";
+import {PositionData} from "../models/positionData.ts";
 
 const Position = () => {
     const navigate = useNavigate();

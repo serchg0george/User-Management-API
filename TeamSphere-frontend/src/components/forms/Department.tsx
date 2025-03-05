@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../api/api.ts";
-import {DepartmentData} from "../models/departmentResponseData.ts";
+import {DepartmentData} from "../models/departmentData.ts";
 
 const Department = () => {
     const navigate = useNavigate();
