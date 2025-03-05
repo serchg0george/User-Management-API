@@ -1,40 +1,40 @@
 import {useEffect, useState} from "react";
 import api from '../../api/api.ts';
 import {useNavigate} from 'react-router-dom';
-import {ProjectData} from "../models/companyData.ts";
+import {TimesheetData} from "../models/timesheetData.ts";
 
 const Timesheet = () => {
     const navigate = useNavigate();
 
-    const [companies, setCompanies] = useState<ProjectData[]>(() => {
+    const [timesheets, setTimesheets] = useState<TimesheetData[]>(() => {
         return [];
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
-        const fetchCompanies = async () => {
+        const fetchTimesheets = async () => {
             try {
-                const response = await api.get('/api/v1/company');
+                const response = await api.get('/api/v1/timesheet');
 
-                const companiesData = response.data.content;
+                const timesheetsData = response.data.content;
 
-                if (!Array.isArray(companiesData)) {
+                if (!Array.isArray(timesheetsData)) {
                     throw new Error('Data isn\'t array');
                 }
 
-                setCompanies(companiesData);
+                setTimesheets(timesheetsData);
                 setError('');
             } catch (error) {
                 console.error('Error:', error);
                 setError((error as Error).message);
-                setCompanies([]);
+                setTimesheets([]);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCompanies();
+        fetchTimesheets();
     }, [navigate]);
 
     if (loading) {
@@ -47,45 +47,42 @@ const Timesheet = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await api.delete(`/api/v1/company/${id}`);
-            setCompanies(companies.filter(company => company.id !== id));
+            await api.delete(`/api/v1/timesheet/${id}`);
+            setTimesheets(timesheets.filter(timesheet => timesheet.id !== id));
         } catch (error) {
-            console.error('Error deleting company:', error);
+            console.error('Error deleting timesheet:', error);
         }
     };
 
     const handleEdit = (id: number) => {
-        navigate(`/company/edit/${id}`);
+        navigate(`/timesheet/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/company/add');
+        navigate('/timesheet/add');
     };
 
     return (
         <div>
-            <h1>Company List</h1>
-            <button onClick={handleAdd}>Add Company</button>
+            <h1>Timesheet List</h1>
+            <button onClick={handleAdd}>Add Timesheet</button>
             <table>
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Industry</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Actions</th>
+                    <th>Time spent(minutes)</th>
+                    <th>Task description</th>
+                    <th>Role ID</th>
                 </tr>
                 </thead>
                 <tbody>
-                {companies.map((company) => (
-                    <tr key={company.id}>
-                        <td>{company.name}</td>
-                        <td>{company.industry}</td>
-                        <td>{company.address}</td>
-                        <td>{company.email}</td>
+                {timesheets.map((timesheet) => (
+                    <tr key={timesheet.id}>
+                        <td>{timesheet.timeSpentMinutes}</td>
+                        <td>{timesheet.taskDescription}</td>
+                        <td>{timesheet.roleId}</td>
                         <td>
-                            <button onClick={() => handleEdit(company.id)}>Edit</button>
-                            <button onClick={() => handleDelete(company.id)}>Delete</button>
+                            <button onClick={() => handleEdit(timesheet.id)}>Edit</button>
+                            <button onClick={() => handleDelete(timesheet.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}
