@@ -23,7 +23,7 @@ const AuthForm = () => {
 
         const url = isRegister
             ? baseUrl + 'api/v1/auth/register'
-            : baseUrl + 'api/v1/auth/authenticate';
+            : baseUrl + 'api/v1/auth/login';
 
         try {
             const response = await axios.post<AuthResponse>(url, data);
