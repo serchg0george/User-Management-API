@@ -62,9 +62,14 @@ const Timesheet = () => {
         navigate('/timesheet/add');
     };
 
+    const handleBackToNav = () => {
+        navigate('/main');
+    }
+
     return (
         <div>
             <h1>Timesheet List</h1>
+            <button onClick={handleBackToNav}>Back to navigation</button>
             <button onClick={handleAdd}>Add Timesheet</button>
             <table>
                 <thead>

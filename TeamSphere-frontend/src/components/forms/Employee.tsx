@@ -62,9 +62,14 @@ const Employee = () => {
         navigate('/employee/add');
     };
 
+    const handleBackToNav = () => {
+        navigate('/main');
+    }
+
     return (
         <div>
             <h1>Employee List</h1>
+            <button onClick={handleBackToNav}>Back to navigation</button>
             <button onClick={handleAdd}>Add Employee</button>
             <table>
                 <thead>

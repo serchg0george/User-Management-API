@@ -62,9 +62,14 @@ const Project = () => {
         navigate('/project/add');
     };
 
+    const handleBackToNav = () => {
+        navigate('/main');
+    }
+
     return (
         <div>
             <h1>Project List</h1>
+            <button onClick={handleBackToNav}>Back to navigation</button>
             <button onClick={handleAdd}>Add Project</button>
             <table>
                 <thead>

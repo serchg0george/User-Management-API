@@ -62,9 +62,14 @@ const Role = () => {
         navigate('/role/add');
     };
 
+    const handleBackToNav = () => {
+        navigate('/main');
+    }
+
     return (
         <div>
             <h1>Role List</h1>
+            <button onClick={handleBackToNav}>Back to navigation</button>
             <button onClick={handleAdd}>Add Role</button>
             <table>
                 <thead>

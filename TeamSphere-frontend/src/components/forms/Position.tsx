@@ -62,9 +62,14 @@ const Position = () => {
         navigate('/position/add');
     };
 
+    const handleBackToNav = () => {
+        navigate('/main');
+    }
+
     return (
         <div>
             <h1>Position List</h1>
+            <button onClick={handleBackToNav}>Back to navigation</button>
             <button onClick={handleAdd}>Add Position</button>
             <table>
                 <thead>
