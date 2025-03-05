@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                         request
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .requestMatchers("/api/v1/auth/register").permitAll()
-                                .requestMatchers("/api/v1/auth/authenticate").permitAll()
+                                .requestMatchers("/api/v1/auth/login").permitAll()
                                 .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurer()))
