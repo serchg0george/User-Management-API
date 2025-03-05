@@ -17,7 +17,7 @@ const AuthForm = () => {
     });
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<AuthFormData> = async (data) => {
+    const onSubmit: SubmitHandler<AuthFormData> = async (data: AuthFormData) => {
 
         const baseUrl: string = 'http://localhost:8080/';
 
@@ -28,8 +28,8 @@ const AuthForm = () => {
         try {
             const response = await axios.post<AuthResponse>(url, data);
             console.log('Response:', response.data);
-            localStorage.setItem('token', response.data.token); // Store the token in localStorage
-            navigate('/company'); // Redirect to the Company component
+            localStorage.setItem('token', response.data.token);
+            navigate('/main');
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Error:', error.response?.data || error.message);
