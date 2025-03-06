@@ -20,9 +20,9 @@ public class TimesheetEntity extends BaseEntity {
     @Column(name = "task_description", nullable = false, length = 150)
     private String taskDescription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RoleEntity role;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "timeSheetEmployee")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "timeSheetEmployee", orphanRemoval = true)
     private EmployeeEntity employee;
 }

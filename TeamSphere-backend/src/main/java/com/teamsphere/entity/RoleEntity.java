@@ -1,11 +1,12 @@
 package com.teamsphere.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class RoleEntity extends BaseEntity {
     @Column(name = "description", length = 150)
     private String description;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "role")
-    private List<TimesheetEntity> timeSheets;
+    @OneToOne(mappedBy = "role")
+    private TimesheetEntity timeSheets;
 
 }
