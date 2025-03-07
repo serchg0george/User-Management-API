@@ -16,7 +16,7 @@ const Role = () => {
     useEffect(() => {
         const fetchRoles = async () => {
             try {
-                const response = await api.get('/api/v1/role');
+                const response = await api.get('/api/v1/role/id');
 
                 const rolesData = response.data.content;
 
@@ -45,32 +45,14 @@ const Role = () => {
         return <div>Error: {error}</div>
     }
 
-    const handleDelete = async (id: number) => {
-        try {
-            await api.delete(`/api/v1/role/${id}`);
-            setRoles(roles.filter(role => role.id !== id));
-        } catch (error) {
-            console.error('Error deleting role:', error);
-        }
-    };
-
-    const handleEdit = (id: number) => {
-        navigate(`/role/edit/${id}`);
-    };
-
-    const handleAdd = () => {
+    const handleSave = () => {
         navigate('/role/add');
     };
-
-    const handleBackToNav = () => {
-        navigate('/main');
-    }
 
     return (
         <div>
             <h1>Role List</h1>
-            <button onClick={handleBackToNav}>Back to navigation</button>
-            <button onClick={handleAdd}>Add Role</button>
+            <button onClick={handleSave}>Add Role</button>
             <table>
                 <thead>
                 <tr>
@@ -83,10 +65,6 @@ const Role = () => {
                     <tr key={role.id}>
                         <td>{role.roleName}</td>
                         <td>{role.description}</td>
-                        <td>
-                            <button onClick={() => handleEdit(role.id)}>Edit</button>
-                            <button onClick={() => handleDelete(role.id)}>Delete</button>
-                        </td>
                     </tr>
                 ))}
                 </tbody>
