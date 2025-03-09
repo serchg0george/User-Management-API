@@ -1,8 +1,8 @@
 package com.teamsphere.mapper;
 
-import com.teamsphere.dto.timesheet.TimesheetDto;
+import com.teamsphere.dto.task.TaskDto;
 import com.teamsphere.entity.RoleEntity;
-import com.teamsphere.entity.TimesheetEntity;
+import com.teamsphere.entity.TaskEntity;
 import com.teamsphere.exception.base.BaseNotFoundException;
 import com.teamsphere.mapper.base.BaseMapper;
 import com.teamsphere.repository.RoleRepository;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TimesheetMapper implements BaseMapper<TimesheetEntity, TimesheetDto> {
+public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
 
     private final RoleRepository roleRepository;
 
     @Override
-    public TimesheetDto mapEntityToDto(TimesheetEntity entity) {
-        return TimesheetDto.builder()
+    public TaskDto mapEntityToDto(TaskEntity entity) {
+        return TaskDto.builder()
                 .id(entity.getId())
                 .timeSpentMinutes(entity.getTimeSpentMinutes())
                 .taskDescription(entity.getTaskDescription())
@@ -26,11 +26,11 @@ public class TimesheetMapper implements BaseMapper<TimesheetEntity, TimesheetDto
     }
 
     @Override
-    public TimesheetEntity mapDtoToEntity(TimesheetDto dto) {
+    public TaskEntity mapDtoToEntity(TaskDto dto) {
 
         RoleEntity role = roleRepository.findById(dto.getRoleId()).orElseThrow(() -> new BaseNotFoundException(dto.getRoleId()));
 
-        return TimesheetEntity.builder()
+        return TaskEntity.builder()
                 .timeSpentMinutes(dto.getTimeSpentMinutes())
                 .taskDescription(dto.getTaskDescription())
                 .role(role)

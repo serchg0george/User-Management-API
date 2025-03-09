@@ -1,13 +1,13 @@
 package com.teamsphere.service.impl;
 
-import com.teamsphere.dto.timesheet.TimesheetDto;
-import com.teamsphere.dto.timesheet.TimesheetSearchRequest;
-import com.teamsphere.dto.timesheet.TimesheetSearchResponse;
-import com.teamsphere.entity.TimesheetEntity;
-import com.teamsphere.mapper.TimesheetMapper;
+import com.teamsphere.dto.task.TaskDto;
+import com.teamsphere.dto.task.TaskSearchRequest;
+import com.teamsphere.dto.task.TaskSearchResponse;
+import com.teamsphere.entity.TaskEntity;
+import com.teamsphere.mapper.TaskMapper;
 import com.teamsphere.mapper.base.BaseMapper;
-import com.teamsphere.repository.TimesheetRepository;
-import com.teamsphere.service.TimesheetService;
+import com.teamsphere.repository.TaskRepository;
+import com.teamsphere.service.TaskService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,28 +25,28 @@ import java.util.List;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class TimesheetServiceImpl extends GenericServiceImpl<TimesheetEntity, TimesheetDto> implements TimesheetService {
+public class TaskServiceImpl extends GenericServiceImpl<TaskEntity, TaskDto> implements TaskService {
 
-    private final TimesheetMapper timeSheetMapper;
-    private final TimesheetRepository timeSheetRepository;
+    private final TaskMapper taskMapper;
+    private final TaskRepository taskRepository;
     private final EntityManager entityManager;
 
     @Override
-    public BaseMapper<TimesheetEntity, TimesheetDto> getMapper() {
-        return timeSheetMapper;
+    public BaseMapper<TaskEntity, TaskDto> getMapper() {
+        return taskMapper;
     }
 
     @Override
-    public JpaRepository<TimesheetEntity, Long> getRepository() {
-        return timeSheetRepository;
+    public JpaRepository<TaskEntity, Long> getRepository() {
+        return taskRepository;
     }
 
     @Override
-    public TimesheetSearchResponse findTimesheet(final TimesheetSearchRequest request) {
+    public TaskSearchResponse findTask(final TaskSearchRequest request) {
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<TimesheetEntity> criteriaQuery = criteriaBuilder.createQuery(TimesheetEntity.class);
+        CriteriaQuery<TaskEntity> criteriaQuery = criteriaBuilder.createQuery(TaskEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        Root<TimesheetEntity> root = criteriaQuery.from(TimesheetEntity.class);
+        Root<TaskEntity> root = criteriaQuery.from(TaskEntity.class);
 
         if (request.query() != null && !request.query().isBlank()) {
             String query = "%" + request.query() + "%";
@@ -63,16 +63,16 @@ public class TimesheetServiceImpl extends GenericServiceImpl<TimesheetEntity, Ti
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<TimesheetEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<TaskEntity> query = entityManager.createQuery(criteriaQuery);
 
-        TimesheetSearchResponse response = new TimesheetSearchResponse();
+        TaskSearchResponse response = new TaskSearchResponse();
 
-        var timeSheets = query.getResultList().stream().map(timeSheetMapper::mapEntityToDto).toList();
+        var timeSheets = query.getResultList().stream().map(taskMapper::mapEntityToDto).toList();
 
-        response.setTimeSheets(timeSheets);
-        response.setTimeSheetCount(timeSheets.size());
+        response.setTasks(timeSheets);
+        response.setTaskCount(timeSheets.size());
 
-        log.debug("Found {} projects for query '{}'", response.getTimeSheetCount(), request.query());
+        log.debug("Found {} projects for query '{}'", response.getTaskCount(), request.query());
 
         return response;
     }

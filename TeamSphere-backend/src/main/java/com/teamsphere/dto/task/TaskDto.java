@@ -1,4 +1,4 @@
-package com.teamsphere.dto.timesheet;
+package com.teamsphere.dto.task;
 
 import com.teamsphere.dto.BaseDto;
 import jakarta.validation.constraints.*;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @SuperBuilder
-public class TimesheetDto extends BaseDto {
+public class TaskDto extends BaseDto {
 
     @NotNull
     @Min(value = 0, message = "Time can't be negative")

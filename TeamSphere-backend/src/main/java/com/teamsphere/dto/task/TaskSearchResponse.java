@@ -1,4 +1,4 @@
-package com.teamsphere.dto.timesheet;
+package com.teamsphere.dto.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +11,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimesheetSearchResponse {
+public class TaskSearchResponse {
 
-    private List<TimesheetDto> timeSheets;
+    private List<TaskDto> tasks;
 
-    private Integer timeSheetCount;
+    private Integer taskCount;
 
 }
