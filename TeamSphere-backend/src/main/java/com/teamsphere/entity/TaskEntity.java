@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "t_timesheets")
-public class TimesheetEntity extends BaseEntity {
+@Table(name = "t_tasks")
+public class TaskEntity extends BaseEntity {
 
     @Column(name = "time_spent_minutes", nullable = false, length = 10)
     private Integer timeSpentMinutes;
@@ -23,6 +23,6 @@ public class TimesheetEntity extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RoleEntity role;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "timeSheetEmployee", orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "taskEmployee", orphanRemoval = true)
     private EmployeeEntity employee;
 }
