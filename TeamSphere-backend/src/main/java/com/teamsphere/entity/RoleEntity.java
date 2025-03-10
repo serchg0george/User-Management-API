@@ -22,6 +22,6 @@ public class RoleEntity extends BaseEntity {
     private String description;
 
     @OneToOne(mappedBy = "role")
-    private TimesheetEntity timeSheets;
+    private TaskEntity timeSheets;
 
 }

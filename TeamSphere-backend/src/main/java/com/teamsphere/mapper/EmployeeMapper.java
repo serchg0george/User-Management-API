@@ -7,7 +7,7 @@ import com.teamsphere.mapper.base.BaseMapper;
 import com.teamsphere.repository.DepartmentRepository;
 import com.teamsphere.repository.PositionRepository;
 import com.teamsphere.repository.ProjectRepository;
-import com.teamsphere.repository.TimesheetRepository;
+import com.teamsphere.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
     private final ProjectRepository projectRepository;
     private final DepartmentRepository departmentRepository;
     private final PositionRepository positionRepository;
-    private final TimesheetRepository timesheetRepository;
+    private final TaskRepository taskRepository;
 
     @Override
     public EmployeeDto mapEntityToDto(EmployeeEntity entity) {
@@ -33,7 +33,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
                 .address(entity.getAddress())
                 .departmentId(entity.getDepartment().getId())
                 .positionId(entity.getPosition().getId())
-                .timeSheetEmployeeId(entity.getTimeSheetEmployee().getId())
+                .taskEmployeeId(entity.getTaskEmployee().getId())
                 .projectIds(entity.getProjects().stream()
                         .map(ProjectEntity::getId)
                         .toList())
@@ -52,8 +52,8 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
         PositionEntity position = positionRepository.findById(dto.getPositionId())
                 .orElseThrow(() -> new BaseNotFoundException(dto.getPositionId()));
 
-        TimesheetEntity timesheet = timesheetRepository.findById(dto.getTimeSheetEmployeeId())
-                .orElseThrow(() -> new BaseNotFoundException(dto.getTimeSheetEmployeeId()));
+        TaskEntity timesheet = taskRepository.findById(dto.getTaskEmployeeId())
+                .orElseThrow(() -> new BaseNotFoundException(dto.getTaskEmployeeId()));
 
         return EmployeeEntity.builder()
                 .firstName(dto.getFirstName())
@@ -63,7 +63,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
                 .address(dto.getAddress())
                 .department(department)
                 .position(position)
-                .timeSheetEmployee(timesheet)
+                .taskEmployee(timesheet)
                 .projects(projects)
                 .build();
     }

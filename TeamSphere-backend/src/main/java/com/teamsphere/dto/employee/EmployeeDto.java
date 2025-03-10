@@ -51,7 +51,7 @@ public class EmployeeDto extends BaseDto {
     @NotNull(message = "Id cannot be null")
     @Positive(message = "Id must be a positive number")
     @Min(value = 1, message = "Id cannot be lower than 1")
-    private Long timeSheetEmployeeId;
+    private Long taskEmployeeId;
 
     private List<
             @NotNull(message = "Id cannot be null")
