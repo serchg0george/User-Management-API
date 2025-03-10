@@ -21,7 +21,7 @@ public class DepartmentEntity extends BaseEntity {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "department")
-    private EmployeeEntity memberEntity;
+    @OneToOne(mappedBy = "department")
+    private EmployeeEntity employeeEntity;
 
 }
