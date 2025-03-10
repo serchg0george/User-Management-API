@@ -15,11 +15,6 @@ spring:
         format_sql: true
         show_sql: true
 
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.yml
-
-
-  sql:
-    init:
-      mode: always
+#  sql:
+#    init:
+#      mode: always
