@@ -3,7 +3,7 @@
 -----------------------------------------------------------
 TRUNCATE TABLE t_projects_employees CASCADE ;
 TRUNCATE TABLE t_employees CASCADE ;
-TRUNCATE TABLE t_timesheets CASCADE ;
+TRUNCATE TABLE t_tasks CASCADE ;
 TRUNCATE TABLE t_projects CASCADE ;
 TRUNCATE TABLE t_companies CASCADE ;
 TRUNCATE TABLE t_positions CASCADE ;
@@ -138,7 +138,7 @@ VALUES (1, 'Project 1', 'Project description 1', '2023-01-01', NULL, 'IN_PROGRES
 -----------------------------------------------------------
 -- Seeding the timesheets table (t_timesheets)
 -----------------------------------------------------------
-INSERT INTO t_timesheets (id, time_spent_minutes, task_description, role_id)
+INSERT INTO t_tasks (id, time_spent_minutes, task_description, role_id)
 VALUES (1, 40, 'Task 1', 1),
        (2, 50, 'Task 2', 2),
        (3, 60, 'Task 3', 3),
@@ -164,7 +164,7 @@ VALUES (1, 40, 'Task 1', 1),
 -- Seeding the employees table (t_employees) CASCADE
 -----------------------------------------------------------
 INSERT INTO t_employees (id, first_name, last_name, pin, address, email, department_id, position_id,
-                         time_sheet_employee_id)
+                         task_employee_id)
 VALUES (1, 'FirstName 1', 'LastName 1', '1000000001', 'Address 1', 'employee1@example.com', 1, 1, 1),
        (2, 'FirstName 2', 'LastName 2', '1000000002', 'Address 2', 'employee2@example.com', 2, 2, 2),
        (3, 'FirstName 3', 'LastName 3', '1000000003', 'Address 3', 'employee3@example.com', 3, 3, 3),
