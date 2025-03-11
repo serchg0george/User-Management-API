@@ -7,7 +7,6 @@ TRUNCATE TABLE t_tasks CASCADE ;
 TRUNCATE TABLE t_projects CASCADE ;
 TRUNCATE TABLE t_companies CASCADE ;
 TRUNCATE TABLE t_positions CASCADE ;
-TRUNCATE TABLE t_roles CASCADE ;
 TRUNCATE TABLE t_departments CASCADE ;
 
 -----------------------------------------------------------
@@ -34,31 +33,6 @@ VALUES (1, 'Department 1', 'Department description 1'),
        (18, 'Department 18', 'Department description 18'),
        (19, 'Department 19', 'Department description 19'),
        (20, 'Department 20', 'Department description 20');
-
------------------------------------------------------------
--- Seeding the roles table (t_roles)
------------------------------------------------------------
-INSERT INTO t_roles (id, role_name, description)
-VALUES (1, 'Administrator', 'Role description Administrator'),
-       (2, 'Manager', 'Role description Manager'),
-       (3, 'Developer', 'Role description Developer'),
-       (4, 'Analyst', 'Role description Analyst'),
-       (5, 'Tester', 'Role description Tester'),
-       (6, 'Designer', 'Role description Designer'),
-       (7, 'Engineer', 'Role description Engineer'),
-       (8, 'Specialist', 'Role description Specialist'),
-       (9, 'Consultant', 'Role description Consultant'),
-       (10, 'Operator', 'Role description Operator'),
-       (11, 'Secretary', 'Role description Secretary'),
-       (12, 'Assistant', 'Role description Assistant'),
-       (13, 'Supervisor', 'Role description Supervisor'),
-       (14, 'Programmer', 'Role description Programmer'),
-       (15, 'Accountant', 'Role description Accountant'),
-       (16, 'Lawyer', 'Role description Lawyer'),
-       (17, 'Marketer', 'Role description Marketer'),
-       (18, 'HR Manager', 'Role description HR Manager'),
-       (19, 'Product Manager', 'Role description Product Manager'),
-       (20, 'System Administrator', 'Role description System Administrator');
 
 -----------------------------------------------------------
 -- Seeding the positions table (t_positions)
@@ -136,31 +110,6 @@ VALUES (1, 'Project 1', 'Project description 1', '2023-01-01', NULL, 'IN_PROGRES
        (20, 'Project 20', 'Project description 20', '2023-01-20', '2023-12-31', 'FINISHED', 20);
 
 -----------------------------------------------------------
--- Seeding the timesheets table (t_timesheets)
------------------------------------------------------------
-INSERT INTO t_tasks (id, time_spent_minutes, task_description, employee_id, role_id)
-VALUES (1, 40, 'Task 1', 1, 1),
-       (2, 50, 'Task 2', 2, 2),
-       (3, 60, 'Task 3', 3, 3),
-       (4, 70, 'Task 4', 4, 4),
-       (5, 80, 'Task 5', 5, 5),
-       (6, 90, 'Task 6', 6, 6),
-       (7, 100, 'Task 7', 7, 7),
-       (8, 110, 'Task 8', 8, 8),
-       (9, 120, 'Task 9', 9, 9),
-       (10, 130, 'Task 10', 10, 10),
-       (11, 140, 'Task 11', 11, 11),
-       (12, 150, 'Task 12', 12, 12),
-       (13, 160, 'Task 13', 13, 13),
-       (14, 170, 'Task 14', 14, 14),
-       (15, 180, 'Task 15', 15, 15),
-       (16, 190, 'Task 16', 16, 16),
-       (17, 200, 'Task 17', 17, 17),
-       (18, 210, 'Task 18', 18, 18),
-       (19, 220, 'Task 19', 19, 19),
-       (20, 230, 'Task 20', 20, 20);
-
------------------------------------------------------------
 -- Seeding the employees table (t_employees) CASCADE
 -----------------------------------------------------------
 INSERT INTO t_employees (id, first_name, last_name, pin, address, email, department_id, position_id)
@@ -184,6 +133,31 @@ VALUES (1, 'FirstName 1', 'LastName 1', '1000000001', 'Address 1', 'employee1@ex
        (18, 'FirstName 18', 'LastName 18', '1000000018', 'Address 18', 'employee18@example.com', 18, 18),
        (19, 'FirstName 19', 'LastName 19', '1000000019', 'Address 19', 'employee19@example.com', 19, 19),
        (20, 'FirstName 20', 'LastName 20', '1000000020', 'Address 20', 'employee20@example.com', 20, 20);
+
+-----------------------------------------------------------
+-- Seeding the timesheets table (t_timesheets)
+-----------------------------------------------------------
+INSERT INTO t_tasks (id, time_spent_minutes, task_description, employee_id, role)
+VALUES (1, 40, 'Task 1', 1, 'Role 1'),
+       (2, 50, 'Task 2', 2, 'Role 2'),
+       (3, 60, 'Task 3', 3, 'Role 3'),
+       (4, 70, 'Task 4', 4, 'Role 4'),
+       (5, 80, 'Task 5', 5, 'Role 5'),
+       (6, 90, 'Task 6', 6, 'Role 6'),
+       (7, 100, 'Task 7', 7, 'Role 7'),
+       (8, 110, 'Task 8', 8, 'Role 8'),
+       (9, 120, 'Task 9', 9, 'Role 9'),
+       (10, 130, 'Task 10', 10, 'Role 10'),
+       (11, 140, 'Task 11', 11, 'Role 11'),
+       (12, 150, 'Task 12', 12, 'Role 12'),
+       (13, 160, 'Task 13', 13, 'Role 13'),
+       (14, 170, 'Task 14', 14, 'Role 14'),
+       (15, 180, 'Task 15', 15, 'Role 15'),
+       (16, 190, 'Task 16', 16, 'Role 16'),
+       (17, 200, 'Task 17', 17, 'Role 17'),
+       (18, 210, 'Task 18', 18, 'Role 18'),
+       (19, 220, 'Task 19', 19, 'Role 19'),
+       (20, 230, 'Task 20', 20, 'Role 20');
 
 -----------------------------------------------------------
 -- Seeding the projects_employees join table (t_projects_employees)
