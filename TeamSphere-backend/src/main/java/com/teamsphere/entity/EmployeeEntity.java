@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -42,14 +43,14 @@ public class EmployeeEntity extends BaseEntity {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @OneToOne
+    @ManyToOne(optional = false)
     private DepartmentEntity department;
 
-    @OneToOne
+    @ManyToOne(optional = false)
     private PositionEntity position;
 
-    @OneToOne
-    private TimesheetEntity timeSheetEmployee;
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<TaskEntity> tasks = new ArrayList<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinTable(
