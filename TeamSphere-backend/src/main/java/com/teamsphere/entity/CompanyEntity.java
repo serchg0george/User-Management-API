@@ -33,6 +33,6 @@ public class CompanyEntity extends BaseEntity {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", orphanRemoval = true)
     private List<ProjectEntity> projects;
 }
