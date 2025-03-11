@@ -138,53 +138,52 @@ VALUES (1, 'Project 1', 'Project description 1', '2023-01-01', NULL, 'IN_PROGRES
 -----------------------------------------------------------
 -- Seeding the timesheets table (t_timesheets)
 -----------------------------------------------------------
-INSERT INTO t_tasks (id, time_spent_minutes, task_description, role_id)
-VALUES (1, 40, 'Task 1', 1),
-       (2, 50, 'Task 2', 2),
-       (3, 60, 'Task 3', 3),
-       (4, 70, 'Task 4', 4),
-       (5, 80, 'Task 5', 5),
-       (6, 90, 'Task 6', 6),
-       (7, 100, 'Task 7', 7),
-       (8, 110, 'Task 8', 8),
-       (9, 120, 'Task 9', 9),
-       (10, 130, 'Task 10', 10),
-       (11, 140, 'Task 11', 11),
-       (12, 150, 'Task 12', 12),
-       (13, 160, 'Task 13', 13),
-       (14, 170, 'Task 14', 14),
-       (15, 180, 'Task 15', 15),
-       (16, 190, 'Task 16', 16),
-       (17, 200, 'Task 17', 17),
-       (18, 210, 'Task 18', 18),
-       (19, 220, 'Task 19', 19),
-       (20, 230, 'Task 20', 20);
+INSERT INTO t_tasks (id, time_spent_minutes, task_description, employee_id, role_id)
+VALUES (1, 40, 'Task 1', 1, 1),
+       (2, 50, 'Task 2', 2, 2),
+       (3, 60, 'Task 3', 3, 3),
+       (4, 70, 'Task 4', 4, 4),
+       (5, 80, 'Task 5', 5, 5),
+       (6, 90, 'Task 6', 6, 6),
+       (7, 100, 'Task 7', 7, 7),
+       (8, 110, 'Task 8', 8, 8),
+       (9, 120, 'Task 9', 9, 9),
+       (10, 130, 'Task 10', 10, 10),
+       (11, 140, 'Task 11', 11, 11),
+       (12, 150, 'Task 12', 12, 12),
+       (13, 160, 'Task 13', 13, 13),
+       (14, 170, 'Task 14', 14, 14),
+       (15, 180, 'Task 15', 15, 15),
+       (16, 190, 'Task 16', 16, 16),
+       (17, 200, 'Task 17', 17, 17),
+       (18, 210, 'Task 18', 18, 18),
+       (19, 220, 'Task 19', 19, 19),
+       (20, 230, 'Task 20', 20, 20);
 
 -----------------------------------------------------------
 -- Seeding the employees table (t_employees) CASCADE
 -----------------------------------------------------------
-INSERT INTO t_employees (id, first_name, last_name, pin, address, email, department_id, position_id,
-                         task_employee_id)
-VALUES (1, 'FirstName 1', 'LastName 1', '1000000001', 'Address 1', 'employee1@example.com', 1, 1, 1),
-       (2, 'FirstName 2', 'LastName 2', '1000000002', 'Address 2', 'employee2@example.com', 2, 2, 2),
-       (3, 'FirstName 3', 'LastName 3', '1000000003', 'Address 3', 'employee3@example.com', 3, 3, 3),
-       (4, 'FirstName 4', 'LastName 4', '1000000004', 'Address 4', 'employee4@example.com', 4, 4, 4),
-       (5, 'FirstName 5', 'LastName 5', '1000000005', 'Address 5', 'employee5@example.com', 5, 5, 5),
-       (6, 'FirstName 6', 'LastName 6', '1000000006', 'Address 6', 'employee6@example.com', 6, 6, 6),
-       (7, 'FirstName 7', 'LastName 7', '1000000007', 'Address 7', 'employee7@example.com', 7, 7, 7),
-       (8, 'FirstName 8', 'LastName 8', '1000000008', 'Address 8', 'employee8@example.com', 8, 8, 8),
-       (9, 'FirstName 9', 'LastName 9', '1000000009', 'Address 9', 'employee9@example.com', 9, 9, 9),
-       (10, 'FirstName 10', 'LastName 10', '1000000010', 'Address 10', 'employee10@example.com', 10, 10, 10),
-       (11, 'FirstName 11', 'LastName 11', '1000000011', 'Address 11', 'employee11@example.com', 11, 11, 11),
-       (12, 'FirstName 12', 'LastName 12', '1000000012', 'Address 12', 'employee12@example.com', 12, 12, 12),
-       (13, 'FirstName 13', 'LastName 13', '1000000013', 'Address 13', 'employee13@example.com', 13, 13, 13),
-       (14, 'FirstName 14', 'LastName 14', '1000000014', 'Address 14', 'employee14@example.com', 14, 14, 14),
-       (15, 'FirstName 15', 'LastName 15', '1000000015', 'Address 15', 'employee15@example.com', 15, 15, 15),
-       (16, 'FirstName 16', 'LastName 16', '1000000016', 'Address 16', 'employee16@example.com', 16, 16, 16),
-       (17, 'FirstName 17', 'LastName 17', '1000000017', 'Address 17', 'employee17@example.com', 17, 17, 17),
-       (18, 'FirstName 18', 'LastName 18', '1000000018', 'Address 18', 'employee18@example.com', 18, 18, 18),
-       (19, 'FirstName 19', 'LastName 19', '1000000019', 'Address 19', 'employee19@example.com', 19, 19, 19),
-       (20, 'FirstName 20', 'LastName 20', '1000000020', 'Address 20', 'employee20@example.com', 20, 20, 20);
+INSERT INTO t_employees (id, first_name, last_name, pin, address, email, department_id, position_id)
+VALUES (1, 'FirstName 1', 'LastName 1', '1000000001', 'Address 1', 'employee1@example.com', 1, 1),
+       (2, 'FirstName 2', 'LastName 2', '1000000002', 'Address 2', 'employee2@example.com', 2, 2),
+       (3, 'FirstName 3', 'LastName 3', '1000000003', 'Address 3', 'employee3@example.com', 3, 3),
+       (4, 'FirstName 4', 'LastName 4', '1000000004', 'Address 4', 'employee4@example.com', 4, 4),
+       (5, 'FirstName 5', 'LastName 5', '1000000005', 'Address 5', 'employee5@example.com', 5, 5),
+       (6, 'FirstName 6', 'LastName 6', '1000000006', 'Address 6', 'employee6@example.com', 6, 6),
+       (7, 'FirstName 7', 'LastName 7', '1000000007', 'Address 7', 'employee7@example.com', 7, 7),
+       (8, 'FirstName 8', 'LastName 8', '1000000008', 'Address 8', 'employee8@example.com', 8, 8),
+       (9, 'FirstName 9', 'LastName 9', '1000000009', 'Address 9', 'employee9@example.com', 9, 9),
+       (10, 'FirstName 10', 'LastName 10', '1000000010', 'Address 10', 'employee10@example.com', 10, 10),
+       (11, 'FirstName 11', 'LastName 11', '1000000011', 'Address 11', 'employee11@example.com', 11, 11),
+       (12, 'FirstName 12', 'LastName 12', '1000000012', 'Address 12', 'employee12@example.com', 12, 12),
+       (13, 'FirstName 13', 'LastName 13', '1000000013', 'Address 13', 'employee13@example.com', 13, 13),
+       (14, 'FirstName 14', 'LastName 14', '1000000014', 'Address 14', 'employee14@example.com', 14, 14),
+       (15, 'FirstName 15', 'LastName 15', '1000000015', 'Address 15', 'employee15@example.com', 15, 15),
+       (16, 'FirstName 16', 'LastName 16', '1000000016', 'Address 16', 'employee16@example.com', 16, 16),
+       (17, 'FirstName 17', 'LastName 17', '1000000017', 'Address 17', 'employee17@example.com', 17, 17),
+       (18, 'FirstName 18', 'LastName 18', '1000000018', 'Address 18', 'employee18@example.com', 18, 18),
+       (19, 'FirstName 19', 'LastName 19', '1000000019', 'Address 19', 'employee19@example.com', 19, 19),
+       (20, 'FirstName 20', 'LastName 20', '1000000020', 'Address 20', 'employee20@example.com', 20, 20);
 
 -----------------------------------------------------------
 -- Seeding the projects_employees join table (t_projects_employees)
