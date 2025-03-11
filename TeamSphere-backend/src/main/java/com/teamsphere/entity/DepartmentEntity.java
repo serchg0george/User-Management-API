@@ -21,7 +21,4 @@ public class DepartmentEntity extends BaseEntity {
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
-    @OneToOne(mappedBy = "department")
-    private EmployeeEntity employeeEntity;
-
 }

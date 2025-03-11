@@ -18,6 +18,4 @@ public class PositionEntity extends BaseEntity {
     @Column(name = "years_of_experience", nullable = false)
     private Integer yearsOfExperience;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE}, mappedBy = "position")
-    private EmployeeEntity employee;
 }
