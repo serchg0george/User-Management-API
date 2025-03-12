@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.project.ProjectCreatedResponse;
 import com.teamsphere.dto.project.ProjectDto;
 import com.teamsphere.dto.project.ProjectSearchRequest;
 import com.teamsphere.dto.project.ProjectSearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,18 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createProject(@Valid @RequestBody ProjectDto project) {
-        projectService.save(project);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<ProjectCreatedResponse> createProject(@Valid @RequestBody ProjectDto project) {
+        ProjectDto createdProject = projectService.save(project);
+        ProjectCreatedResponse created = ProjectCreatedResponse.builder()
+                .name(createdProject.getName())
+                .description(createdProject.getDescription())
+                .startDate(createdProject.getStartDate())
+                .finishDate(createdProject.getFinishDate())
+                .status(createdProject.getStatus())
+                .companyId(createdProject.getCompanyId())
+                .build();
+        URI location = URI.create("/api/v1/project/%d" + createdProject.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")

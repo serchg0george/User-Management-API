@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.department.DepartmentCreatedResponse;
 import com.teamsphere.dto.department.DepartmentDto;
 import com.teamsphere.dto.department.DepartmentSearchRequest;
 import com.teamsphere.dto.department.DepartmentSearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,14 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createDepartment(@Valid @RequestBody DepartmentDto department) {
-        departmentService.save(department);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<DepartmentCreatedResponse> createDepartment(@Valid @RequestBody DepartmentDto department) {
+        DepartmentDto createdDepartment = departmentService.save(department);
+        DepartmentCreatedResponse created = DepartmentCreatedResponse.builder()
+                .groupName(createdDepartment.getGroupName())
+                .description(createdDepartment.getDescription())
+                .build();
+        URI location = URI.create("/api/v1/department/%d" + createdDepartment.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")

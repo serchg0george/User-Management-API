@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.company.CompanyCreatedResponse;
 import com.teamsphere.dto.company.CompanyDto;
 import com.teamsphere.dto.company.CompanySearchRequest;
 import com.teamsphere.dto.company.CompanySearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,16 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createCompany(@Valid @RequestBody CompanyDto company) {
-        companyService.save(company);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<CompanyCreatedResponse> createCompany(@Valid @RequestBody CompanyDto company) {
+        CompanyDto createdCompany = companyService.save(company);
+        CompanyCreatedResponse created = CompanyCreatedResponse.builder()
+                .name(createdCompany.getName())
+                .industry(createdCompany.getIndustry())
+                .address(createdCompany.getAddress())
+                .email(createdCompany.getEmail())
+                .build();
+        URI location = URI.create(String.format("/api/v1/company/%d", createdCompany.getId()));
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")

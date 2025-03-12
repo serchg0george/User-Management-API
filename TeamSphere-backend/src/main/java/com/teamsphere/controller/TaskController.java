@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.task.TaskCreatedResponse;
 import com.teamsphere.dto.task.TaskDto;
 import com.teamsphere.dto.task.TaskSearchRequest;
 import com.teamsphere.dto.task.TaskSearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,15 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createTask(@Valid @RequestBody TaskDto task) {
-        taskService.save(task);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<TaskCreatedResponse> createTask(@Valid @RequestBody TaskDto task) {
+        TaskDto createdTask = taskService.save(task);
+        TaskCreatedResponse created = TaskCreatedResponse.builder()
+                .timeSpentMinutes(createdTask.getTimeSpentMinutes())
+                .taskDescription(createdTask.getTaskDescription())
+                .roleId(createdTask.getRoleId())
+                .build();
+        URI location = URI.create("/api/v1/task/%d" + createdTask.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")

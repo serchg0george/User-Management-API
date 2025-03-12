@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.employee.EmployeeCreatedResponse;
 import com.teamsphere.dto.employee.EmployeeDto;
 import com.teamsphere.dto.employee.EmployeeSearchRequest;
 import com.teamsphere.dto.employee.EmployeeSearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,21 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createEmployee(@Valid @RequestBody EmployeeDto employee) {
-        employeeService.save(employee);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<EmployeeCreatedResponse> createEmployee(@Valid @RequestBody EmployeeDto employee) {
+        EmployeeDto createdEmployee = employeeService.save(employee);
+        EmployeeCreatedResponse created = EmployeeCreatedResponse.builder()
+                .firstName(createdEmployee.getFirstName())
+                .lastName(createdEmployee.getLastName())
+                .pin(createdEmployee.getPin())
+                .address(createdEmployee.getAddress())
+                .email(createdEmployee.getEmail())
+                .departmentId(createdEmployee.getDepartmentId())
+                .positionId(createdEmployee.getPositionId())
+                .taskIds(createdEmployee.getTaskIds())
+                .projectIds(createdEmployee.getProjectIds())
+                .build();
+        URI location = URI.create("/api/v1/employee/%d" + createdEmployee.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")

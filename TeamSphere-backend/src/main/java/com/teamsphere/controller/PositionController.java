@@ -1,5 +1,6 @@
 package com.teamsphere.controller;
 
+import com.teamsphere.dto.position.PositionCreatedResponse;
 import com.teamsphere.dto.position.PositionDto;
 import com.teamsphere.dto.position.PositionSearchRequest;
 import com.teamsphere.dto.position.PositionSearchResponse;
@@ -13,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import java.net.URI;
+
 import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
@@ -30,9 +32,14 @@ public class PositionController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createPosition(@Valid @RequestBody PositionDto position) {
-        positionService.save(position);
-        return ResponseEntity.ok(CREATE_SUCCESS);
+    public ResponseEntity<PositionCreatedResponse> createPosition(@Valid @RequestBody PositionDto position) {
+        PositionDto createdPosition = positionService.save(position);
+        PositionCreatedResponse created = PositionCreatedResponse.builder()
+                .positionName(createdPosition.getPositionName())
+                .yearsOfExperience(createdPosition.getYearsOfExperience())
+                .build();
+        URI location = URI.create("/api/v1/position/%d" + createdPosition.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @GetMapping("{id}")
