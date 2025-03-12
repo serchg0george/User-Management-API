@@ -2,7 +2,7 @@ package com.teamsphere.mapper;
 
 import com.teamsphere.dto.employee.EmployeeDto;
 import com.teamsphere.entity.*;
-import com.teamsphere.exception.base.BaseNotFoundException;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.mapper.base.BaseMapper;
 import com.teamsphere.repository.DepartmentRepository;
 import com.teamsphere.repository.PositionRepository;
@@ -46,12 +46,12 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
     @Override
     public EmployeeEntity toEntity(EmployeeDto dto) {
         List<ProjectEntity> projects = dto.getProjectIds().stream()
-                .map(id -> projectRepository.findById(id).orElseThrow(() -> new BaseNotFoundException(id)))
+                .map(id -> projectRepository.findById(id).orElseThrow(() -> new NotFoundException(id)))
                 .toList();
 
-        DepartmentEntity department = departmentRepository.findById(dto.getDepartmentId()).orElseThrow(() -> new BaseNotFoundException(dto.getDepartmentId()));
+        DepartmentEntity department = departmentRepository.findById(dto.getDepartmentId()).orElseThrow(() -> new NotFoundException(dto.getDepartmentId()));
 
-        PositionEntity position = positionRepository.findById(dto.getPositionId()).orElseThrow(() -> new BaseNotFoundException(dto.getPositionId()));
+        PositionEntity position = positionRepository.findById(dto.getPositionId()).orElseThrow(() -> new NotFoundException(dto.getPositionId()));
 
         EmployeeEntity employee = EmployeeEntity.builder()
                 .firstName(dto.getFirstName())
@@ -68,7 +68,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
         if (dto.getTaskIds() != null) {
             List<TaskEntity> tasks = dto.getTaskIds().stream()
                     .map(id -> {
-                        TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new BaseNotFoundException(id));
+                        TaskEntity task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
                         task.setEmployee(employee);
                         return task;
                     })

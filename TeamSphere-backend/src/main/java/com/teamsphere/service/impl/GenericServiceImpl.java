@@ -2,7 +2,7 @@ package com.teamsphere.service.impl;
 
 import com.teamsphere.dto.BaseDto;
 import com.teamsphere.entity.BaseEntity;
-import com.teamsphere.exception.base.BaseNotFoundException;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.mapper.base.BaseMapper;
 import com.teamsphere.service.GenericService;
 import jakarta.transaction.Transactional;
@@ -30,7 +30,7 @@ public abstract class GenericServiceImpl<E extends BaseEntity, D extends BaseDto
 
     @Override
     public D get(Long id) {
-        E entity = getRepository().findById(id).orElseThrow(() -> new BaseNotFoundException(id));
+        E entity = getRepository().findById(id).orElseThrow(() -> new NotFoundException(id));
         return getMapper().toDto(entity);
     }
 
@@ -39,14 +39,14 @@ public abstract class GenericServiceImpl<E extends BaseEntity, D extends BaseDto
         if (getRepository().existsById(id)) {
             getRepository().deleteById(id);
         } else {
-            throw new BaseNotFoundException(id);
+            throw new NotFoundException(id);
         }
     }
 
     @Override
     @Transactional
     public D update(D dto, Long id) {
-        E entityDb = getRepository().findById(id).orElseThrow(() -> new BaseNotFoundException(id));
+        E entityDb = getRepository().findById(id).orElseThrow(() -> new NotFoundException(id));
         E entityForUpdate = getMapper().toEntity(dto);
         entityForUpdate.setId(entityDb.getId());
         return getMapper().toDto(getRepository().save(entityForUpdate));

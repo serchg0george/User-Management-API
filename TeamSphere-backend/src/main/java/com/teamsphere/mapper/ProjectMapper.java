@@ -4,7 +4,7 @@ import com.teamsphere.dto.project.ProjectDto;
 import com.teamsphere.entity.CompanyEntity;
 import com.teamsphere.entity.ProjectEntity;
 import com.teamsphere.entity.enums.ProjectStatus;
-import com.teamsphere.exception.base.BaseNotFoundException;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.mapper.base.BaseMapper;
 import com.teamsphere.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class ProjectMapper implements BaseMapper<ProjectEntity, ProjectDto> {
 
     public ProjectEntity toEntity(ProjectDto dto) {
         CompanyEntity company = companyRepository.findById(dto.getCompanyId())
-                .orElseThrow(() -> new BaseNotFoundException(dto.getCompanyId()));
+                .orElseThrow(() -> new NotFoundException(dto.getCompanyId()));
 
         return new ProjectEntity(
                 dto.getName(),
