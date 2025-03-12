@@ -21,3 +21,4 @@ spring:
 
 jwt:
   secret: ${SECRET_KEY}
+  expiration-time: 7d
