@@ -2,6 +2,7 @@ package com.teamsphere.dto.task;
 
 import com.teamsphere.dto.BaseDto;
 import jakarta.validation.constraints.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 public class TaskDto extends BaseDto {
