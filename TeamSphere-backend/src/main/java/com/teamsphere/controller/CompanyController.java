@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,32 +25,27 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @PostMapping("/search")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<CompanySearchResponse> searchCompany(@RequestBody CompanySearchRequest findCompany) {
         return ResponseEntity.ok(companyService.findCompany(findCompany));
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createCompany(@Valid @RequestBody CompanyDto company) {
         companyService.save(company);
         return ok().body(CREATE_SUCCESS);
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<CompanyDto> getCompanyById(@PathVariable("id") Long companyId) {
         return new ResponseEntity<>(companyService.get(companyId), HttpStatus.OK);
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Page<CompanyDto>> getAllCompanies(Pageable pageable) {
         return new ResponseEntity<>(companyService.getAll(pageable), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateCompany(@PathVariable("id") Long companyId,
                                                 @Valid @RequestBody CompanyDto company) {
         companyService.update(company, companyId);
@@ -59,7 +53,6 @@ public class CompanyController {
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteCompany(@PathVariable("id") Long companyId) {
         companyService.delete(companyId);
         return ResponseEntity.status(HttpStatus.OK).body(DELETE_SUCCESS);
