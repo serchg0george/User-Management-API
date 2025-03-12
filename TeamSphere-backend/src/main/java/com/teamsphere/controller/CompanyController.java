@@ -3,18 +3,18 @@ package com.teamsphere.controller;
 import com.teamsphere.dto.company.CompanyDto;
 import com.teamsphere.dto.company.CompanySearchRequest;
 import com.teamsphere.dto.company.CompanySearchResponse;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.*;
-import static org.springframework.http.ResponseEntity.ok;
+import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,29 +32,33 @@ public class CompanyController {
     @PostMapping
     public ResponseEntity<String> createCompany(@Valid @RequestBody CompanyDto company) {
         companyService.save(company);
-        return ok().body(CREATE_SUCCESS);
+        return ResponseEntity.ok(CREATE_SUCCESS);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<CompanyDto> getCompanyById(@PathVariable("id") Long companyId) {
-        return new ResponseEntity<>(companyService.get(companyId), HttpStatus.OK);
+        return ResponseEntity.ok(companyService.get(companyId));
     }
 
     @GetMapping
     public ResponseEntity<Page<CompanyDto>> getAllCompanies(Pageable pageable) {
-        return new ResponseEntity<>(companyService.getAll(pageable), HttpStatus.OK);
+        return ResponseEntity.ok(companyService.getAll(pageable));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<String> updateCompany(@PathVariable("id") Long companyId,
                                                 @Valid @RequestBody CompanyDto company) {
         companyService.update(company, companyId);
-        return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
+        return ResponseEntity.ok(UPDATE_SUCCESS);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCompany(@PathVariable("id") Long companyId) {
-        companyService.delete(companyId);
-        return ResponseEntity.status(HttpStatus.OK).body(DELETE_SUCCESS);
+        try {
+            companyService.delete(companyId);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 }

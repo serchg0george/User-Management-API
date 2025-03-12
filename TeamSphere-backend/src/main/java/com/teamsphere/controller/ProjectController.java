@@ -3,18 +3,18 @@ package com.teamsphere.controller;
 import com.teamsphere.dto.project.ProjectDto;
 import com.teamsphere.dto.project.ProjectSearchRequest;
 import com.teamsphere.dto.project.ProjectSearchResponse;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.*;
-import static org.springframework.http.ResponseEntity.ok;
+import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,29 +32,33 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<String> createProject(@Valid @RequestBody ProjectDto project) {
         projectService.save(project);
-        return ok().body(CREATE_SUCCESS);
+        return ResponseEntity.ok(CREATE_SUCCESS);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ProjectDto> getProjectById(@PathVariable("id") Long projectId) {
-        return new ResponseEntity<>(projectService.get(projectId), HttpStatus.OK);
+        return ResponseEntity.ok(projectService.get(projectId));
     }
 
     @GetMapping
     public ResponseEntity<Page<ProjectDto>> getAllProjects(Pageable pageable) {
-        return new ResponseEntity<>(projectService.getAll(pageable), HttpStatus.OK);
+        return ResponseEntity.ok(projectService.getAll(pageable));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<String> updateProject(@PathVariable("id") Long projectId,
                                                 @Valid @RequestBody ProjectDto project) {
         projectService.update(project, projectId);
-        return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
+        return ResponseEntity.ok(UPDATE_SUCCESS);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProject(@PathVariable("id") Long projectId) {
-        projectService.delete(projectId);
-        return ResponseEntity.status(HttpStatus.OK).body(DELETE_SUCCESS);
+        try {
+            projectService.delete(projectId);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 }

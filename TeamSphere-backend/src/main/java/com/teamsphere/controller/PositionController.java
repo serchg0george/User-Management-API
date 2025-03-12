@@ -3,18 +3,18 @@ package com.teamsphere.controller;
 import com.teamsphere.dto.position.PositionDto;
 import com.teamsphere.dto.position.PositionSearchRequest;
 import com.teamsphere.dto.position.PositionSearchResponse;
+import com.teamsphere.exception.NotFoundException;
 import com.teamsphere.service.PositionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.teamsphere.exception.Constants.*;
-import static org.springframework.http.ResponseEntity.ok;
+import static com.teamsphere.exception.Constants.CREATE_SUCCESS;
+import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,29 +32,33 @@ public class PositionController {
     @PostMapping
     public ResponseEntity<String> createPosition(@Valid @RequestBody PositionDto position) {
         positionService.save(position);
-        return ok().body(CREATE_SUCCESS);
+        return ResponseEntity.ok(CREATE_SUCCESS);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PositionDto> getPositionById(@PathVariable("id") Long positionId) {
-        return new ResponseEntity<>(positionService.get(positionId), HttpStatus.OK);
+        return ResponseEntity.ok(positionService.get(positionId));
     }
 
     @GetMapping
     public ResponseEntity<Page<PositionDto>> getAllPositions(Pageable pageable) {
-        return new ResponseEntity<>(positionService.getAll(pageable), HttpStatus.OK);
+        return ResponseEntity.ok(positionService.getAll(pageable));
     }
 
     @PutMapping("{id}")
     public ResponseEntity<String> updatePosition(@PathVariable("id") Long positionId,
                                                  @Valid @RequestBody PositionDto position) {
         positionService.update(position, positionId);
-        return new ResponseEntity<>(UPDATE_SUCCESS, HttpStatus.OK);
+        return ResponseEntity.ok(UPDATE_SUCCESS);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deletePosition(@PathVariable("id") Long positionId) {
-        positionService.delete(positionId);
-        return ResponseEntity.status(HttpStatus.OK).body(DELETE_SUCCESS);
+        try {
+            positionService.delete(positionId);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.noContent().build();
     }
 }
