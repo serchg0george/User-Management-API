@@ -9,16 +9,10 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=user_management_application_db
-
-  auth-server:
-    image: auth-server:latest
-    container_name: auth-server
-    ports:
-      - "9000:9000"
+      - POSTGRES_DB=team_sphere_db
 
   application:
-    image: user-management-api:latest
+    image: team-sphere-backend:latest
     container_name: application
     ports:
       - "8080:8080"
