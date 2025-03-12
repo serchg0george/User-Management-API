@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CompanyMapper extends BaseMapper<CompanyEntity, CompanyDto> {
     @Override
-    CompanyDto mapEntityToDto(CompanyEntity entity);
+    CompanyDto toDto(CompanyEntity entity);
 
     @Override
-    CompanyEntity mapDtoToEntity(CompanyDto dto);
+    CompanyEntity toEntity(CompanyDto dto);
 }

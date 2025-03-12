@@ -62,7 +62,7 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentEntity, 
 
         DepartmentSearchResponse response = new DepartmentSearchResponse();
 
-        var departments = query.getResultList().stream().map(departmentMapper::mapEntityToDto).toList();
+        var departments = query.getResultList().stream().map(departmentMapper::toDto).toList();
 
         response.setDepartments(departments);
         response.setDepartmentCount(departments.size());

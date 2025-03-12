@@ -12,7 +12,7 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
 
 
     @Override
-    public TaskDto mapEntityToDto(TaskEntity entity) {
+    public TaskDto toDto(TaskEntity entity) {
         return TaskDto.builder()
                 .id(entity.getId())
                 .timeSpentMinutes(entity.getTimeSpentMinutes())
@@ -21,7 +21,7 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
     }
 
     @Override
-    public TaskEntity mapDtoToEntity(TaskDto dto) {
+    public TaskEntity toEntity(TaskDto dto) {
 
         return TaskEntity.builder()
                 .timeSpentMinutes(dto.getTimeSpentMinutes())

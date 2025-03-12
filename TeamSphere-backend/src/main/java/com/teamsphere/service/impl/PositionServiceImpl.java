@@ -68,7 +68,7 @@ public class PositionServiceImpl extends GenericServiceImpl<PositionEntity, Posi
 
         PositionSearchResponse response = new PositionSearchResponse();
 
-        var positions = query.getResultList().stream().map(positionMapper::mapEntityToDto).toList();
+        var positions = query.getResultList().stream().map(positionMapper::toDto).toList();
 
         response.setPositions(positions);
         response.setPositionCount(positions.size());

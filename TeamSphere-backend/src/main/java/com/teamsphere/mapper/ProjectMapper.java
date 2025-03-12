@@ -18,7 +18,7 @@ public class ProjectMapper implements BaseMapper<ProjectEntity, ProjectDto> {
 
     private final CompanyRepository companyRepository;
 
-    public ProjectDto mapEntityToDto(ProjectEntity entity) {
+    public ProjectDto toDto(ProjectEntity entity) {
 
         LocalDate finishDateEntity = entity.getFinishDate();
         String finishDate = null;
@@ -38,7 +38,7 @@ public class ProjectMapper implements BaseMapper<ProjectEntity, ProjectDto> {
                 .build();
     }
 
-    public ProjectEntity mapDtoToEntity(ProjectDto dto) {
+    public ProjectEntity toEntity(ProjectDto dto) {
         CompanyEntity company = companyRepository.findById(dto.getCompanyId())
                 .orElseThrow(() -> new BaseNotFoundException(dto.getCompanyId()));
 

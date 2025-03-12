@@ -1,6 +1,6 @@
 package com.teamsphere.mapper.base;
 
 public interface BaseMapper<E, D> {
-    D mapEntityToDto(E entity);
-    E mapDtoToEntity(D dto);
+    D toDto(E entity);
+    E toEntity(D dto);
 }

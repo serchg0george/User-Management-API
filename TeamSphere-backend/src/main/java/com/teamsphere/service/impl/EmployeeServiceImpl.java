@@ -72,7 +72,7 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
 
         EmployeeSearchResponse response = new EmployeeSearchResponse();
 
-        var employees = query.getResultList().stream().map(employeeMapper::mapEntityToDto).toList();
+        var employees = query.getResultList().stream().map(employeeMapper::toDto).toList();
 
         response.setEmployees(employees);
         response.setEmployeeCount(employees.size());

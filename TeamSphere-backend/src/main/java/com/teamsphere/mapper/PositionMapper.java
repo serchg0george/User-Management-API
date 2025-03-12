@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PositionMapper extends BaseMapper<PositionEntity, PositionDto> {
     @Override
-    PositionDto mapEntityToDto(PositionEntity entity);
+    PositionDto toDto(PositionEntity entity);
 
     @Override
-    PositionEntity mapDtoToEntity(PositionDto dto);
+    PositionEntity toEntity(PositionDto dto);
 }

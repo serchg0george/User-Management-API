@@ -67,7 +67,7 @@ public class TaskServiceImpl extends GenericServiceImpl<TaskEntity, TaskDto> imp
 
         TaskSearchResponse response = new TaskSearchResponse();
 
-        var timeSheets = query.getResultList().stream().map(taskMapper::mapEntityToDto).toList();
+        var timeSheets = query.getResultList().stream().map(taskMapper::toDto).toList();
 
         response.setTasks(timeSheets);
         response.setTaskCount(timeSheets.size());

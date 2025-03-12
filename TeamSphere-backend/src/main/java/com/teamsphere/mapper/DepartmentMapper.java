@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface DepartmentMapper extends BaseMapper<DepartmentEntity, DepartmentDto> {
     @Override
-    DepartmentDto mapEntityToDto(DepartmentEntity entity);
+    DepartmentDto toDto(DepartmentEntity entity);
 
     @Override
-    DepartmentEntity mapDtoToEntity(DepartmentDto dto);
+    DepartmentEntity toEntity(DepartmentDto dto);
 }

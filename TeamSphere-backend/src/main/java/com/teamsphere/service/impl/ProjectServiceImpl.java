@@ -95,7 +95,7 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
 
         ProjectSearchResponse response = new ProjectSearchResponse();
 
-        var projects = query.getResultList().stream().map(projectMapper::mapEntityToDto).toList();
+        var projects = query.getResultList().stream().map(projectMapper::toDto).toList();
 
         response.setProjects(projects);
         response.setProjectCount(projects.size());

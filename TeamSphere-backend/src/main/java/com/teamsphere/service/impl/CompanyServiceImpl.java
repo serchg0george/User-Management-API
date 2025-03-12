@@ -64,7 +64,7 @@ public class CompanyServiceImpl extends GenericServiceImpl<CompanyEntity, Compan
 
         CompanySearchResponse response = new CompanySearchResponse();
 
-        var companies = query.getResultList().stream().map(companyMapper::mapEntityToDto).toList();
+        var companies = query.getResultList().stream().map(companyMapper::toDto).toList();
 
         response.setCompanies(companies);
         response.setCompanyCount(companies.size());

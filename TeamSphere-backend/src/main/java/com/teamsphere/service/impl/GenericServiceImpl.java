@@ -18,20 +18,20 @@ public abstract class GenericServiceImpl<E extends BaseEntity, D extends BaseDto
     @Override
     public Page<D> getAll(Pageable pageable) {
         return getRepository().findAll(pageable)
-                .map(entity -> getMapper().mapEntityToDto(entity));
+                .map(entity -> getMapper().toDto(entity));
     }
 
     @Override
     @Transactional
     public D save(D dto) {
-        E entityForSave = getRepository().save(getMapper().mapDtoToEntity(dto));
-        return getMapper().mapEntityToDto(entityForSave);
+        E entityForSave = getRepository().save(getMapper().toEntity(dto));
+        return getMapper().toDto(entityForSave);
     }
 
     @Override
     public D get(Long id) {
         E entity = getRepository().findById(id).orElseThrow(() -> new BaseNotFoundException(id));
-        return getMapper().mapEntityToDto(entity);
+        return getMapper().toDto(entity);
     }
 
     @Override
@@ -47,8 +47,8 @@ public abstract class GenericServiceImpl<E extends BaseEntity, D extends BaseDto
     @Transactional
     public D update(D dto, Long id) {
         E entityDb = getRepository().findById(id).orElseThrow(() -> new BaseNotFoundException(id));
-        E entityForUpdate = getMapper().mapDtoToEntity(dto);
+        E entityForUpdate = getMapper().toEntity(dto);
         entityForUpdate.setId(entityDb.getId());
-        return getMapper().mapEntityToDto(getRepository().save(entityForUpdate));
+        return getMapper().toDto(getRepository().save(entityForUpdate));
     }
 }

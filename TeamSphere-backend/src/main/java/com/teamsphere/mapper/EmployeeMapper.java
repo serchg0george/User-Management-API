@@ -24,7 +24,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
     private final TaskRepository taskRepository;
 
     @Override
-    public EmployeeDto mapEntityToDto(EmployeeEntity entity) {
+    public EmployeeDto toDto(EmployeeEntity entity) {
         return EmployeeDto.builder()
                 .id(entity.getId())
                 .firstName(entity.getFirstName())
@@ -44,7 +44,7 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
     }
 
     @Override
-    public EmployeeEntity mapDtoToEntity(EmployeeDto dto) {
+    public EmployeeEntity toEntity(EmployeeDto dto) {
         List<ProjectEntity> projects = dto.getProjectIds().stream()
                 .map(id -> projectRepository.findById(id).orElseThrow(() -> new BaseNotFoundException(id)))
                 .toList();
