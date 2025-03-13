@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.employee.EmployeeCreatedResponse;
 import com.teamsphere.dto.employee.EmployeeDto;
 import com.teamsphere.dto.employee.EmployeeSearchRequest;
 import com.teamsphere.dto.employee.EmployeeSearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/employee")
@@ -32,20 +29,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeCreatedResponse> createEmployee(@Valid @RequestBody EmployeeDto employee) {
-        EmployeeDto createdEmployee = employeeService.save(employee);
-        EmployeeCreatedResponse created = EmployeeCreatedResponse.builder()
-                .firstName(createdEmployee.getFirstName())
-                .lastName(createdEmployee.getLastName())
-                .pin(createdEmployee.getPin())
-                .address(createdEmployee.getAddress())
-                .email(createdEmployee.getEmail())
-                .departmentId(createdEmployee.getDepartmentId())
-                .positionId(createdEmployee.getPositionId())
-                .taskIds(createdEmployee.getTaskIds())
-                .projectIds(createdEmployee.getProjectIds())
-                .build();
-        URI location = URI.create("/api/v1/employee/%d" + createdEmployee.getId());
+    public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto employee) {
+        EmployeeDto created = employeeService.save(employee);
+        URI location = URI.create("/api/v1/employee/%d" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 
@@ -60,10 +46,10 @@ public class EmployeeController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateEmployee(@PathVariable("id") Long employeeId,
-                                                 @Valid @RequestBody EmployeeDto employee) {
+    public ResponseEntity<Void> updateEmployee(@PathVariable("id") Long employeeId,
+                                               @Valid @RequestBody EmployeeDto employee) {
         employeeService.update(employee, employeeId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

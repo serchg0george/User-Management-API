@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.position.PositionCreatedResponse;
 import com.teamsphere.dto.position.PositionDto;
 import com.teamsphere.dto.position.PositionSearchRequest;
 import com.teamsphere.dto.position.PositionSearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/position")
@@ -32,13 +29,9 @@ public class PositionController {
     }
 
     @PostMapping
-    public ResponseEntity<PositionCreatedResponse> createPosition(@Valid @RequestBody PositionDto position) {
-        PositionDto createdPosition = positionService.save(position);
-        PositionCreatedResponse created = PositionCreatedResponse.builder()
-                .positionName(createdPosition.getPositionName())
-                .yearsOfExperience(createdPosition.getYearsOfExperience())
-                .build();
-        URI location = URI.create("/api/v1/position/%d" + createdPosition.getId());
+    public ResponseEntity<PositionDto> createPosition(@Valid @RequestBody PositionDto position) {
+        PositionDto created = positionService.save(position);
+        URI location = URI.create("/api/v1/position/%d" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 
@@ -53,10 +46,10 @@ public class PositionController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updatePosition(@PathVariable("id") Long positionId,
-                                                 @Valid @RequestBody PositionDto position) {
+    public ResponseEntity<Void> updatePosition(@PathVariable("id") Long positionId,
+                                               @Valid @RequestBody PositionDto position) {
         positionService.update(position, positionId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

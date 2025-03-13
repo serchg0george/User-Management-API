@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.project.ProjectCreatedResponse;
 import com.teamsphere.dto.project.ProjectDto;
 import com.teamsphere.dto.project.ProjectSearchRequest;
 import com.teamsphere.dto.project.ProjectSearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/project")
@@ -32,17 +29,9 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectCreatedResponse> createProject(@Valid @RequestBody ProjectDto project) {
-        ProjectDto createdProject = projectService.save(project);
-        ProjectCreatedResponse created = ProjectCreatedResponse.builder()
-                .name(createdProject.getName())
-                .description(createdProject.getDescription())
-                .startDate(createdProject.getStartDate())
-                .finishDate(createdProject.getFinishDate())
-                .status(createdProject.getStatus())
-                .companyId(createdProject.getCompanyId())
-                .build();
-        URI location = URI.create("/api/v1/project/%d" + createdProject.getId());
+    public ResponseEntity<ProjectDto> createProject(@Valid @RequestBody ProjectDto project) {
+        ProjectDto created = projectService.save(project);
+        URI location = URI.create("/api/v1/project/%d" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 
@@ -57,10 +46,10 @@ public class ProjectController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateProject(@PathVariable("id") Long projectId,
-                                                @Valid @RequestBody ProjectDto project) {
+    public ResponseEntity<Void> updateProject(@PathVariable("id") Long projectId,
+                                              @Valid @RequestBody ProjectDto project) {
         projectService.update(project, projectId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

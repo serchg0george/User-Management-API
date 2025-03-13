@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.company.CompanyCreatedResponse;
 import com.teamsphere.dto.company.CompanyDto;
 import com.teamsphere.dto.company.CompanySearchRequest;
 import com.teamsphere.dto.company.CompanySearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/company")
@@ -32,15 +29,9 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<CompanyCreatedResponse> createCompany(@Valid @RequestBody CompanyDto company) {
-        CompanyDto createdCompany = companyService.save(company);
-        CompanyCreatedResponse created = CompanyCreatedResponse.builder()
-                .name(createdCompany.getName())
-                .industry(createdCompany.getIndustry())
-                .address(createdCompany.getAddress())
-                .email(createdCompany.getEmail())
-                .build();
-        URI location = URI.create(String.format("/api/v1/company/%d", createdCompany.getId()));
+    public ResponseEntity<CompanyDto> createCompany(@Valid @RequestBody CompanyDto company) {
+        CompanyDto created = companyService.save(company);
+        URI location = URI.create(String.format("/api/v1/company/%d", created.getId()));
         return ResponseEntity.created(location).body(created);
     }
 
@@ -55,10 +46,10 @@ public class CompanyController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateCompany(@PathVariable("id") Long companyId,
-                                                @Valid @RequestBody CompanyDto company) {
+    public ResponseEntity<Void> updateCompany(@PathVariable("id") Long companyId,
+                                              @Valid @RequestBody CompanyDto company) {
         companyService.update(company, companyId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

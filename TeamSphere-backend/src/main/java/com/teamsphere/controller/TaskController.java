@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.task.TaskCreatedResponse;
 import com.teamsphere.dto.task.TaskDto;
 import com.teamsphere.dto.task.TaskSearchRequest;
 import com.teamsphere.dto.task.TaskSearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/task")
@@ -32,14 +29,9 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskCreatedResponse> createTask(@Valid @RequestBody TaskDto task) {
-        TaskDto createdTask = taskService.save(task);
-        TaskCreatedResponse created = TaskCreatedResponse.builder()
-                .timeSpentMinutes(createdTask.getTimeSpentMinutes())
-                .taskDescription(createdTask.getTaskDescription())
-                .roleId(createdTask.getRoleId())
-                .build();
-        URI location = URI.create("/api/v1/task/%d" + createdTask.getId());
+    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskDto task) {
+        TaskDto created = taskService.save(task);
+        URI location = URI.create("/api/v1/task/%d" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 
@@ -54,10 +46,10 @@ public class TaskController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateTask(@PathVariable("id") Long taskId,
-                                             @Valid @RequestBody TaskDto task) {
+    public ResponseEntity<Void> updateTask(@PathVariable("id") Long taskId,
+                                           @Valid @RequestBody TaskDto task) {
         taskService.update(task, taskId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")

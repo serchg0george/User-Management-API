@@ -1,6 +1,5 @@
 package com.teamsphere.controller;
 
-import com.teamsphere.dto.department.DepartmentCreatedResponse;
 import com.teamsphere.dto.department.DepartmentDto;
 import com.teamsphere.dto.department.DepartmentSearchRequest;
 import com.teamsphere.dto.department.DepartmentSearchResponse;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
-import static com.teamsphere.exception.Constants.UPDATE_SUCCESS;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/department")
@@ -32,13 +29,9 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<DepartmentCreatedResponse> createDepartment(@Valid @RequestBody DepartmentDto department) {
-        DepartmentDto createdDepartment = departmentService.save(department);
-        DepartmentCreatedResponse created = DepartmentCreatedResponse.builder()
-                .groupName(createdDepartment.getGroupName())
-                .description(createdDepartment.getDescription())
-                .build();
-        URI location = URI.create("/api/v1/department/%d" + createdDepartment.getId());
+    public ResponseEntity<DepartmentDto> createDepartment(@Valid @RequestBody DepartmentDto department) {
+        DepartmentDto created = departmentService.save(department);
+        URI location = URI.create("/api/v1/department/%d" + created.getId());
         return ResponseEntity.created(location).body(created);
     }
 
@@ -53,10 +46,10 @@ public class DepartmentController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateDepartment(@PathVariable("id") Long departmentId,
-                                                   @Valid @RequestBody DepartmentDto department) {
+    public ResponseEntity<Void> updateDepartment(@PathVariable("id") Long departmentId,
+                                                 @Valid @RequestBody DepartmentDto department) {
         departmentService.update(department, departmentId);
-        return ResponseEntity.ok(UPDATE_SUCCESS);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("{id}")
