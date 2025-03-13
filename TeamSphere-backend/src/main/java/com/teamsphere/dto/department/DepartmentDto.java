@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepartmentDto extends BaseDto {

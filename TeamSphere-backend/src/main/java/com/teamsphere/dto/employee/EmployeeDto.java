@@ -2,10 +2,7 @@ package com.teamsphere.dto.employee;
 
 import com.teamsphere.dto.BaseDto;
 import jakarta.validation.constraints.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@Builder
 @NoArgsConstructor
 @SuperBuilder
 public class EmployeeDto extends BaseDto {
