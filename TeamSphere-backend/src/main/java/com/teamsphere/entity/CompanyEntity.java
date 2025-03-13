@@ -35,7 +35,7 @@ public class CompanyEntity extends BaseEntity {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "company", orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "company", orphanRemoval = true)
     private List<ProjectEntity> projects;
 
     @Override
