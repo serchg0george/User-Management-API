@@ -29,4 +29,9 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
                 .build();
     }
 
+    @Override
+    public void updateFromDto(TaskDto dto, TaskEntity entity) {
+        entity.setTimeSpentMinutes(dto.getTimeSpentMinutes());
+        entity.setTaskDescription(dto.getTaskDescription());
+    }
 }

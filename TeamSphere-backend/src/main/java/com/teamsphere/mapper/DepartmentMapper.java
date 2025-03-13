@@ -25,4 +25,10 @@ public class DepartmentMapper implements BaseMapper<DepartmentEntity, Department
                 .description(dto.getDescription())
                 .build();
     }
+
+    @Override
+    public void updateFromDto(DepartmentDto dto, DepartmentEntity entity) {
+        entity.setGroupName(dto.getGroupName());
+        entity.setDescription(dto.getDescription());
+    }
 }

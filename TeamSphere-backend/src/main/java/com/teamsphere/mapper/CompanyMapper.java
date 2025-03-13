@@ -31,4 +31,11 @@ public class CompanyMapper implements BaseMapper<CompanyEntity, CompanyDto> {
                 .build();
     }
 
+    @Override
+    public void updateFromDto(CompanyDto dto, CompanyEntity entity) {
+        entity.setName(dto.getName());
+        entity.setIndustry(dto.getIndustry());
+        entity.setAddress(dto.getAddress());
+        entity.setEmail(dto.getEmail());
+    }
 }

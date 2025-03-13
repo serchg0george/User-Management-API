@@ -79,4 +79,45 @@ public class EmployeeMapper implements BaseMapper<EmployeeEntity, EmployeeDto> {
         return employee;
     }
 
+    @Override
+    public void updateFromDto(EmployeeDto dto, EmployeeEntity entity) {
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setPin(dto.getPin());
+        entity.setEmail(dto.getEmail());
+        entity.setAddress(dto.getAddress());
+
+        if (dto.getDepartmentId() != null) {
+            DepartmentEntity department = departmentRepository.findById(dto.getDepartmentId())
+                    .orElseThrow(() -> new NotFoundException(dto.getDepartmentId()));
+            entity.setDepartment(department);
+        }
+
+        if (dto.getPositionId() != null) {
+            PositionEntity position = positionRepository.findById(dto.getPositionId())
+                    .orElseThrow(() -> new NotFoundException(dto.getPositionId()));
+            entity.setPosition(position);
+        }
+
+        if (dto.getProjectIds() != null) {
+            List<ProjectEntity> projects = dto.getProjectIds().stream()
+                    .map(id -> projectRepository.findById(id)
+                            .orElseThrow(() -> new NotFoundException(id)))
+                    .toList();
+            entity.setProjects(projects);
+        }
+
+        if (dto.getTaskIds() != null) {
+            List<TaskEntity> tasks = dto.getTaskIds().stream()
+                    .map(id -> {
+                        TaskEntity task = taskRepository.findById(id)
+                                .orElseThrow(() -> new NotFoundException(id));
+                        task.setEmployee(entity);
+                        return task;
+                    })
+                    .toList();
+            entity.getTasks().clear();
+            entity.getTasks().addAll(tasks);
+        }
+    }
 }

@@ -25,4 +25,10 @@ public class PositionMapper implements BaseMapper<PositionEntity, PositionDto> {
                 .yearsOfExperience(dto.getYearsOfExperience())
                 .build();
     }
+
+    @Override
+    public void updateFromDto(PositionDto dto, PositionEntity entity) {
+        entity.setPositionName(dto.getPositionName());
+        entity.setYearsOfExperience(dto.getYearsOfExperience());
+    }
 }

@@ -47,8 +47,7 @@ public abstract class GenericServiceImpl<E extends BaseEntity, D extends BaseDto
     @Transactional
     public D update(D dto, Long id) {
         E entityDb = getRepository().findById(id).orElseThrow(() -> new NotFoundException(id));
-        E entityForUpdate = getMapper().toEntity(dto);
-        entityForUpdate.setId(entityDb.getId());
-        return getMapper().toDto(getRepository().save(entityForUpdate));
+        getMapper().updateFromDto(dto, entityDb);
+        return getMapper().toDto(getRepository().save(entityDb));
     }
 }

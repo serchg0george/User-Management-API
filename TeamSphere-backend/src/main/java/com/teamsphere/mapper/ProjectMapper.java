@@ -42,13 +42,26 @@ public class ProjectMapper implements BaseMapper<ProjectEntity, ProjectDto> {
         CompanyEntity company = companyRepository.findById(dto.getCompanyId())
                 .orElseThrow(() -> new NotFoundException(dto.getCompanyId()));
 
-        return new ProjectEntity(
-                dto.getName(),
-                dto.getDescription(),
-                LocalDate.parse(dto.getStartDate()),
-                LocalDate.parse(dto.getFinishDate()),
-                ProjectStatus.valueOf(dto.getStatus()),
-                company
-        );
+        return ProjectEntity.builder()
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .startDate(LocalDate.parse(dto.getStartDate()))
+                .finishDate(LocalDate.parse(dto.getFinishDate()))
+                .status(ProjectStatus.valueOf(dto.getStatus()))
+                .company(company)
+                .build();
+    }
+
+    @Override
+    public void updateFromDto(ProjectDto dto, ProjectEntity entity) {
+        CompanyEntity company = companyRepository.findById(dto.getCompanyId())
+                .orElseThrow(() -> new NotFoundException(dto.getCompanyId()));
+
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setStartDate(LocalDate.parse(dto.getStartDate()));
+        entity.setFinishDate(LocalDate.parse(dto.getFinishDate()));
+        entity.setStatus(ProjectStatus.valueOf(dto.getStatus()));
+        entity.setCompany(company);
     }
 }
