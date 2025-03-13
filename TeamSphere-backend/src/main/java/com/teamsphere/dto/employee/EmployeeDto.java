@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Builder
 @NoArgsConstructor
 @SuperBuilder
 public class EmployeeDto extends BaseDto {

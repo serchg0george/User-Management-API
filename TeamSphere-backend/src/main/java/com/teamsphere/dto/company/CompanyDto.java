@@ -6,13 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class CompanyDto extends BaseDto {
 
     @NotBlank
