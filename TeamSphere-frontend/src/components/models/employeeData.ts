@@ -7,6 +7,6 @@ export interface EmployeeData {
     email: string;
     departmentId: number;
     positionId: number;
-    timeSheetEmployeeId: number;
+    taskIds: [number];
     projectIds: [number];
 }

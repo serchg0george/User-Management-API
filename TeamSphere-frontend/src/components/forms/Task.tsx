@@ -1,40 +1,40 @@
 import {useEffect, useState} from "react";
 import api from '../../api/api.ts';
 import {useNavigate} from 'react-router-dom';
-import {TimesheetData} from "../models/timesheetData.ts";
+import {TaskData} from "../models/taskData.ts";
 
-const Timesheet = () => {
+const Task = () => {
     const navigate = useNavigate();
 
-    const [timesheets, setTimesheets] = useState<TimesheetData[]>(() => {
+    const [tasks, setTasks] = useState<TaskData[]>(() => {
         return [];
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
 
     useEffect(() => {
-        const fetchTimesheets = async () => {
+        const fetchTasks = async () => {
             try {
-                const response = await api.get('/api/v1/timesheet');
+                const response = await api.get('/api/v1/task');
 
-                const timesheetsData = response.data.content;
+                const tasksData = response.data.content;
 
-                if (!Array.isArray(timesheetsData)) {
+                if (!Array.isArray(tasksData)) {
                     throw new Error('Data isn\'t array');
                 }
 
-                setTimesheets(timesheetsData);
+                setTasks(tasksData);
                 setError('');
             } catch (error) {
                 console.error('Error:', error);
                 setError((error as Error).message);
-                setTimesheets([]);
+                setTasks([]);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchTimesheets();
+        fetchTasks();
     }, [navigate]);
 
     if (loading) {
@@ -47,19 +47,19 @@ const Timesheet = () => {
 
     const handleDelete = async (id: number) => {
         try {
-            await api.delete(`/api/v1/timesheet/${id}`);
-            setTimesheets(timesheets.filter(timesheet => timesheet.id !== id));
+            await api.delete(`/api/v1/task/${id}`);
+            setTasks(tasks.filter(task => task.id !== id));
         } catch (error) {
-            console.error('Error deleting timesheet:', error);
+            console.error('Error deleting task:', error);
         }
     };
 
     const handleEdit = (id: number) => {
-        navigate(`/timesheet/edit/${id}`);
+        navigate(`/task/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/timesheet/add');
+        navigate('/task/add');
     };
 
     const handleBackToNav = () => {
@@ -68,26 +68,26 @@ const Timesheet = () => {
 
     return (
         <div>
-            <h1>Timesheet List</h1>
+            <h1>Task List</h1>
             <button onClick={handleBackToNav}>Back to navigation</button>
-            <button onClick={handleAdd}>Add Timesheet</button>
+            <button onClick={handleAdd}>Add Task</button>
             <table>
                 <thead>
                 <tr>
                     <th>Time spent(minutes)</th>
                     <th>Task description</th>
-                    <th>Role ID</th>
+                    <th>Role</th>
                 </tr>
                 </thead>
                 <tbody>
-                {timesheets.map((timesheet) => (
-                    <tr key={timesheet.id}>
-                        <td>{timesheet.timeSpentMinutes}</td>
-                        <td>{timesheet.taskDescription}</td>
-                        <td>{timesheet.roleId}</td>
+                {tasks.map((task) => (
+                    <tr key={task.id}>
+                        <td>{task.timeSpentMinutes}</td>
+                        <td>{task.taskDescription}</td>
+                        <td>{task.role}</td>
                         <td>
-                            <button onClick={() => handleEdit(timesheet.id)}>Edit</button>
-                            <button onClick={() => handleDelete(timesheet.id)}>Delete</button>
+                            <button onClick={() => handleEdit(task.id)}>Edit</button>
+                            <button onClick={() => handleDelete(task.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}
@@ -97,4 +97,4 @@ const Timesheet = () => {
     );
 };
 
-export default Timesheet;
+export default Task;

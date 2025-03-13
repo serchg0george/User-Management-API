@@ -1,6 +1,6 @@
-export interface TimesheetData {
+export interface TaskData {
     id: number;
     timeSpentMinutes: number;
     taskDescription: string;
-    roleId: number;
+    role: string;
 }

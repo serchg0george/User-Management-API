@@ -45,15 +45,9 @@ const Navigation: React.FC = () => {
                 </button>
                 <button
                     className="nav-link"
-                    onClick={() => handleNavigation('/role')}
+                    onClick={() => handleNavigation('/task')}
                 >
-                    Roles
-                </button>
-                <button
-                    className="nav-link"
-                    onClick={() => handleNavigation('/timesheet')}
-                >
-                    Timesheets
+                    Tasks
                 </button>
             </div>
         </div>

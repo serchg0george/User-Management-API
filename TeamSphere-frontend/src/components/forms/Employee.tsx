@@ -81,7 +81,7 @@ const Employee = () => {
                     <th>Address</th>
                     <th>Department ID</th>
                     <th>Position ID</th>
-                    <th>Timesheet ID</th>
+                    <th>Task ID</th>
                     <th>Project Ids</th>
                 </tr>
                 </thead>
@@ -95,7 +95,7 @@ const Employee = () => {
                         <td>{department.email}</td>
                         <td>{department.departmentId}</td>
                         <td>{department.positionId}</td>
-                        <td>{department.timeSheetEmployeeId}</td>
+                        <td>{department.taskIds}</td>
                         <td>{department.projectIds}</td>
                         <td>
                             <button onClick={() => handleEdit(department.id)}>Edit</button>
