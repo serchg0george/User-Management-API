@@ -3,13 +3,32 @@ package com.teamsphere.mapper;
 import com.teamsphere.dto.company.CompanyDto;
 import com.teamsphere.entity.CompanyEntity;
 import com.teamsphere.mapper.base.BaseMapper;
-import org.mapstruct.Mapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface CompanyMapper extends BaseMapper<CompanyEntity, CompanyDto> {
-    @Override
-    CompanyDto toDto(CompanyEntity entity);
+@Component
+@RequiredArgsConstructor
+public class CompanyMapper implements BaseMapper<CompanyEntity, CompanyDto> {
 
     @Override
-    CompanyEntity toEntity(CompanyDto dto);
+    public CompanyDto toDto(CompanyEntity entity) {
+        return CompanyDto.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .industry(entity.getIndustry())
+                .address(entity.getAddress())
+                .email(entity.getEmail())
+                .build();
+    }
+
+    @Override
+    public CompanyEntity toEntity(CompanyDto dto) {
+        return CompanyEntity.builder()
+                .name(dto.getName())
+                .industry(dto.getIndustry())
+                .address(dto.getAddress())
+                .email(dto.getEmail())
+                .build();
+    }
+
 }

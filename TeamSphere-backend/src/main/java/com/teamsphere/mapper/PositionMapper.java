@@ -3,13 +3,26 @@ package com.teamsphere.mapper;
 import com.teamsphere.dto.position.PositionDto;
 import com.teamsphere.entity.PositionEntity;
 import com.teamsphere.mapper.base.BaseMapper;
-import org.mapstruct.Mapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface PositionMapper extends BaseMapper<PositionEntity, PositionDto> {
+@Component
+@RequiredArgsConstructor
+public class PositionMapper implements BaseMapper<PositionEntity, PositionDto> {
     @Override
-    PositionDto toDto(PositionEntity entity);
+    public PositionDto toDto(PositionEntity entity) {
+        return PositionDto.builder()
+                .id(entity.getId())
+                .positionName(entity.getPositionName())
+                .yearsOfExperience(entity.getYearsOfExperience())
+                .build();
+    }
 
     @Override
-    PositionEntity toEntity(PositionDto dto);
+    public PositionEntity toEntity(PositionDto dto) {
+        return PositionEntity.builder()
+                .positionName(dto.getPositionName())
+                .yearsOfExperience(dto.getYearsOfExperience())
+                .build();
+    }
 }
