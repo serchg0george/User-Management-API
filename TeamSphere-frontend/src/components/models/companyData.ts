@@ -1,5 +1,5 @@
 export interface CompanyData {
-    id: number;
+    id?: number;
     name: string;
     industry: string;
     address: string;
