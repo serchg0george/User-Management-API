@@ -1,5 +1,8 @@
 import React from 'react';
 import '@/app/App.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import Company from '@/components/forms/Company.tsx';
 import Auth from '@/components/forms/AuthForm.tsx';
