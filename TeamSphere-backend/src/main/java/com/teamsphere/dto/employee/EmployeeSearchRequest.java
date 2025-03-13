@@ -1,4 +1,6 @@
 package com.teamsphere.dto.employee;
 
-public record EmployeeSearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record EmployeeSearchRequest(@NotEmpty String query) {
 }

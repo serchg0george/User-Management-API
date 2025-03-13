@@ -48,27 +48,26 @@ public class PositionServiceImpl extends GenericServiceImpl<PositionEntity, Posi
         List<Predicate> predicates = new ArrayList<>();
         Root<PositionEntity> root = criteriaQuery.from(PositionEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate roleName = criteriaBuilder.like(root.get("positionName"), query);
 
-            try {
-                Integer yearsOfExperienceQuery = Integer.parseInt(request.query());
-                Predicate yearsOfExperience = criteriaBuilder.equal(root.get("yearsOfExperience"), yearsOfExperienceQuery);
-                predicates.add(criteriaBuilder.or(roleName, yearsOfExperience));
-            } catch (NumberFormatException e) {
-                predicates.add(roleName);
-            }
+        String query = "%" + request.query() + "%";
+        Predicate roleName = criteriaBuilder.like(root.get("positionName"), query);
 
+        try {
+            Integer yearsOfExperienceQuery = Integer.parseInt(request.query());
+            Predicate yearsOfExperience = criteriaBuilder.equal(root.get("yearsOfExperience"), yearsOfExperienceQuery);
+            predicates.add(criteriaBuilder.or(roleName, yearsOfExperience));
+        } catch (NumberFormatException e) {
+            predicates.add(roleName);
         }
+
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<PositionEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<PositionEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         PositionSearchResponse response = new PositionSearchResponse();
 
-        var positions = query.getResultList().stream().map(positionMapper::toDto).toList();
+        var positions = tQuery.getResultList().stream().map(positionMapper::toDto).toList();
 
         response.setPositions(positions);
         response.setPositionCount(positions.size());

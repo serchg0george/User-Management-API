@@ -1,4 +1,6 @@
 package com.teamsphere.dto.project;
 
-public record ProjectSearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record ProjectSearchRequest(@NotEmpty String query) {
 }

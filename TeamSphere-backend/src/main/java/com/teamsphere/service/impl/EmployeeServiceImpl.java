@@ -49,30 +49,30 @@ public class EmployeeServiceImpl extends GenericServiceImpl<EmployeeEntity, Empl
         List<Predicate> predicates = new ArrayList<>();
         Root<EmployeeEntity> root = criteriaQuery.from(EmployeeEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate firstName = criteriaBuilder.like(root.get("firstName"), query);
-            Predicate lastName = criteriaBuilder.like(root.get("lastName"), query);
-            Predicate email = criteriaBuilder.like(root.get("email"), query);
 
-            try {
-                Integer pinQuery = Integer.parseInt(request.query());
-                Predicate pin = criteriaBuilder.equal(root.get("pin"), pinQuery);
-                predicates.add(criteriaBuilder.or(firstName, lastName, email, pin));
-            } catch (NumberFormatException e) {
-                log.info("Query '{}' is not a valid pin", e.getMessage());
-            }
+        String query = "%" + request.query() + "%";
+        Predicate firstName = criteriaBuilder.like(root.get("firstName"), query);
+        Predicate lastName = criteriaBuilder.like(root.get("lastName"), query);
+        Predicate email = criteriaBuilder.like(root.get("email"), query);
 
-            predicates.add(criteriaBuilder.or(firstName, lastName, email));
+        try {
+            Integer pinQuery = Integer.parseInt(request.query());
+            Predicate pin = criteriaBuilder.equal(root.get("pin"), pinQuery);
+            predicates.add(criteriaBuilder.or(firstName, lastName, email, pin));
+        } catch (NumberFormatException e) {
+            log.info("Query '{}' is not a valid pin", e.getMessage());
         }
+
+        predicates.add(criteriaBuilder.or(firstName, lastName, email));
+
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<EmployeeEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<EmployeeEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         EmployeeSearchResponse response = new EmployeeSearchResponse();
 
-        var employees = query.getResultList().stream().map(employeeMapper::toDto).toList();
+        var employees = tQuery.getResultList().stream().map(employeeMapper::toDto).toList();
 
         response.setEmployees(employees);
         response.setEmployeeCount(employees.size());

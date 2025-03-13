@@ -52,50 +52,49 @@ public class ProjectServiceImpl extends GenericServiceImpl<ProjectEntity, Projec
         List<Predicate> predicates = new ArrayList<>();
         Root<ProjectEntity> root = criteriaQuery.from(ProjectEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate name = criteriaBuilder.like(root.get("name"), query);
-            Predicate description = criteriaBuilder.like(root.get("description"), query);
+        String query = "%" + request.query() + "%";
+        Predicate name = criteriaBuilder.like(root.get("name"), query);
+        Predicate description = criteriaBuilder.like(root.get("description"), query);
 
-            List<Predicate> datePredicates = new ArrayList<>();
-            boolean isDateQuery = false;
-            try {
-                LocalDate queryDate = LocalDate.parse(request.query(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                datePredicates.add(criteriaBuilder.equal(root.get("startDate"), queryDate));
-                datePredicates.add(criteriaBuilder.equal(root.get("finishDate"), queryDate));
-                isDateQuery = true;
-            } catch (DateTimeParseException e) {
-                log.warn("Failed to parse date: {}", request.query(), e);
-            }
-
-            Predicate status = null;
-            if (!isDateQuery) {
-                try {
-                    ProjectStatus projectStatus = ProjectStatus.valueOf(request.query().toUpperCase());
-                    status = criteriaBuilder.equal(root.get("status"), projectStatus);
-                } catch (IllegalArgumentException e) {
-                    log.info("Query '{}' is not a valid project status", request.query());
-                }
-            }
-
-            List<Predicate> allPredicates = new ArrayList<>();
-            allPredicates.add(name);
-            allPredicates.add(description);
-            allPredicates.addAll(datePredicates);
-            if (status != null) {
-                allPredicates.add(status);
-            }
-
-            predicates.add(criteriaBuilder.or(allPredicates.toArray(new Predicate[0])));
+        List<Predicate> datePredicates = new ArrayList<>();
+        boolean isDateQuery = false;
+        try {
+            LocalDate queryDate = LocalDate.parse(request.query(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            datePredicates.add(criteriaBuilder.equal(root.get("startDate"), queryDate));
+            datePredicates.add(criteriaBuilder.equal(root.get("finishDate"), queryDate));
+            isDateQuery = true;
+        } catch (DateTimeParseException e) {
+            log.warn("Failed to parse date: {}", request.query(), e);
         }
+
+        Predicate status = null;
+        if (!isDateQuery) {
+            try {
+                ProjectStatus projectStatus = ProjectStatus.valueOf(request.query().toUpperCase());
+                status = criteriaBuilder.equal(root.get("status"), projectStatus);
+            } catch (IllegalArgumentException e) {
+                log.info("Query '{}' is not a valid project status", request.query());
+            }
+        }
+
+        List<Predicate> allPredicates = new ArrayList<>();
+        allPredicates.add(name);
+        allPredicates.add(description);
+        allPredicates.addAll(datePredicates);
+        if (status != null) {
+            allPredicates.add(status);
+        }
+
+        predicates.add(criteriaBuilder.or(allPredicates.toArray(new Predicate[0])));
+
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<ProjectEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<ProjectEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         ProjectSearchResponse response = new ProjectSearchResponse();
 
-        var projects = query.getResultList().stream().map(projectMapper::toDto).toList();
+        var projects = tQuery.getResultList().stream().map(projectMapper::toDto).toList();
 
         response.setProjects(projects);
         response.setProjectCount(projects.size());

@@ -1,4 +1,6 @@
 package com.teamsphere.dto.position;
 
-public record PositionSearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record PositionSearchRequest(@NotEmpty String query) {
 }

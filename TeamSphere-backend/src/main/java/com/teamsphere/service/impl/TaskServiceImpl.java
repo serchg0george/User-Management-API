@@ -48,26 +48,24 @@ public class TaskServiceImpl extends GenericServiceImpl<TaskEntity, TaskDto> imp
         List<Predicate> predicates = new ArrayList<>();
         Root<TaskEntity> root = criteriaQuery.from(TaskEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate taskDescription = criteriaBuilder.like(root.get("taskDescription"), query);
-            try {
-                Integer timeSpentMinutesQuery = Integer.parseInt(request.query());
-                Predicate timeSpentMinutes = criteriaBuilder.equal(root.get("timeSpentMinutes"), timeSpentMinutesQuery);
-                predicates.add(criteriaBuilder.or(timeSpentMinutes, taskDescription));
-            } catch (NumberFormatException e) {
-                log.info("Query '{}' is not a valid number", e.getMessage());
-            }
-            predicates.add(taskDescription);
+        String query = "%" + request.query() + "%";
+        Predicate taskDescription = criteriaBuilder.like(root.get("taskDescription"), query);
+        try {
+            Integer timeSpentMinutesQuery = Integer.parseInt(request.query());
+            Predicate timeSpentMinutes = criteriaBuilder.equal(root.get("timeSpentMinutes"), timeSpentMinutesQuery);
+            predicates.add(criteriaBuilder.or(timeSpentMinutes, taskDescription));
+        } catch (NumberFormatException e) {
+            log.info("Query '{}' is not a valid number", e.getMessage());
         }
+        predicates.add(taskDescription);
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<TaskEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<TaskEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         TaskSearchResponse response = new TaskSearchResponse();
 
-        var timeSheets = query.getResultList().stream().map(taskMapper::toDto).toList();
+        var timeSheets = tQuery.getResultList().stream().map(taskMapper::toDto).toList();
 
         response.setTasks(timeSheets);
         response.setTaskCount(timeSheets.size());

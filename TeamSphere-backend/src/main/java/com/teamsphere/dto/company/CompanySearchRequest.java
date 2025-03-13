@@ -1,4 +1,6 @@
 package com.teamsphere.dto.company;
 
-public record CompanySearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record CompanySearchRequest(@NotEmpty String query) {
 }

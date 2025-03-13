@@ -48,21 +48,19 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentEntity, 
         List<Predicate> predicates = new ArrayList<>();
         Root<DepartmentEntity> root = criteriaQuery.from(DepartmentEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate groupName = criteriaBuilder.like(root.get("groupName"), query);
-            Predicate description = criteriaBuilder.like(root.get("description"), query);
+        String query = "%" + request.query() + "%";
+        Predicate groupName = criteriaBuilder.like(root.get("groupName"), query);
+        Predicate description = criteriaBuilder.like(root.get("description"), query);
 
-            predicates.add(criteriaBuilder.or(groupName, description));
-        }
+        predicates.add(criteriaBuilder.or(groupName, description));
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<DepartmentEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<DepartmentEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         DepartmentSearchResponse response = new DepartmentSearchResponse();
 
-        var departments = query.getResultList().stream().map(departmentMapper::toDto).toList();
+        var departments = tQuery.getResultList().stream().map(departmentMapper::toDto).toList();
 
         response.setDepartments(departments);
         response.setDepartmentCount(departments.size());

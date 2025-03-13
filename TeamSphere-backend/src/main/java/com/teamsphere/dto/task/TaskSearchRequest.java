@@ -1,4 +1,6 @@
 package com.teamsphere.dto.task;
 
-public record TaskSearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record TaskSearchRequest(@NotEmpty String query) {
 }

@@ -1,4 +1,6 @@
 package com.teamsphere.dto.department;
 
-public record DepartmentSearchRequest(String query) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record DepartmentSearchRequest(@NotEmpty String query) {
 }

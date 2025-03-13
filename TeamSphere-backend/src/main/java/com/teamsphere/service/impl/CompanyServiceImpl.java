@@ -48,23 +48,21 @@ public class CompanyServiceImpl extends GenericServiceImpl<CompanyEntity, Compan
         List<Predicate> predicates = new ArrayList<>();
         Root<CompanyEntity> root = criteriaQuery.from(CompanyEntity.class);
 
-        if (request.query() != null && !request.query().isBlank()) {
-            String query = "%" + request.query() + "%";
-            Predicate name = criteriaBuilder.like(root.get("name"), query);
-            Predicate industry = criteriaBuilder.like(root.get("industry"), query);
-            Predicate address = criteriaBuilder.like(root.get("address"), query);
-            Predicate email = criteriaBuilder.like(root.get("email"), query);
+        String query = "%" + request.query() + "%";
+        Predicate name = criteriaBuilder.like(root.get("name"), query);
+        Predicate industry = criteriaBuilder.like(root.get("industry"), query);
+        Predicate address = criteriaBuilder.like(root.get("address"), query);
+        Predicate email = criteriaBuilder.like(root.get("email"), query);
 
-            predicates.add(criteriaBuilder.or(name, industry, address, email));
-        }
+        predicates.add(criteriaBuilder.or(name, industry, address, email));
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 
-        TypedQuery<CompanyEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<CompanyEntity> tQuery = entityManager.createQuery(criteriaQuery);
 
         CompanySearchResponse response = new CompanySearchResponse();
 
-        var companies = query.getResultList().stream().map(companyMapper::toDto).toList();
+        var companies = tQuery.getResultList().stream().map(companyMapper::toDto).toList();
 
         response.setCompanies(companies);
         response.setCompanyCount(companies.size());
