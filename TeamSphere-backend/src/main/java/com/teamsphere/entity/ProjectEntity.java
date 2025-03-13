@@ -33,7 +33,7 @@ public class ProjectEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private CompanyEntity company;
 
     @Override
