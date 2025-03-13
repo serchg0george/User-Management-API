@@ -25,9 +25,9 @@ public class TaskDto extends BaseDto {
     @Size(min = 1, max = 150)
     private String taskDescription;
 
-    @NotNull(message = "Id cannot be null")
-    @Positive(message = "Id must be a positive number")
-    @Min(value = 1, message = "Id cannot be lower than 1")
-    private Long roleId;
+    @NotBlank
+    @NotNull
+    @Size(max = 100)
+    private String role;
 
 }

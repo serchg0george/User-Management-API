@@ -17,6 +17,7 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
                 .id(entity.getId())
                 .timeSpentMinutes(entity.getTimeSpentMinutes())
                 .taskDescription(entity.getTaskDescription())
+                .role(entity.getRole())
                 .build();
     }
 
@@ -26,6 +27,7 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
         return TaskEntity.builder()
                 .timeSpentMinutes(dto.getTimeSpentMinutes())
                 .taskDescription(dto.getTaskDescription())
+                .role(dto.getRole())
                 .build();
     }
 
@@ -33,5 +35,6 @@ public class TaskMapper implements BaseMapper<TaskEntity, TaskDto> {
     public void updateFromDto(TaskDto dto, TaskEntity entity) {
         entity.setTimeSpentMinutes(dto.getTimeSpentMinutes());
         entity.setTaskDescription(dto.getTaskDescription());
+        entity.setRole(dto.getRole());
     }
 }
