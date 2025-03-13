@@ -2,10 +2,7 @@ package com.teamsphere.entity;
 
 import com.teamsphere.entity.enums.ProjectStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "t_projects")
 public class ProjectEntity extends BaseEntity {
