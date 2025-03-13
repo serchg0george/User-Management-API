@@ -1,41 +1,14 @@
-import {useEffect, useState} from "react";
-import api from '../../api/api.ts';
+import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
-import {CompanyData} from "../models/companyData.ts";
+import {CompanyData} from "@/components/models/companyData.ts";
+import api from '../../api/api';
+import AddCompanyDialog from "./AddCompanyDialog";
+import useFetchCompanies from "@/hooks/useFetchCompanies.ts";
 
 const Company = () => {
     const navigate = useNavigate();
-
-    const [companies, setCompanies] = useState<CompanyData[]>(() => {
-        return [];
-    });
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-        const fetchCompanies = async () => {
-            try {
-                const response = await api.get('/api/v1/company');
-
-                const companiesData = response.data.content;
-
-                if (!Array.isArray(companiesData)) {
-                    throw new Error('Data isn\'t array');
-                }
-
-                setCompanies(companiesData);
-                setError('');
-            } catch (error) {
-                console.error('Error:', error);
-                setError((error as Error).message);
-                setCompanies([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCompanies();
-    }, [navigate]);
+    const {data: companies, loading, error, fetchCompanies} = useFetchCompanies();
+    const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,26 +18,36 @@ const Company = () => {
         return <div>Error: {error}</div>;
     }
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id?: number) => {
         try {
             await api.delete(`/api/v1/company/${id}`);
-            setCompanies(companies.filter(company => company.id !== id));
+            fetchCompanies();
         } catch (error) {
-            console.error('Error deleting company:', error);
+            console.error("Error deleting company:", error);
         }
     };
 
-    const handleEdit = (id: number) => {
+    const handleEdit = (id?: number) => {
         navigate(`/company/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/company/add');
+        setShowAddDialog(true);
+    };
+
+    const handleAddCompany = async (newCompany: CompanyData) => {
+        try {
+            await api.post("/api/v1/company", newCompany);
+            fetchCompanies();
+            setShowAddDialog(false);
+        } catch (error) {
+            console.error("Error adding company:", error);
+        }
     };
 
     const handleBackToNav = () => {
-        navigate('/main');
-    }
+        navigate("/main");
+    };
 
     return (
         <div>
@@ -96,6 +79,12 @@ const Company = () => {
                 ))}
                 </tbody>
             </table>
+
+            <AddCompanyDialog
+                visible={showAddDialog}
+                onHide={() => setShowAddDialog(false)}
+                onAdd={handleAddCompany}
+            />
         </div>
     );
 };
