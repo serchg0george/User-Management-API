@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "@/api/api";
-import { CompanyData } from "@/components/models/companyData";
+import {CompanyData} from "@/components/models/companyData";
 
 
 const useFetchCompanies = () => {
@@ -33,7 +33,7 @@ const useFetchCompanies = () => {
         fetchCompanies();
     }, []);
 
-    return { data, loading, error, fetchCompanies };
+    return {data, loading, error, fetchCompanies};
 };
 
 export default useFetchCompanies;

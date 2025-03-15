@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Dialog } from "primereact/dialog";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
+import {useState} from "react";
+import {Dialog} from "primereact/dialog";
+import {InputText} from "primereact/inputtext";
+import {Button} from "primereact/button";
 import {CompanyData} from "@/components/models/companyData.ts";
 
 interface AddCompanyDialogProps {
@@ -10,7 +10,7 @@ interface AddCompanyDialogProps {
     onAdd: (company: CompanyData) => void;
 }
 
-const AddCompanyDialog = ({ visible, onHide, onAdd }: AddCompanyDialogProps) => {
+const AddCompanyDialog = ({visible, onHide, onAdd}: AddCompanyDialogProps) => {
     const [company, setCompany] = useState<CompanyData>({
         name: '',
         industry: '',
@@ -27,7 +27,6 @@ const AddCompanyDialog = ({ visible, onHide, onAdd }: AddCompanyDialogProps) => 
 
     const handleAdd = () => {
         onAdd(company);
-        // Сброс формы после добавления
         setCompany({
             name: '',
             industry: '',
@@ -38,8 +37,8 @@ const AddCompanyDialog = ({ visible, onHide, onAdd }: AddCompanyDialogProps) => 
 
     const footer = (
         <div>
-            <Button label="Add" icon="pi pi-check" onClick={handleAdd} />
-            <Button label="Cancel" icon="pi pi-times" onClick={onHide} className="p-button-secondary" />
+            <Button label="Add" icon="pi pi-check" onClick={handleAdd}/>
+            <Button label="Cancel" icon="pi pi-times" onClick={onHide} className="p-button-secondary"/>
         </div>
     );
 
@@ -49,25 +48,25 @@ const AddCompanyDialog = ({ visible, onHide, onAdd }: AddCompanyDialogProps) => 
             visible={visible}
             onHide={onHide}
             footer={footer}
-            style={{ width: '100vw', height: '100vh' }} // форма на весь экран
-            className="full-screen-dialog"  // можно добавить дополнительные классы для стилизации
+            style={{width: '100vw', height: '100vh'}}
+            className="full-screen-dialog"
         >
             <div className="p-fluid">
                 <div className="p-field">
                     <label htmlFor="name">Name</label>
-                    <InputText id="name" name="name" value={company.name} onChange={handleInputChange} />
+                    <InputText id="name" name="name" value={company.name} onChange={handleInputChange}/>
                 </div>
                 <div className="p-field">
                     <label htmlFor="industry">Industry</label>
-                    <InputText id="industry" name="industry" value={company.industry} onChange={handleInputChange} />
+                    <InputText id="industry" name="industry" value={company.industry} onChange={handleInputChange}/>
                 </div>
                 <div className="p-field">
                     <label htmlFor="address">Address</label>
-                    <InputText id="address" name="address" value={company.address} onChange={handleInputChange} />
+                    <InputText id="address" name="address" value={company.address} onChange={handleInputChange}/>
                 </div>
                 <div className="p-field">
                     <label htmlFor="email">Email</label>
-                    <InputText id="email" name="email" value={company.email} onChange={handleInputChange} />
+                    <InputText id="email" name="email" value={company.email} onChange={handleInputChange}/>
                 </div>
             </div>
         </Dialog>
