@@ -1,8 +1,8 @@
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
-import api from "../../api/api.ts";
-import {DepartmentData} from "../models/departmentData.ts";
-import AddDepartmentDialog from "./AddDepartmentDialog";
+import api from "../../../api/api.ts";
+import {DepartmentData} from "../../models/departmentData.ts";
+import AddDepartmentDialog from "./AddDepartmentDialog.tsx";
 import useFetchDepartments from "@/hooks/useFetchDepartments.ts"
 
 const Department = () => {

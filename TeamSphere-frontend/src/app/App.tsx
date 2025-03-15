@@ -4,14 +4,14 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
-import Company from '@/components/forms/Company.tsx';
+import Company from '@/components/forms/company/Company.tsx';
 import Auth from '@/components/forms/AuthForm.tsx';
-import Navigation from '../components/forms/Navigation.tsx';
-import Department from "@/components/forms/Department.tsx";
-import Position from "@/components/forms/Position.tsx";
-import Project from "@/components/forms/Project.tsx";
-import Task from "@/components/forms/Task.tsx";
-import Employee from "@/components/forms/Employee.tsx";
+import Navigation from '../components/forms/navigation/Navigation.tsx';
+import Department from "@/components/forms/department/Department.tsx";
+import Position from "@/components/forms/position/Position.tsx";
+import Project from "@/components/forms/project/Project.tsx";
+import Task from "@/components/forms/task/Task.tsx";
+import Employee from "@/components/forms/employee/Employee.tsx";
 
 const App: React.FC = () => {
     return (

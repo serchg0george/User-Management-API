@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import api from '../../api/api.ts';
+import api from '../../../api/api.ts';
 import {useNavigate} from 'react-router-dom';
-import {TaskData} from "../models/taskData.ts";
+import {TaskData} from "../../models/taskData.ts";
 
 const Task = () => {
     const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import api from '../../api/api.ts';
+import api from '../../../api/api.ts';
 import {useNavigate} from 'react-router-dom';
-import {ProjectData} from "../models/projectData.ts";
+import {ProjectData} from "../../models/projectData.ts";
 
 const Project = () => {
     const navigate = useNavigate();

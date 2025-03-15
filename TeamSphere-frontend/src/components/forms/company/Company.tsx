@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import {CompanyData} from "@/components/models/companyData.ts";
-import api from '../../api/api';
-import AddCompanyDialog from "./AddCompanyDialog";
+import api from '../../../api/api.ts';
+import AddCompanyDialog from "./AddCompanyDialog.tsx";
 import useFetchCompanies from "@/hooks/useFetchCompanies.ts";
 
 const Company = () => {
