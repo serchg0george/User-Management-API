@@ -1,41 +1,14 @@
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import api from "../../../api/api.ts";
-import {EmployeeData} from "../../models/employeeData.ts";
+import useFetchEmployees from "@/hooks/useFetchEmployees.ts";
+import {EmployeeData} from "@/components/models/employeeData.ts";
+import AddEmployeeDialog from "@/components/forms/employee/AddEmployeeDialog.tsx";
 
 const Employee = () => {
     const navigate = useNavigate();
-
-    const [employee, setEmployee] = useState<EmployeeData[]>(() => {
-        return [];
-    });
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-        const fetchEmployees = async () => {
-            try {
-                const response = await api.get('/api/v1/employee');
-
-                const employeesData = response.data.content;
-
-                if (!Array.isArray(employeesData)) {
-                    throw new Error('Data isn\'t array');
-                }
-
-                setEmployee(employeesData);
-                setError('');
-            } catch (error) {
-                console.error('Error:', error);
-                setError((error as Error).message);
-                setEmployee([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchEmployees();
-    }, [navigate]);
+    const {data: employees, loading, error, fetchEmployees} = useFetchEmployees();
+    const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,21 +18,31 @@ const Employee = () => {
         return <div>Error: {error}</div>
     }
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: number | undefined) => {
         try {
             await api.delete(`/api/v1/employee/${id}`);
-            setEmployee(employee.filter(employee => employee.id !== id));
+            await fetchEmployees();
         } catch (error) {
             console.error('Error deleting employee:', error);
         }
     };
 
-    const handleEdit = (id: number) => {
+    const handleEdit = (id: number | undefined) => {
         navigate(`/employee/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/employee/add');
+        setShowAddDialog(true);
+    };
+
+    const handleAddEmployee = async (newEmployee: EmployeeData) => {
+        try {
+            await api.post("/api/v1/employee", newEmployee);
+            await fetchEmployees();
+            setShowAddDialog(false);
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
     };
 
     const handleBackToNav = () => {
@@ -86,25 +69,31 @@ const Employee = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {employee.map((department) => (
-                    <tr key={department.id}>
-                        <td>{department.firstName}</td>
-                        <td>{department.lastName}</td>
-                        <td>{department.pin}</td>
-                        <td>{department.address}</td>
-                        <td>{department.email}</td>
-                        <td>{department.departmentId}</td>
-                        <td>{department.positionId}</td>
-                        <td>{department.taskIds}</td>
-                        <td>{department.projectIds}</td>
+                {employees.map((employee) => (
+                    <tr key={employee.id}>
+                        <td>{employee.firstName}</td>
+                        <td>{employee.lastName}</td>
+                        <td>{employee.pin}</td>
+                        <td>{employee.address}</td>
+                        <td>{employee.email}</td>
+                        <td>{employee.departmentId}</td>
+                        <td>{employee.positionId}</td>
+                        <td>{employee.taskIds}</td>
+                        <td>{employee.projectIds}</td>
                         <td>
-                            <button onClick={() => handleEdit(department.id)}>Edit</button>
-                            <button onClick={() => handleDelete(department.id)}>Delete</button>
+                            <button onClick={() => handleEdit(employee.id)}>Edit</button>
+                            <button onClick={() => handleDelete(employee.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
+
+            <AddEmployeeDialog
+                visible={showAddDialog}
+                onHide={() => setShowAddDialog(false)}
+                onAdd={handleAddEmployee}
+            />
         </div>
     );
 };

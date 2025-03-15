@@ -1,5 +1,5 @@
 export interface EmployeeData {
-    id: number;
+    id?: number;
     firstName: string;
     lastName: string;
     pin: string;
@@ -7,6 +7,6 @@ export interface EmployeeData {
     email: string;
     departmentId: number;
     positionId: number;
-    taskIds: [number];
-    projectIds: [number];
+    taskIds: number[];
+    projectIds: number[];
 }
