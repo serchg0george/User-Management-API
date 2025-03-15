@@ -1,41 +1,14 @@
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import api from "../../../api/api.ts";
 import {PositionData} from "../../models/positionData.ts";
+import useFetchPositions from "@/hooks/useFetchPositions.ts";
+import AddPositionDialog from "@/components/forms/position/AddPositionDialog.tsx";
 
 const Position = () => {
     const navigate = useNavigate();
-
-    const [positions, setPositions] = useState<PositionData[]>(() => {
-        return [];
-    });
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-        const fetchPositions = async () => {
-            try {
-                const response = await api.get('/api/v1/position');
-
-                const positionsData = response.data.content;
-
-                if (!Array.isArray(positionsData)) {
-                    throw new Error('Data isn\'t array');
-                }
-
-                setPositions(positionsData);
-                setError('');
-            } catch (error) {
-                console.error('Error:', error);
-                setError((error as Error).message);
-                setPositions([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchPositions();
-    }, [navigate]);
+    const {data: positions, loading, error, fetchPositions} = useFetchPositions();
+    const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,26 +18,36 @@ const Position = () => {
         return <div>Error: {error}</div>
     }
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: number | undefined) => {
         try {
             await api.delete(`/api/v1/position/${id}`);
-            setPositions(positions.filter(position => position.id !== id));
+            await fetchPositions();
         } catch (error) {
             console.error('Error deleting position:', error);
         }
     };
 
-    const handleEdit = (id: number) => {
+    const handleEdit = (id: number | undefined) => {
         navigate(`/position/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/position/add');
+        setShowAddDialog(true);
+    };
+
+    const handleAddPosition = async (newPosition: PositionData) => {
+        try {
+            await api.post("/api/v1/position", newPosition);
+            await fetchPositions();
+            setShowAddDialog(false);
+        } catch (error) {
+            console.error('Error deleting position', error);
+        }
     };
 
     const handleBackToNav = () => {
         navigate('/main');
-    }
+    };
 
     return (
         <div>
@@ -91,6 +74,12 @@ const Position = () => {
                 ))}
                 </tbody>
             </table>
+
+            <AddPositionDialog
+                visible={showAddDialog}
+                onHide={() => setShowAddDialog(false)}
+                onAdd={handleAddPosition}
+            />
         </div>
     );
 };

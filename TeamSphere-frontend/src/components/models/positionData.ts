@@ -1,5 +1,5 @@
 export interface PositionData {
-    id: number;
+    id?: number;
     positionName: string;
     yearsOfExperience: number;
 }
