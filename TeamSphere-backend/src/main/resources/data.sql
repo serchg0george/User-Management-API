@@ -1,13 +1,13 @@
 -----------------------------------------------------------
 -- Clear tables (order can be adjusted based on FK constraints)
 -----------------------------------------------------------
-TRUNCATE TABLE t_projects_employees CASCADE ;
-TRUNCATE TABLE t_employees CASCADE ;
-TRUNCATE TABLE t_tasks CASCADE ;
-TRUNCATE TABLE t_projects CASCADE ;
-TRUNCATE TABLE t_companies CASCADE ;
-TRUNCATE TABLE t_positions CASCADE ;
-TRUNCATE TABLE t_departments CASCADE ;
+DELETE FROM t_projects_employees;
+DELETE FROM t_tasks;
+DELETE FROM t_employees;
+DELETE FROM t_projects;
+DELETE FROM t_companies;
+DELETE FROM t_positions;
+DELETE FROM t_departments;
 
 -----------------------------------------------------------
 -- Seeding the departments table (t_departments)
