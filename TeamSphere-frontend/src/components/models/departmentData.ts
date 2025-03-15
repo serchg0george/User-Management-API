@@ -1,5 +1,5 @@
 export interface DepartmentData {
-    id: number;
-    groupName: string;
+    id?: number;
+    departmentName: string;
     description: string;
 }

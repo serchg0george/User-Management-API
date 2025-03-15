@@ -1,41 +1,14 @@
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import api from "../../api/api.ts";
 import {DepartmentData} from "../models/departmentData.ts";
+import AddDepartmentDialog from "./AddDepartmentDialog";
+import useFetchDepartments from "@/hooks/useFetchDepartments.ts"
 
 const Department = () => {
     const navigate = useNavigate();
-
-    const [department, setDepartment] = useState<DepartmentData[]>(() => {
-        return [];
-    });
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-        const fetchDepartments = async () => {
-            try {
-                const response = await api.get('/api/v1/department');
-
-                const departmentsData = response.data.content;
-
-                if (!Array.isArray(departmentsData)) {
-                    throw new Error('Data isn\'t array');
-                }
-
-                setDepartment(departmentsData);
-                setError('');
-            } catch (error) {
-                console.error('Error:', error);
-                setError((error as Error).message);
-                setDepartment([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchDepartments();
-    }, [navigate]);
+    const {data: departments, loading, error, fetchDepartments} = useFetchDepartments();
+    const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,26 +18,36 @@ const Department = () => {
         return <div>Error: {error}</div>
     }
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: number | undefined) => {
         try {
             await api.delete(`/api/v1/department/${id}`);
-            setDepartment(department.filter(department => department.id !== id));
+            await fetchDepartments();
         } catch (error) {
             console.error('Error deleting department:', error);
         }
     };
 
-    const handleEdit = (id: number) => {
+    const handleEdit = (id: number | undefined) => {
         navigate(`/department/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/department/add');
+        setShowAddDialog(true)
+    };
+
+    const handleAddDepartment = async (newDepartment: DepartmentData) => {
+        try {
+            await api.post("/api/v1/department", newDepartment);
+            await fetchDepartments();
+            setShowAddDialog(false);
+        } catch (error) {
+            console.error('Error deleting department:', error);
+        }
     };
 
     const handleBackToNav = () => {
         navigate('/main');
-    }
+    };
 
     return (
         <div>
@@ -79,9 +62,9 @@ const Department = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {department.map((department) => (
+                {departments.map((department) => (
                     <tr key={department.id}>
-                        <td>{department.groupName}</td>
+                        <td>{department.departmentName}</td>
                         <td>{department.description}</td>
                         <td>
                             <button onClick={() => handleEdit(department.id)}>Edit</button>
@@ -91,6 +74,12 @@ const Department = () => {
                 ))}
                 </tbody>
             </table>
+
+            <AddDepartmentDialog
+                visible={showAddDialog}
+                onHide={() => setShowAddDialog(false)}
+                onAdd={handleAddDepartment}
+            />
         </div>
     );
 };
