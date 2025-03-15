@@ -21,7 +21,7 @@ const Company = () => {
     const handleDelete = async (id?: number) => {
         try {
             await api.delete(`/api/v1/company/${id}`);
-            fetchCompanies();
+            await fetchCompanies();
         } catch (error) {
             console.error("Error deleting company:", error);
         }
@@ -38,7 +38,7 @@ const Company = () => {
     const handleAddCompany = async (newCompany: CompanyData) => {
         try {
             await api.post("/api/v1/company", newCompany);
-            fetchCompanies();
+            await fetchCompanies();
             setShowAddDialog(false);
         } catch (error) {
             console.error("Error adding company:", error);
