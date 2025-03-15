@@ -12,7 +12,7 @@ TRUNCATE TABLE t_departments CASCADE ;
 -----------------------------------------------------------
 -- Seeding the departments table (t_departments)
 -----------------------------------------------------------
-INSERT INTO t_departments (id, group_name, description)
+INSERT INTO t_departments (id, department_name, description)
 VALUES (1, 'Department 1', 'Department description 1'),
        (2, 'Department 2', 'Department description 2'),
        (3, 'Department 3', 'Department description 3'),
