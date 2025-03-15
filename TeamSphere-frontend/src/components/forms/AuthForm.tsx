@@ -4,7 +4,7 @@ import {useForm, SubmitHandler} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 import {AuthFormData} from "../models/authFormData.ts";
 import {AuthResponse} from "../models/authResponseData.ts";
-import api from "@/api/api.ts";
+import {baseUrl} from "@/config/BaseUrl.ts";
 
 const AuthForm = () => {
     const [isRegister, setIsRegister] = useState<boolean>(true);
@@ -21,8 +21,8 @@ const AuthForm = () => {
     const onSubmit: SubmitHandler<AuthFormData> = async (data: AuthFormData) => {
 
         const url = isRegister
-            ? api + 'api/v1/auth/register'
-            : api + 'api/v1/auth/login';
+            ? baseUrl + '/api/v1/auth/register'
+            : baseUrl + '/api/v1/auth/login';
 
         try {
             const response = await axios.post<AuthResponse>(url, data);

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {baseUrl} from "@/config/BaseUrl.ts";
 
 const api = axios.create({
-    baseURL: 'http://192.168.100.60:8080',
+    baseURL: baseUrl,
 });
 
 api.interceptors.request.use((config) => {
