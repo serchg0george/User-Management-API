@@ -49,10 +49,10 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentEntity, 
         Root<DepartmentEntity> root = criteriaQuery.from(DepartmentEntity.class);
 
         String query = "%" + request.query() + "%";
-        Predicate groupName = criteriaBuilder.like(root.get("groupName"), query);
+        Predicate departmentName = criteriaBuilder.like(root.get("departmentName"), query);
         Predicate description = criteriaBuilder.like(root.get("description"), query);
 
-        predicates.add(criteriaBuilder.or(groupName, description));
+        predicates.add(criteriaBuilder.or(departmentName, description));
 
         criteriaQuery.where(criteriaBuilder.or(predicates.toArray(new Predicate[0])));
 

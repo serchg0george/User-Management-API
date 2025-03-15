@@ -13,7 +13,7 @@ public class DepartmentMapper implements BaseMapper<DepartmentEntity, Department
     public DepartmentDto toDto(DepartmentEntity entity) {
         return DepartmentDto.builder()
                 .id(entity.getId())
-                .groupName(entity.getGroupName())
+                .departmentName(entity.getDepartmentName())
                 .description(entity.getDescription())
                 .build();
     }
@@ -21,14 +21,14 @@ public class DepartmentMapper implements BaseMapper<DepartmentEntity, Department
     @Override
     public DepartmentEntity toEntity(DepartmentDto dto) {
         return DepartmentEntity.builder()
-                .groupName(dto.getGroupName())
+                .departmentName(dto.getDepartmentName())
                 .description(dto.getDescription())
                 .build();
     }
 
     @Override
     public void updateFromDto(DepartmentDto dto, DepartmentEntity entity) {
-        entity.setGroupName(dto.getGroupName());
+        entity.setDepartmentName(dto.getDepartmentName());
         entity.setDescription(dto.getDescription());
     }
 }

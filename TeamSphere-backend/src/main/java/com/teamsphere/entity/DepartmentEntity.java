@@ -19,8 +19,8 @@ import java.util.Objects;
 public class DepartmentEntity extends BaseEntity {
 
     @NotBlank
-    @Column(name = "group_name", nullable = false, length = 40)
-    private String groupName;
+    @Column(name = "department_name", nullable = false, length = 40)
+    private String departmentName;
 
     @NotBlank
     @Column(name = "description", nullable = false, length = 100)

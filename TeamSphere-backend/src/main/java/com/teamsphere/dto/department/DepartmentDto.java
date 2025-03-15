@@ -18,7 +18,7 @@ public class DepartmentDto extends BaseDto {
     @NotBlank
     @NotNull
     @Size(min = 1, max = 40)
-    private String groupName;
+    private String departmentName;
 
     @NotBlank
     @NotNull
