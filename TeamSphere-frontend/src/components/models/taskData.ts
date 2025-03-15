@@ -1,5 +1,5 @@
 export interface TaskData {
-    id: number;
+    id?: number;
     timeSpentMinutes: number;
     taskDescription: string;
     role: string;
