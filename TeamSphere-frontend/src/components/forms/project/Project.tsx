@@ -1,41 +1,14 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import api from '../../../api/api.ts';
 import {useNavigate} from 'react-router-dom';
 import {ProjectData} from "../../models/projectData.ts";
+import useFetchProjects from "@/hooks/useFetchProjects.ts";
+import AddProjectDialog from "@/components/forms/project/AddProjectDialog.tsx";
 
 const Project = () => {
     const navigate = useNavigate();
-
-    const [projects, setProjects] = useState<ProjectData[]>(() => {
-        return [];
-    });
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const response = await api.get('/api/v1/project');
-
-                const projectsData = response.data.content;
-
-                if (!Array.isArray(projectsData)) {
-                    throw new Error('Data isn\'t array');
-                }
-
-                setProjects(projectsData);
-                setError('');
-            } catch (error) {
-                console.error('Error:', error);
-                setError((error as Error).message);
-                setProjects([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProjects();
-    }, [navigate]);
+    const {data: projects, loading, error, fetchProjects} = useFetchProjects();
+    const [showAddDialog, setShowAddDialog] = useState<boolean>(false);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -45,26 +18,36 @@ const Project = () => {
         return <div>Error: {error}</div>;
     }
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: number | undefined) => {
         try {
             await api.delete(`/api/v1/project/${id}`);
-            setProjects(projects.filter(project => project.id !== id));
+            await fetchProjects();
         } catch (error) {
             console.error('Error deleting project:', error);
         }
     };
 
-    const handleEdit = (id: number) => {
+    const handleEdit = (id: number | undefined) => {
         navigate(`/project/edit/${id}`);
     };
 
     const handleAdd = () => {
-        navigate('/project/add');
+        setShowAddDialog(true)
+    };
+
+    const handleAddProject = async (newProject: ProjectData) => {
+        try {
+            await api.post("/api/v1/project", newProject);
+            await fetchProjects();
+            setShowAddDialog(false);
+        } catch (error) {
+            console.error('Error deleting project:', error);
+        }
     };
 
     const handleBackToNav = () => {
         navigate('/main');
-    }
+    };
 
     return (
         <div>
@@ -99,6 +82,12 @@ const Project = () => {
                 ))}
                 </tbody>
             </table>
+
+            <AddProjectDialog
+                visible={showAddDialog}
+                onHide={() => setShowAddDialog(false)}
+                onAdd={handleAddProject}
+            />
         </div>
     );
 };
