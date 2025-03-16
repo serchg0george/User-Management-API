@@ -4,6 +4,7 @@ import api from "../../../api/api.ts";
 import {DepartmentData} from "../../models/departmentData.ts";
 import AddDepartmentDialog from "./AddDepartmentDialog.tsx";
 import useFetchDepartments from "@/hooks/useFetchDepartments.ts"
+import '@/components/forms/styles.css'
 
 const Department = () => {
     const navigate = useNavigate();
@@ -59,6 +60,7 @@ const Department = () => {
                 <tr>
                     <th>Department Name</th>
                     <th>Description</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

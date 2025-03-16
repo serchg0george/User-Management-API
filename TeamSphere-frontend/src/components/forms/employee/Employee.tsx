@@ -4,6 +4,7 @@ import api from "../../../api/api.ts";
 import useFetchEmployees from "@/hooks/useFetchEmployees.ts";
 import {EmployeeData} from "@/components/models/employeeData.ts";
 import AddEmployeeDialog from "@/components/forms/employee/AddEmployeeDialog.tsx";
+import '@/components/forms/styles.css'
 
 const Employee = () => {
     const navigate = useNavigate();
@@ -66,6 +67,7 @@ const Employee = () => {
                     <th>Position ID</th>
                     <th>Task ID</th>
                     <th>Project Ids</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

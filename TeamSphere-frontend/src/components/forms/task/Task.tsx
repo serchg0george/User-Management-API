@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {TaskData} from "../../models/taskData.ts";
 import useFetchTasks from "@/hooks/useFetchTasks.ts";
 import AddTaskDialog from "@/components/forms/task/AddTaskDialog.tsx";
+import '@/components/forms/styles.css'
 
 const Task = () => {
     const navigate = useNavigate();
@@ -60,6 +61,7 @@ const Task = () => {
                     <th>Time spent(minutes)</th>
                     <th>Task description</th>
                     <th>Role</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

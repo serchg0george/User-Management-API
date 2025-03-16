@@ -4,6 +4,7 @@ import api from "../../../api/api.ts";
 import {PositionData} from "../../models/positionData.ts";
 import useFetchPositions from "@/hooks/useFetchPositions.ts";
 import AddPositionDialog from "@/components/forms/position/AddPositionDialog.tsx";
+import '@/components/forms/styles.css'
 
 const Position = () => {
     const navigate = useNavigate();
@@ -59,6 +60,7 @@ const Position = () => {
                 <tr>
                     <th>Position Name</th>
                     <th>Years of Experience</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

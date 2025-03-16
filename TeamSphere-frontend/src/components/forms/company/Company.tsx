@@ -4,6 +4,7 @@ import {CompanyData} from "@/components/models/companyData.ts";
 import api from '../../../api/api.ts';
 import AddCompanyDialog from "./AddCompanyDialog.tsx";
 import useFetchCompanies from "@/hooks/useFetchCompanies.ts";
+import '@/components/forms/styles.css'
 
 const Company = () => {
     const navigate = useNavigate();

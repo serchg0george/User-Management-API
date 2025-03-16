@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {ProjectData} from "../../models/projectData.ts";
 import useFetchProjects from "@/hooks/useFetchProjects.ts";
 import AddProjectDialog from "@/components/forms/project/AddProjectDialog.tsx";
+import '@/components/forms/styles.css'
 
 const Project = () => {
     const navigate = useNavigate();
@@ -63,6 +64,7 @@ const Project = () => {
                     <th>Finish Date</th>
                     <th>Status</th>
                     <th>Company ID</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>

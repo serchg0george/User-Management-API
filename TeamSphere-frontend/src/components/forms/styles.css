@@ -8,10 +8,11 @@ th, td {
     padding: 0.8rem;
     border: 1px solid #ddd;
     text-align: left;
+    color: #ffffff;
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #444;
 }
 
 button {
