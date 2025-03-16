@@ -67,6 +67,7 @@ const AddProjectDialog = ({visible, onHide, onAdd}: AddProjectDialogProps) => {
             onHide={onHide}
             footer={footer}
             style={{width: '100vw', height: '100vh'}}
+            closable={false}
             className="full-screen-dialog"
         >
             <div className="p-fluid">

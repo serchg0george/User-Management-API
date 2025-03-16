@@ -55,6 +55,7 @@ const AddTaskDialog = ({visible, onHide, onAdd}: AddTaskDialogProps) => {
             onHide={onHide}
             footer={footer}
             style={{width: '100vw', height: '100vh'}}
+            closable={false}
             className="full-screen-dialog"
         >
             <div className="p-fluid">
