@@ -18,8 +18,7 @@ TeamSphere is a RESTful web application designed to manage multiple aspects of a
 - **Dynamic Search**  
   - Search endpoints that use JPA Criteria Builder for flexible, type-safe queries.
   
-- **Mapping & Validation**  
-  - MapStruct for DTO-to-entity mapping.
+- **Tools**  
   - Lombok to reduce boilerplate code.
   - Integrated validation using Spring Boot Starter Validation.
 
@@ -40,7 +39,7 @@ TeamSphere is a RESTful web application designed to manage multiple aspects of a
   - Maven
 
 - **Libraries & Tools:**  
-  - Lombok, MapStruct, JPA Criteria Builder
+  - Lombok, JPA Criteria Builder
 
 ## Installation & Setup
 
@@ -170,8 +169,8 @@ Each controller has a dedicated table listing its endpoints and a short descript
 - **Criteria Builder:**  
   For search endpoints, the API uses the JPA Criteria Builder to create type-safe and dynamic queries at runtime. This allows flexible filtering of data without hardcoding SQL queries.
 
-- **MapStruct & Lombok:**  
-  MapStruct facilitates mapping between DTOs and entities, while Lombok reduces boilerplate code.
+- **Lombok:**  
+  Lombok to reduce boilerplate code.
 
 - **Maven:**  
   Dependency management and build processes are handled with Maven.
